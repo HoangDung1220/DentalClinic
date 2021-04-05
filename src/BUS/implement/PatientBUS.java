@@ -1,13 +1,12 @@
-package BUS;
+package BUS.implement;
 
 import java.util.List;
 
-import BUS.impl.IPatientBUS;
-import DAL.AbstractDAL;
-import DAL.PatientDAL;
+import BUS.IPatientBUS;
+import DAL.implement.PatientDAL;
 import DTO.Patient;
 
-public class PatientBUS extends AbstractDAL<Patient> implements IPatientBUS{
+public class PatientBUS implements IPatientBUS{
 	
 	PatientDAL patient;
 	
@@ -29,8 +28,8 @@ public class PatientBUS extends AbstractDAL<Patient> implements IPatientBUS{
 	@Override
 	public void update(Patient p) {
 
-		Patient pi = patient.findOne(p.getId());
-		patient.update(pi);
+		
+		patient.update(p);
 		
 	}
 

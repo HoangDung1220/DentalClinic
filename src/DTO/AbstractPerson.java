@@ -66,8 +66,8 @@ public class AbstractPerson<T> {
 	}
 
 
-	public void setGender(byte gender) {
-		this.gender = gender;
+	public void setGender(byte i) {
+		this.gender = i;
 	}
 
 

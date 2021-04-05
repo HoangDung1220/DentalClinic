@@ -1,4 +1,4 @@
-package DAL;
+package DAL.implement;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import DAL.impl.GenericDAL;
+import DAL.GenericDAL;
 import Mapper.RowMapper;
 
 public class AbstractDAL<T> implements GenericDAL<T>{
@@ -19,7 +19,7 @@ public class AbstractDAL<T> implements GenericDAL<T>{
 		Connection conn = null;
 		
 		try {
-			String url ="jdbc:mysql://localhost:3306/dentalclinic";
+			String url ="jdbc:mysql://localhost:3306/dental_clinic";
 			String username ="root";
 			String password ="120301200201";
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -63,6 +63,10 @@ public class AbstractDAL<T> implements GenericDAL<T>{
 			if (paramters[i] instanceof Date) {
 				
 				ppst.setDate(i+1, (Date) paramters[i]);
+		}
+			if (paramters[i] instanceof Double) {
+				
+				ppst.setDouble(i+1, (Double) paramters[i]);
 		}
 			
 		}

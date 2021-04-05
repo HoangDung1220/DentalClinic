@@ -1,4 +1,4 @@
-package DAL.impl;
+package DAL;
 
 import java.util.List;
 
