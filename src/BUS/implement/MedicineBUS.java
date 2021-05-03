@@ -13,14 +13,14 @@ public class MedicineBUS implements IMedicineBUS{
 
 	@Override
 	public List<Medicine> findAll() {
-		medicine.findAll();
-		return null;
+		return medicine.findAll();
+		
 	}
 
 	@Override
 	public Medicine findOne(int id) {
 		
-		return null;
+		return medicine.findOne(id);
 	}
 
 	@Override
@@ -34,7 +34,8 @@ public class MedicineBUS implements IMedicineBUS{
 	}
 
 	@Override
-	public void delete(int id) {
+	public void delete(List<Integer> list) {
+		for (int id : list)
 		medicine.delete(id);
 	}
 

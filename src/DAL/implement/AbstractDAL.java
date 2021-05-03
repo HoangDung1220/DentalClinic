@@ -124,7 +124,7 @@ public class AbstractDAL<T> implements GenericDAL<T>{
 			}
 		}
 		
-		return null;
+		return list;
 	}
 
 	

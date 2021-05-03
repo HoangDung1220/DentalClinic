@@ -2,6 +2,8 @@ package TestMain;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import BUS.IMedicineBUS;
 import BUS.IPatientBUS;
@@ -18,8 +20,10 @@ public class Test {
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) {
 		IMedicineBUS medicine = new MedicineBUS();
-		
-		Medicine m = new Medicine();
+		List<Medicine> list = new ArrayList<Medicine>();
+		list = medicine.findAll();
+		System.out.println(list);
+		/*Medicine m = new Medicine();
 		m.setCodeMedicine("pana");
 		m.setIdTypeMedicine(3);
 		m.setNameMedicine("panaheader1");
@@ -28,8 +32,8 @@ public class Test {
 		m.setUnit("viên thuốc");
 		m.setId(2);
 		/*
-		medicine.insert(m);*/
-		medicine.update(m);
+		medicine.insert(m);
+		medicine.update(m);*/
 		
 		
 		

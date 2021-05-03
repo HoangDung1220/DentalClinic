@@ -9,7 +9,7 @@ public interface IMedicineBUS  {
 	public Medicine findOne(int id);
 	public void insert(Medicine p);
 	public void update(Medicine p);
-	public void delete(int id);
+	public void delete(List<Integer> list);
 
 
 }

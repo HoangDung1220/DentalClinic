@@ -10,14 +10,15 @@ public class MedicineDAL extends AbstractDAL<Medicine> implements IMedicineDAL{
 
 	@Override
 	public List<Medicine> findAll() {
-		String st ="select *from medicine";
+		String st ="select *from medicine inner join type_medicine where medicine.id_typemedicine = type_medicine.id";
 		return query(st,new MedicineMapper());
 	}
 
 	@Override
 	public Medicine findOne(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		String st ="select *from medicine inner join type_medicine on medicine.id_typemedicine = type_medicine.id where medicine.id=?";
+	    List<Medicine> list = query(st,new MedicineMapper(),id);
+	    return list.isEmpty()?null:list.get(0);
 	}
 
 	@Override

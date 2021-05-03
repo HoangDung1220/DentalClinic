@@ -8,7 +8,7 @@ public class Medicine {
 	private String unit;
 	private double price;
 	private int quantity;
-
+	private TypeMedicine typeMedicine;
 	public Medicine() {
 		super();
 	}
@@ -23,6 +23,8 @@ public class Medicine {
 		this.unit = unit;
 		this.price = price;
 		this.quantity = quantity;
+		
+		
 	}
 
 	public int getId() {
@@ -79,6 +81,14 @@ public class Medicine {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	public TypeMedicine getTypeMedicine() {
+		return typeMedicine;
+	}
+
+	public void setTypeMedicine(TypeMedicine typeMedicine) {
+		this.typeMedicine = typeMedicine;
 	}
 	
 	
