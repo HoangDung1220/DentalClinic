@@ -22,13 +22,11 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -69,6 +67,8 @@ public class ManagementMedicine extends JFrame {
 	}
 
 	public ManagementMedicine() {
+		List<TypeMedicine> listType = new ArrayList<TypeMedicine>();
+		listType = typeMedicine.findAll();
 		setBackground(SystemColor.text);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1120, 635);
@@ -77,7 +77,7 @@ public class ManagementMedicine extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		showTable();
+		showTable(medicine.findAll());
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "T\u00ECm ki\u1EBFm thu\u1ED1c", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.setBackground(SystemColor.activeCaption);
@@ -90,9 +90,12 @@ public class ManagementMedicine extends JFrame {
 		lblNewLabel.setBounds(10, 49, 115, 13);
 		panel.add(lblNewLabel);
 		
-		JComboBox comboSearchType = new JComboBox();
+		JComboBox<TypeMedicine> comboSearchType = new JComboBox<TypeMedicine>();
 		comboSearchType.setBounds(119, 46, 167, 21);
-		panel.add(comboSearchType);
+		comboSearchType.addItem(new TypeMedicine(0,"all","All"));
+		for (TypeMedicine i : listType)
+			comboSearchType.addItem(i);
+		   panel.add(comboSearchType);
 		
 		txtSearchName = new JTextField();
 		txtSearchName.setBounds(119, 123, 167, 19);
@@ -105,6 +108,19 @@ public class ManagementMedicine extends JFrame {
 		panel.add(lblNewLabel_1);
 		
 		JButton Search = new JButton("SEARCH");
+		Search.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int idType = ((TypeMedicine)comboSearchType.getSelectedItem()).getId();
+				String chara = txtSearchName.getText();
+				defaultTable.setRowCount(0);
+				List<Medicine> list = new ArrayList<Medicine>();
+				list = medicine.searchByNameAndIDType(chara, idType);
+				showTable(list);
+				
+				
+				
+			}
+		});
 		Search.setFont(new Font("Tahoma", Font.BOLD, 14));
 		Search.setBounds(97, 213, 115, 21);
 		panel.add(Search);
@@ -122,6 +138,7 @@ public class ManagementMedicine extends JFrame {
 		panel_1.add(lblNewLabel_2);
 		
 		txtID = new JTextField();
+		txtID.setEnabled(false);
 		txtID.setBounds(154, 39, 160, 19);
 		
 		panel_1.add(txtID);
@@ -168,15 +185,16 @@ public class ManagementMedicine extends JFrame {
 				
 			
 					Medicine i = getDataByGui();
-					medicine.insert(i);
-					showTable();
+					txtID.setText(String.valueOf(medicine.insert(i)));
+					JOptionPane.showMessageDialog(null, "You save data successful");
+					showTable(medicine.findAll());
 					refresh();   
 					
 			
 			}
 		});
 		Save.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Save.setBounds(622, 38, 96, 21);
+		Save.setBounds(622, 36, 96, 21);
 		panel_1.add(Save);
 		
 		JButton Edit = new JButton("EDIT");
@@ -198,7 +216,8 @@ public class ManagementMedicine extends JFrame {
 				m.setNameMedicine(mData.getNameMedicine());
 				
 				medicine.update(m);
-				showTable();
+				JOptionPane.showMessageDialog(null, "You update data successful");
+				showTable(medicine.findAll());
 				refresh();
 				
 			}
@@ -220,7 +239,8 @@ public class ManagementMedicine extends JFrame {
 				} else 
 				{
 					medicine.delete(listId);
-					showTable();
+					showTable(medicine.findAll());
+					refresh();
 				}
 			}
 				
@@ -246,8 +266,7 @@ public class ManagementMedicine extends JFrame {
 		
 		comboType.setBounds(427, 155, 157, 21);
 		
-		List<TypeMedicine> listType = new ArrayList<TypeMedicine>();
-		listType = typeMedicine.findAll();
+		
 		for (TypeMedicine i : listType)
 		comboType.addItem(i);
 		panel_1.add(comboType);
@@ -319,10 +338,9 @@ public class ManagementMedicine extends JFrame {
 
 	}
 	
-	public void showTable() {
+	public void showTable(List<Medicine> list) {
 		defaultTable.setRowCount(0);
-		List<Medicine> list = new ArrayList<Medicine>();
-		list = medicine.findAll();
+
 		String[] columns = {"ID","Name_Type","Name_Medicine","Code","Unit","Price","Quantity"};
 		defaultTable.setColumnIdentifiers(columns);
 		for (Medicine i: list) {
@@ -339,7 +357,7 @@ public class ManagementMedicine extends JFrame {
 	
 	public Medicine getDataByGui() {
 		Medicine m = new Medicine();
-		m.setId(Integer.parseInt(txtID.getText()));
+		
 		m.setNameMedicine(txtName.getText());
 		m.setPrice(Double.parseDouble(txtPrice.getText()));
 		m.setQuantity(Integer.parseInt(txtQuantity.getText()));
@@ -372,4 +390,6 @@ public class ManagementMedicine extends JFrame {
 		txtQuantity.setText(String.valueOf(m.getQuantity()));
 		
 	}
+	
+	
 }

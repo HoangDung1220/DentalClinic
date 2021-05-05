@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +69,10 @@ public class AbstractDAL<T> implements GenericDAL<T>{
 				
 				ppst.setDouble(i+1, (Double) paramters[i]);
 		}
+			if (paramters[i] instanceof Boolean) {
+				
+				ppst.setBoolean(i+1, (Boolean) paramters[i]);
+		}
 			
 		}
 				} catch (SQLException e) {
@@ -129,17 +134,25 @@ public class AbstractDAL<T> implements GenericDAL<T>{
 
 	
 	@Override
-	public void insert(String st, Object... paramters) {
+	public int insert(String st, Object... paramters) {
 		Connection conn = null;
 		PreparedStatement ppst = null;
-		
+		ResultSet rs = null;
 		try {
+			int id = -1;
 			conn = getConnection();
 			conn.setAutoCommit(false);
-			ppst = conn.prepareStatement(st);
+			ppst= conn.prepareStatement(st,Statement.RETURN_GENERATED_KEYS);
 			setParamters(ppst,paramters);
 			ppst.executeUpdate();
+			rs = ppst.getGeneratedKeys();
+			if (rs.next()) {
+				id =rs.getInt(1);
+			}	
 			conn.commit();
+			return id;
+			
+		
 		} catch (SQLException e) {
 			if (conn!= null) {
 				try {
@@ -150,6 +163,8 @@ public class AbstractDAL<T> implements GenericDAL<T>{
 				}
 			}
 			e.printStackTrace();
+			return -1;
+
 		}
 		finally {
 			try {

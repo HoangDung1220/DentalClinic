@@ -1,26 +1,25 @@
 package DTO;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Staff extends AbstractPerson<Staff> {
 	private String email;
 	private Date dateStartWork;
 	private String username;
 	private String password;
-	private int status;
 	private int idRole;
+	private Role role;
 	
 	public Staff() {
 		super();
 	}
 
-	public Staff(String email, Date dateStartWork, String username, String password, int status, int idRole) {
+	public Staff(String email, Date dateStartWork, String username, String password, int idRole) {
 		super();
 		this.email = email;
 		this.dateStartWork = dateStartWork;
 		this.username = username;
 		this.password = password;
-		this.status = status;
 		this.idRole = idRole;
 	}
 
@@ -56,13 +55,6 @@ public class Staff extends AbstractPerson<Staff> {
 		this.password = password;
 	}
 
-	public int getStatus() {
-		return status;
-	}
-
-	public void setStatus(int status) {
-		this.status = status;
-	}
 
 	public int getIdRole() {
 		return idRole;
@@ -70,6 +62,14 @@ public class Staff extends AbstractPerson<Staff> {
 
 	public void setIdRole(int idRole) {
 		this.idRole = idRole;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
 	}
 	
 	

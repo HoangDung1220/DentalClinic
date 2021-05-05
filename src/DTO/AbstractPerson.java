@@ -1,14 +1,14 @@
 package DTO;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class AbstractPerson<T> {
 	private int id;
 	private String fullname;
-	private byte gender;
+	private boolean gender;
 	private String address;
 	private Date birthday;
 	private String phone;
@@ -24,7 +24,7 @@ public class AbstractPerson<T> {
 	}
 
 
-	public AbstractPerson(int id, String fullname, byte gender, String address, Date birthday, String phone,
+	public AbstractPerson(int id, String fullname, boolean gender, String address, Date birthday, String phone,
 			String createdBy, Timestamp createdDate, String modifiedBy, Timestamp modifiedDate, String iCard) {
 		super();
 		this.id = id;
@@ -61,12 +61,12 @@ public class AbstractPerson<T> {
 	}
 
 
-	public byte getGender() {
+	public boolean getGender() {
 		return gender;
 	}
 
 
-	public void setGender(byte i) {
+	public void setGender(boolean i) {
 		this.gender = i;
 	}
 

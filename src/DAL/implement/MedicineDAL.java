@@ -22,10 +22,10 @@ public class MedicineDAL extends AbstractDAL<Medicine> implements IMedicineDAL{
 	}
 
 	@Override
-	public void insert(Medicine p) {
+	public int insert(Medicine p) {
 		
 		String st = "insert into medicine(name_medicine,code_medicine,id_typemedicine,price,unit,quantity) values (?,?,?,?,?,?)";
-				insert(st,p.getNameMedicine(),p.getCodeMedicine(),p.getIdTypeMedicine(),p.getPrice(),p.getUnit(),p.getQuantity());
+				return insert(st,p.getNameMedicine(),p.getCodeMedicine(),p.getIdTypeMedicine(),p.getPrice(),p.getUnit(),p.getQuantity());
 			
 	}
 
@@ -40,6 +40,19 @@ public class MedicineDAL extends AbstractDAL<Medicine> implements IMedicineDAL{
 
 		String st ="delete from medicine where id=?";
 		delete(st,id);
+	}
+
+	@Override
+	public List<Medicine> searchByNameAndIDType(String name, int idType) {
+		StringBuilder st = new StringBuilder("select *from medicine inner join type_medicine on medicine.id_typemedicine = type_medicine.id");
+		if (idType != 0) {
+			st.append(" where type_medicine.id = '"+idType+"' ");
+			st.append("and medicine.name_medicine like '%"+name+"%'");
+
+		} else 
+		st.append(" where medicine.name_medicine like '%"+name+"%'");
+		List<Medicine> list = query(st.toString(),new MedicineMapper());
+		return list;
 	}
 
 }

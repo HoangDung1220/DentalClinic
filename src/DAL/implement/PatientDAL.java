@@ -16,9 +16,9 @@ public class PatientDAL extends AbstractDAL<Patient> implements IPatientDAL{
 
 	@Override
 	public void insert(Patient p) {
-		String st ="insert into patient(fullname,gender,phone,address,birthday,icard,created_date,created_by,status) values (?,?,?,?,?,?,?,?,?)";
+		String st ="insert into patient(fullname,gender,phone,address,birthday,icard,created_date,created_by) values (?,?,?,?,?,?,?,?)";
 	    insert(st,p.getFullname(),p.getGender(),p.getPhone(),p.getAddress(),p.getBirthday()
-	    		,p.getiCard(),p.getCreatedDate(),p.getCreatedBy(),p.getStatus());
+	    		,p.getiCard(),p.getCreatedDate(),p.getCreatedBy());
 	//createdby
 		
 	
@@ -26,8 +26,8 @@ public class PatientDAL extends AbstractDAL<Patient> implements IPatientDAL{
 
 	@Override
 	public void update(Patient p) {
-		String st ="update patient set fullname =?,gender=?,birthday=?,phone=?,address=?,icard=?,modified_date=?,modified_by=?,status=? where id =?";
-		update(st,p.getFullname(),p.getGender(),p.getBirthday(),p.getPhone(),p.getAddress(),p.getiCard(),p.getModifiedDate(),p.getModifiedBy(),p.getStatus(),p.getId());	
+		String st ="update patient set fullname =?,gender=?,birthday=?,phone=?,address=?,icard=?,modified_date=?,modified_by=?where id =?";
+		update(st,p.getFullname(),p.getGender(),p.getBirthday(),p.getPhone(),p.getAddress(),p.getiCard(),p.getModifiedDate(),p.getModifiedBy(),p.getId());	
 	}
 
 	@Override

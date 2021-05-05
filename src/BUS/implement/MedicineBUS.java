@@ -24,8 +24,8 @@ public class MedicineBUS implements IMedicineBUS{
 	}
 
 	@Override
-	public void insert(Medicine p) {
-		medicine.insert(p);
+	public int insert(Medicine p) {
+		return medicine.insert(p);
 	}
 
 	@Override
@@ -37,6 +37,11 @@ public class MedicineBUS implements IMedicineBUS{
 	public void delete(List<Integer> list) {
 		for (int id : list)
 		medicine.delete(id);
+	}
+
+	@Override
+	public List<Medicine> searchByNameAndIDType(String name, int idType) {
+		return medicine.searchByNameAndIDType(name, idType);
 	}
 
 }

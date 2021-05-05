@@ -1,6 +1,7 @@
 package DTO;
 
 public class Role {
+	
 	private int id;
 	private String code;
 	private String name;
@@ -40,6 +41,12 @@ public class Role {
 		this.name = name;
 	}
 	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return name;
+	}
+
 	
 	
 
