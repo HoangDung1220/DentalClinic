@@ -14,10 +14,12 @@ import java.util.List;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import BUS.implement.MedicalFormBUS;
 import BUS.implement.MedicineBUS;
 import BUS.implement.PrescriptionBUS;
 import BUS.implement.TypeMedicineBUS;
 import Constant.SystemConstant;
+import DTO.MedicalForm;
 import DTO.Medicine;
 import DTO.Prescription;
 import DTO.TypeMedicine;
@@ -53,6 +55,9 @@ public class MedicalDetail extends JFrame {
 	private TypeMedicineBUS typeMedicine = new TypeMedicineBUS();
 	private MedicineBUS medicine = new  MedicineBUS();
 	private PrescriptionBUS prescription = new PrescriptionBUS();
+	private MedicalFormBUS medical_form = new MedicalFormBUS();
+	
+	private static int idForm;
 
 	JComboBox<TypeMedicine> comboTypeSearch;
 	JComboBox<String> comboUnit ;
@@ -64,7 +69,7 @@ public class MedicalDetail extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MedicalDetail frame = new MedicalDetail();
+					MedicalDetail frame = new MedicalDetail(idForm);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -73,7 +78,9 @@ public class MedicalDetail extends JFrame {
 		});
 	}
 
-	public MedicalDetail() {
+
+	public MedicalDetail(int id_Form_Medical) {
+		idForm = id_Form_Medical;
 		showTable1();
 
 		showTable(medicine.findAll());
@@ -188,6 +195,10 @@ public class MedicalDetail extends JFrame {
 				txtPrice.setText(String.valueOf(p.getPrice()));
 				prescription.insert(p);
 				showTable1();
+				Medicine m = getDataMedicine(p,true);
+				medicine.update(m);
+				refreshData();
+				
 			}
 		});
 		Save.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -200,10 +211,17 @@ public class MedicalDetail extends JFrame {
 				int index = table_1.getSelectedRow();
 				int id = Integer.parseInt(table_1.getValueAt(index, 0).toString());
 				
+				int quanIni = prescription.findOne(id).getQuantity();
 				Prescription pre = getDataByGui();
 				pre.setId(id);
 				prescription.update(pre);
+				txtPrice.setText(String.valueOf(pre.getPrice()));
 				showTable1();
+				
+				Medicine m = medicine.findOne(pre.getIdMedicine());
+				m.setQuantity(m.getQuantity()+quanIni-pre.getQuantity());
+				medicine.update(m);
+				refreshData();
 			}
 		});
 		Edit.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -216,10 +234,14 @@ public class MedicalDetail extends JFrame {
 				int[] indexs = table_1.getSelectedRows();
 				List<Integer> list = new ArrayList<Integer>();
 				for (int i: indexs) {
-					list.add(Integer.parseInt(table_1.getValueAt(i, 0).toString()));
+					int id =Integer.parseInt(table_1.getValueAt(i, 0).toString());
+					list.add(id);
+					Medicine m = getDataMedicine(prescription.findOne(id),false);
+					medicine.update(m);
 				}
 				prescription.delete(list);
 				showTable1();
+				refreshData();
 				
 			}
 		});
@@ -311,11 +333,7 @@ public class MedicalDetail extends JFrame {
 		JButton Search = new JButton("SEARCH");
 		Search.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int idType = ((TypeMedicine) (comboTypeSearch.getSelectedItem())).getId();
-				String name = txtNameSearch.getText();
-				
-				List<Medicine> list = medicine.searchByNameAndIDType(name, idType);
-				showTable(list);
+				refreshData();
 			}
 		});
 		Search.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -335,6 +353,18 @@ public class MedicalDetail extends JFrame {
 		JButton btnNewButton_4 = new JButton("EXIT ");
 		btnNewButton_4.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnNewButton_4.setBounds(922, 569, 85, 21);
+		btnNewButton_4.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				MedicalForm m = medical_form.findOne(idForm);
+				CreateMedicalForm frame1 = new CreateMedicalForm(m);
+				frame1.setVisible(true);
+				dispose();
+				
+			}
+			
+		});
 		contentPane.add(btnNewButton_4);
 	}
 	
@@ -358,7 +388,7 @@ public class MedicalDetail extends JFrame {
 				"STT","Name_Medicine","Quantity","Price","Usages","Note"
 		});
 		
-		List<Prescription> list = prescription.findAll(1);
+		List<Prescription> list = prescription.findAll(idForm);
 		for (Prescription i: list) {
 			Object[] row = new Object[] {
 					i.getId(),i.getMedicine().getNameMedicine(),i.getQuantity(),i.getPrice(),i.getUsage(),i.getNote()
@@ -394,8 +424,22 @@ public class MedicalDetail extends JFrame {
 		pre.setUsage(txtUsage.getText());
 		Double price1 = (medicine.findOne(Integer.parseInt(txtID.getText()))).getPrice()*Integer.parseInt(txtQuantity.getText());
 		pre.setPrice(price1);
-		pre.setIdMedicalForm(1);
+		pre.setIdMedicalForm(idForm);
 		return pre;
+	}
+	
+	public Medicine getDataMedicine(Prescription p,boolean check) {
+		Medicine m = medicine.findOne(p.getIdMedicine());
+		if (check) m.setQuantity(m.getQuantity()-p.getQuantity());
+		else m.setQuantity(m.getQuantity()+p.getQuantity());
+		return m;
+	}
+	
+	public void refreshData() {
+		int idType = ((TypeMedicine) (comboTypeSearch.getSelectedItem())).getId();
+		String name = txtNameSearch.getText();
+		List<Medicine> list = medicine.searchByNameAndIDType(name, idType);
+		showTable(list);
 	}
 		
 }

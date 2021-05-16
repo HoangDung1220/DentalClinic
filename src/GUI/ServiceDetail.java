@@ -17,17 +17,22 @@ import javax.swing.table.DefaultTableModel;
 
 import BUS.implement.DentalServiceBUS;
 import BUS.implement.DetailServiceBUS;
+import BUS.implement.MedicalFormBUS;
 import DTO.DentalService;
 import DTO.DetailService;
+import DTO.MedicalForm;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 
 public class ServiceDetail extends JFrame {
@@ -40,17 +45,19 @@ public class ServiceDetail extends JFrame {
 	private JTable table;
 	private JTable table_1;
 	private JComboBox<String> comboUnit;
+	private static int idForm;
 	DefaultTableModel defaultTable = new DefaultTableModel();
 	DefaultTableModel defaultTable_1 = new DefaultTableModel();
 
 	DentalServiceBUS service = new DentalServiceBUS();
 	DetailServiceBUS detailService = new DetailServiceBUS();
+	MedicalFormBUS medicalForm = new MedicalFormBUS();
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ServiceDetail frame = new ServiceDetail();
+					ServiceDetail frame = new ServiceDetail(idForm);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -59,7 +66,9 @@ public class ServiceDetail extends JFrame {
 		});
 	}
 
-	public ServiceDetail() {
+	
+	public ServiceDetail(int Id_Medical_Form) {
+		idForm = Id_Medical_Form;
 		showTable(service.findAll());
 		showTable1();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -102,6 +111,18 @@ public class ServiceDetail extends JFrame {
 		JButton Exit = new JButton("EXIT");
 		Exit.setFont(new Font("Tahoma", Font.BOLD, 14));
 		Exit.setBounds(835, 28, 85, 21);
+		Exit.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				MedicalForm m = medicalForm.findOne(idForm);
+				CreateMedicalForm form = new CreateMedicalForm(m);
+				form.setVisible(true);
+				dispose();
+				
+			}
+			
+		});
 		panel.add(Exit);
 		
 		JPanel panel_1 = new JPanel();
@@ -123,6 +144,19 @@ public class ServiceDetail extends JFrame {
 				int index = table.getSelectedRow();
 				int id = Integer.parseInt(table.getValueAt(index, 0).toString());
 				setDataToGui(id);
+			}
+			
+		});
+		table.addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyReleased(KeyEvent action) {
+				if (action.getKeyCode()==KeyEvent.VK_UP || action.getKeyCode()==KeyEvent.VK_DOWN) {
+					int row = table.getSelectedRow();
+					int id = Integer.parseInt(table.getValueAt(row, 0).toString());
+					setDataToGui(id);
+				}
+				
 			}
 			
 		});
@@ -184,6 +218,7 @@ public class ServiceDetail extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				DetailService de = getDataByGui();
 				detailService.insert(de);
+				txtPrice.setText(String.valueOf(de.getPrice()));
 				showTable1();
 			}
 		});
@@ -195,8 +230,12 @@ public class ServiceDetail extends JFrame {
 		Edit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				DetailService de = getDataByGui();
-				de.setId(Integer.parseInt(txtID.getText()));
+				int index = table_1.getSelectedRow();
+				int id = Integer.parseInt(table_1.getValueAt(index, 0).toString());
+				de.setId(id);
 				detailService.update(de);
+				txtPrice.setText(String.valueOf(de.getPrice()));
+				showTable1();
 			}
 		});
 		Edit.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -204,8 +243,20 @@ public class ServiceDetail extends JFrame {
 		panel_2.add(Edit);
 		
 		JButton Delete = new JButton("DELETE");
+		Delete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int[] indexs = table_1.getSelectedRows();
+				List<Integer> list = new ArrayList<Integer>();
+				for (int i: indexs) {
+					list.add(Integer.parseInt(table_1.getValueAt(i, 0).toString()));
+				}
+				detailService.delete(list);
+				showTable1();
+			}
+		});
 		Delete.setFont(new Font("Tahoma", Font.BOLD, 14));
 		Delete.setBounds(334, 169, 96, 21);
+		
 		panel_2.add(Delete);
 		
 		JPanel panel_3 = new JPanel();
@@ -231,6 +282,19 @@ public class ServiceDetail extends JFrame {
 			
 			
 		});
+		table_1.addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyReleased(KeyEvent action) {
+				if (action.getKeyCode()==KeyEvent.VK_UP || action.getKeyCode()==KeyEvent.VK_DOWN) {
+					int row = table_1.getSelectedRow();
+					int id = Integer.parseInt(table_1.getValueAt(row, 0).toString());
+					setDataToGui1(id);
+				}
+				
+			}
+			
+		});
 		scrollPane_1.setViewportView(table_1);
 	}
 	
@@ -253,7 +317,7 @@ public class ServiceDetail extends JFrame {
 		defaultTable_1.setColumnIdentifiers(new String[] {
 				"ID","Name_Service","Unit","Quantity","Warranty","Price"
 		});
-		List<DetailService> list = detailService.findAll(1);
+		List<DetailService> list = detailService.findAll(idForm);
 		for (DetailService i:list) {
 			Object[] row = new Object[] {
 					i.getId(),i.getDentalService().getNameService(),i.getDentalService().getUnit(),i.getQuantity(),i.getDentalService().getWarranty(),i.getPrice()
@@ -276,14 +340,14 @@ public class ServiceDetail extends JFrame {
 		de.setQuantity(Integer.parseInt(txtQuantity.getText()));
 		double price1 = Integer.parseInt(txtQuantity.getText())*(service.findOne(Integer.parseInt(txtID.getText()))).getPrice();
 		de.setPrice(price1);
-		de.setIdMedicalForm(1);
+		de.setIdMedicalForm(idForm);
 		return de;
 	}
 
 	public void setDataToGui1(int id) {
 		
 		DetailService ser = detailService.findOne(id);
-		txtID.setText(String.valueOf(ser.getId()));
+		txtID.setText(String.valueOf(ser.getIdDentalService()));
 		comboUnit.setSelectedItem(ser.getDentalService().getUnit());
 		txtQuantity.setText(String.valueOf(ser.getQuantity()));
 		txtPrice.setText(String.valueOf(ser.getPrice()));

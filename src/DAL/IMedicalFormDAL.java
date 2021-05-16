@@ -12,4 +12,6 @@ public interface IMedicalFormDAL {
 	public void update(MedicalForm p);
 	public void delete(int id);
 	public List<MedicalForm> search(boolean isName,boolean isDate, String name,Date date);
+	public List<MedicalForm> searchByIDPatient(int id);
+
 }

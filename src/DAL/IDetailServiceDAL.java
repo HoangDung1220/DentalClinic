@@ -11,4 +11,5 @@ public interface IDetailServiceDAL {
 	public int insert(DetailService p);
 	public void update(DetailService p);
 	public void delete(int id);
+
 }

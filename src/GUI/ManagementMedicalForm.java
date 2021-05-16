@@ -1,6 +1,5 @@
 package GUI;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -13,7 +12,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JLabel;
@@ -24,6 +22,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import BUS.implement.MedicalFormBUS;
+import BUS.implement.StaffBUS;
 import DTO.MedicalForm;
 
 import javax.swing.border.EtchedBorder;
@@ -41,6 +40,7 @@ public class ManagementMedicalForm extends JFrame {
 	private JTextField textSearch;
 	private JCheckBox checkName ;
 	private JCheckBox checkDate ;
+	private StaffBUS staff = new StaffBUS();
 
 
 	MedicalFormBUS medicalForm = new MedicalFormBUS();
@@ -75,8 +75,10 @@ public class ManagementMedicalForm extends JFrame {
 		JButton Create = new JButton("Create New Medical Form");
 		Create.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				CreateMedicalForm form1 = new CreateMedicalForm();
-				form1.show();
+				MedicalForm m = null;
+				CreateMedicalForm form1 = new CreateMedicalForm(m);
+				form1.setVisible(true);
+				dispose();
 			}
 		});
 		Create.setBounds(394, 22, 213, 26);
@@ -141,13 +143,29 @@ public class ManagementMedicalForm extends JFrame {
 		
 		JDateChooser dateSearch = new JDateChooser();
 		dateSearch.setBounds(393, 15, 343, 32);
+		Date date = new Date(System.currentTimeMillis());
+		dateSearch.setDate(date);
 		panel_1.add(dateSearch);
 		textSearch.addKeyListener(new KeyAdapter() {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode()==KeyEvent.VK_ENTER) {
-					JOptionPane.showMessageDialog(null, "ok");
+					String st = sdf.format(dateSearch.getDate());
+				    Date date1 = Date.valueOf(st);
+					List<MedicalForm> list = medicalForm.search(checkName.isSelected(), checkDate.isSelected(), textSearch.getText(),date1);
+					showTable(list);
+					
+				}
+			}
+	
+		});
+		
+		dateSearch.addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode()==KeyEvent.VK_ENTER) {
 					String st = sdf.format(dateSearch.getDate());
 				    Date date1 = Date.valueOf(st);
 					List<MedicalForm> list = medicalForm.search(checkName.isSelected(), checkDate.isSelected(), textSearch.getText(),date1);
@@ -161,13 +179,14 @@ public class ManagementMedicalForm extends JFrame {
 	}
 	
 	public void showTable(List<MedicalForm> list) {
+		defaultTable.setRowCount(0);
 		defaultTable.setColumnIdentifiers(new Object[] {
 			"ID","Name_Patient","Name_Doctor","Date_Cure",""
 		});
 		
 		for (MedicalForm i :list ) {
 			Object[] row = new Object[] {
-				i.getId(),i.getPatient().getFullname(),i.getStaff().getFullname(),i.getDateCure()	
+				i.getId(),i.getPatient().getFullname(),staff.findOne(i.getIdDoctor()).getFullname(),i.getDateCure()	
 			};
 			defaultTable.addRow(row);
 		}

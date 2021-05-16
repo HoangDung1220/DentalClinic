@@ -31,8 +31,8 @@ public class PrescriptionDAL extends AbstractDAL<Prescription> implements IPresc
 
 	@Override
 	public void update(Prescription p) {
-		String st ="update prescription set quantity=?,usages=?,note=? where id =?";
-		update(st,p.getQuantity(),p.getUsage(),p.getNote(),p.getId());
+		String st ="update prescription set price=? ,quantity=?,usages=?,note=? where id =?";
+		update(st,p.getPrice(),p.getQuantity(),p.getUsage(),p.getNote(),p.getId());
 	}
 
 	@Override

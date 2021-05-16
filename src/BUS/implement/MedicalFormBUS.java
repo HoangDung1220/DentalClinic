@@ -18,7 +18,7 @@ public class MedicalFormBUS implements IMedicalFormBUS{
 	@Override
 	public MedicalForm findOne(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		return form.findOne(id);
 	}
 
 	@Override
@@ -29,8 +29,7 @@ public class MedicalFormBUS implements IMedicalFormBUS{
 
 	@Override
 	public void update(MedicalForm p) {
-		// TODO Auto-generated method stub
-		
+		form.update(p);
 	}
 
 	@Override
@@ -42,6 +41,11 @@ public class MedicalFormBUS implements IMedicalFormBUS{
 	@Override
 	public List<MedicalForm> search(boolean isName, boolean isDate, String name, Date date) {
 		return form.search(isName, isDate, name, date);
+	}
+
+	@Override
+	public List<MedicalForm> searchByIDPatient(int id) {
+		return form.searchByIDPatient(id);
 	}
 
 }

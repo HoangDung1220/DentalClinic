@@ -15,9 +15,9 @@ public class PatientDAL extends AbstractDAL<Patient> implements IPatientDAL{
 	}
 
 	@Override
-	public void insert(Patient p) {
+	public int insert(Patient p) {
 		String st ="insert into patient(fullname,gender,phone,address,birthday,icard,created_date,created_by) values (?,?,?,?,?,?,?,?)";
-	    insert(st,p.getFullname(),p.getGender(),p.getPhone(),p.getAddress(),p.getBirthday()
+	   return insert(st,p.getFullname(),p.getGender(),p.getPhone(),p.getAddress(),p.getBirthday()
 	    		,p.getiCard(),p.getCreatedDate(),p.getCreatedBy());
 	//createdby
 		

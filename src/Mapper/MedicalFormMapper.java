@@ -19,6 +19,7 @@ public class MedicalFormMapper implements RowMapper<MedicalForm> {
 			form.setDateCure(rs.getDate("date_cure"));
 			form.setStatusAfterCure(rs.getString("status_after_cure"));
 			form.setStatusBeforeCure(rs.getString("status_before_cure"));
+			form.setContentCure(rs.getString("content_cure"));
 			
 			try {
 				Patient patient = new Patient();

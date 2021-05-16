@@ -18,8 +18,10 @@ public class MedicalFormDAL extends AbstractDAL<MedicalForm> implements IMedical
 
 	@Override
 	public MedicalForm findOne(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder st =new StringBuilder("select *from medical_form inner join patient on medical_form.id_patient=patient.id ");
+		st.append("inner join staff on medical_form.id_doctor=staff.id where medical_form.id=?");
+		List<MedicalForm> list = query(st.toString(),new MedicalFormMapper(),id);
+		return list.isEmpty()?null:list.get(0);
 	}
 
 	@Override
@@ -30,8 +32,8 @@ public class MedicalFormDAL extends AbstractDAL<MedicalForm> implements IMedical
 
 	@Override
 	public void update(MedicalForm p) {
-		// TODO Auto-generated method stub
-		
+		String st ="update medical_form set status_before_cure=?, status_after_cure=?, content_cure=? where id=?";
+		update(st,p.getStatusBeforeCure(),p.getStatusAfterCure(),p.getContentCure(),p.getId());
 	}
 
 	@Override
@@ -59,6 +61,13 @@ public class MedicalFormDAL extends AbstractDAL<MedicalForm> implements IMedical
 			
 		
 		return query(st.toString(),new MedicalFormMapper());
+	}
+
+	@Override
+	public List<MedicalForm> searchByIDPatient(int id) {
+		StringBuilder st =new StringBuilder("select *from medical_form inner join patient on medical_form.id_patient=patient.id ");
+		st.append("inner join staff on medical_form.id_doctor=staff.id where medical_form.id_patient=?");
+		return query(st.toString(),new MedicalFormMapper(),id);
 	}
 
 }

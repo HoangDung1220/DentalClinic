@@ -21,8 +21,8 @@ public class PatientBUS implements IPatientBUS{
 	}
 
 	@Override
-	public void insert(Patient p) {
-				patient.insert(p);
+	public int insert(Patient p) {
+				return patient.insert(p);
 	}
 
 	@Override
@@ -37,6 +37,11 @@ public class PatientBUS implements IPatientBUS{
 	public void delete(int id) {
 
 		patient.delete(id);
+	}
+
+	@Override
+	public Patient findOne(int id) {
+		return patient.findOne(id);
 	}
 
 }
