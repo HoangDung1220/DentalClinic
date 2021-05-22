@@ -15,7 +15,6 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import javax.swing.border.TitledBorder;

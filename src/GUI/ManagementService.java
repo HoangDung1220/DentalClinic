@@ -65,7 +65,7 @@ public class ManagementService extends JFrame {
 	public ManagementService() {
 		showTable(service.findAll());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 990, 498);
+		setBounds(100, 100, 1021, 498);
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.activeCaption);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -207,7 +207,7 @@ public class ManagementService extends JFrame {
 		JButton Exit = new JButton("EXIT");
 		Exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				System.exit(0);
+				dispose();
 			}
 		});
 		Exit.setFont(new Font("Tahoma", Font.BOLD, 14));

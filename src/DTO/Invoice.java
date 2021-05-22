@@ -3,20 +3,21 @@ package DTO;
 import java.sql.Timestamp;
 
 public class Invoice {
-	private int id;
+	private String id;
 	private int idMedicalForm;
 	private int idStaff;
-	private float totalPriceMedicine;
-	private float totalPriceService;
+	private double totalPriceMedicine;
+	private double totalPriceService;
 	private Timestamp payDate;
-	private byte status;
+	private double totalPrice;
+	private Staff staff;
 	
 	public Invoice() {
 		super();
 	}
 
-	public Invoice(int id, int idMedicalForm, int idStaff, float totalPriceMedicine, float totalPriceService,
-			Timestamp payDate, byte status) {
+	public Invoice(String id, int idMedicalForm, int idStaff, float totalPriceMedicine, double totalPriceService,
+			Timestamp payDate) {
 		super();
 		this.id = id;
 		this.idMedicalForm = idMedicalForm;
@@ -24,14 +25,13 @@ public class Invoice {
 		this.totalPriceMedicine = totalPriceMedicine;
 		this.totalPriceService = totalPriceService;
 		this.payDate = payDate;
-		this.status = status;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -51,19 +51,19 @@ public class Invoice {
 		this.idStaff = idStaff;
 	}
 
-	public float getTotalPriceMedicine() {
+	public double getTotalPriceMedicine() {
 		return totalPriceMedicine;
 	}
 
-	public void setTotalPriceMedicine(float totalPriceMedicine) {
+	public void setTotalPriceMedicine(double totalPriceMedicine) {
 		this.totalPriceMedicine = totalPriceMedicine;
 	}
 
-	public float getTotalPriceService() {
+	public double getTotalPriceService() {
 		return totalPriceService;
 	}
 
-	public void setTotalPriceService(float totalPriceService) {
+	public void setTotalPriceService(double totalPriceService) {
 		this.totalPriceService = totalPriceService;
 	}
 
@@ -75,12 +75,22 @@ public class Invoice {
 		this.payDate = payDate;
 	}
 
-	public byte getStatus() {
-		return status;
+	
+
+	public double getTotalPrice() {
+		return totalPrice;
 	}
 
-	public void setStatus(byte status) {
-		this.status = status;
+	public void setTotalPrice(double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public Staff getStaff() {
+		return staff;
+	}
+
+	public void setStaff(Staff staff) {
+		this.staff = staff;
 	}
 	
 	

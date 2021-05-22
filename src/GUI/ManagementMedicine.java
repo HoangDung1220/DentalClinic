@@ -253,7 +253,7 @@ public class ManagementMedicine extends JFrame {
 		JButton Exit = new JButton("EXIT ");
 		Exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				System.exit(0);
+				dispose();
 			}
 		});
 		Exit.setFont(new Font("Tahoma", Font.BOLD, 14));
