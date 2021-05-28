@@ -11,6 +11,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import BUS.implement.DentalServiceBUS;
+import Constant.SystemConstant;
 import DTO.DentalService;
 import DTO.Medicine;
 
@@ -19,6 +20,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
@@ -140,7 +142,7 @@ public class ManagementService extends JFrame {
 		panel.add(txtWarranty);
 		txtWarranty.setColumns(10);
 		
-		JButton Save = new JButton("SAVE");
+		JButton Save = new JButton("");
 		Save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -152,10 +154,12 @@ public class ManagementService extends JFrame {
 			}
 		});
 		Save.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Save.setBounds(52, 202, 85, 21);
+		Save.setBounds(52, 202, 40, 35);
+		Save.setIcon(new ImageIcon(SystemConstant.img_save1));
+		Save.setToolTipText("Save data");
 		panel.add(Save);
 		
-		JButton Edit = new JButton("EDIT");
+		JButton Edit = new JButton("");
 		Edit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int index = table.getSelectedRow();
@@ -178,10 +182,12 @@ public class ManagementService extends JFrame {
 			}
 		});
 		Edit.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Edit.setBounds(198, 202, 85, 21);
+		Edit.setBounds(128, 202, 40, 35);
+		Edit.setIcon(new ImageIcon(SystemConstant.img_edit1));
+		Edit.setToolTipText("Edit data");
 		panel.add(Edit);
 		
-		JButton Delete = new JButton("DELETE");
+		JButton Delete = new JButton("");
 		Delete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int[] listRow = table.getSelectedRows();
@@ -201,17 +207,21 @@ public class ManagementService extends JFrame {
 				}
 		});
 		Delete.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Delete.setBounds(345, 202, 101, 21);
+		Delete.setBounds(206, 202, 40, 35);
+		Delete.setIcon(new ImageIcon(SystemConstant.img_delete1));
+		Delete.setToolTipText("Delete data");
 		panel.add(Delete);
 		
-		JButton Exit = new JButton("EXIT");
+		JButton Exit = new JButton("");
 		Exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
 			}
 		});
 		Exit.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Exit.setBounds(491, 202, 85, 21);
+		Exit.setBounds(280, 202, 40, 35);
+		Exit.setIcon(new ImageIcon(SystemConstant.img_exit3));
+		Exit.setToolTipText("Exit data");
 		panel.add(Exit);
 		
 		JPanel panel_1 = new JPanel();
@@ -223,10 +233,10 @@ public class ManagementService extends JFrame {
 		
 		JLabel lblNewLabel_6 = new JLabel("Name_Service");
 		lblNewLabel_6.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblNewLabel_6.setBounds(10, 89, 109, 13);
+		lblNewLabel_6.setBounds(10, 136, 109, 13);
 		panel_1.add(lblNewLabel_6);
 		
-		JButton SearchButton = new JButton("SEARCH");
+		JButton SearchButton = new JButton("");
 		SearchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String chara = txtSearchName.getText();
@@ -234,13 +244,20 @@ public class ManagementService extends JFrame {
 			}
 		});
 		SearchButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		SearchButton.setBounds(102, 201, 94, 21);
+		SearchButton.setBounds(102, 201, 35, 35);
+		SearchButton.setIcon(new ImageIcon(SystemConstant.img_search1));
+		SearchButton.setToolTipText("Search data");
 		panel_1.add(SearchButton);
 		
 		txtSearchName = new JTextField();
-		txtSearchName.setBounds(143, 87, 109, 19);
+		txtSearchName.setBounds(145, 134, 109, 19);
 		panel_1.add(txtSearchName);
 		txtSearchName.setColumns(10);
+		
+		JLabel lblNewLabel_7 = new JLabel("");
+		lblNewLabel_7.setBounds(109, 49, 102, 60);
+		lblNewLabel_7.setIcon(new ImageIcon(SystemConstant.img_dental1));
+		panel_1.add(lblNewLabel_7);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(SystemColor.activeCaption);

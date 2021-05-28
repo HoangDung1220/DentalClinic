@@ -1,12 +1,24 @@
 package GUI;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Timestamp;
+import java.util.List;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,26 +28,11 @@ import BUS.implement.MedicalFormBUS;
 import BUS.implement.PrescriptionBUS;
 import Checked.AutoID;
 import Constant.SystemConstant;
+import DAL.implement.InvoiceDAL;
 import DTO.DetailService;
 import DTO.Invoice;
 import DTO.MedicalForm;
 import DTO.Prescription;
-
-import javax.swing.border.CompoundBorder;
-import java.awt.Color;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.Font;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.sql.Timestamp;
-import java.util.List;
-import java.awt.event.ActionEvent;
-import javax.swing.JTextField;
 
 public class ManagementInvoice extends JFrame {
 
@@ -60,7 +57,6 @@ public class ManagementInvoice extends JFrame {
 	private JLabel lbID = new JLabel("");
 
 	private InvoiceBUS invoiceExecute = new InvoiceBUS();
-
 
 
 	
@@ -233,7 +229,6 @@ public class ManagementInvoice extends JFrame {
 				lbID.setText("");
 				lbDate.setText("");
 				lbNamePatient.setText("");
-				lbStaff.setText("Ngo Hoang Dung");
 				lbAddress.setText("");
 				lbPhone.setText("");
 				showTableMedicine(0);
@@ -260,6 +255,11 @@ public class ManagementInvoice extends JFrame {
 		panel_3.add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("Print");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				invoiceExecute.printf(lbID.getText());
+			}
+		});
 		btnNewButton_2.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnNewButton_2.setBounds(538, 99, 85, 21);
 		panel_3.add(btnNewButton_2);
@@ -282,7 +282,10 @@ public class ManagementInvoice extends JFrame {
 		TotalPrice.setForeground(Color.red);
 		panel_3.add(TotalPrice);
 		
-		
+		Timestamp time = new Timestamp(System.currentTimeMillis());
+		lbDate.setText(String.valueOf(time));
+		lbStaff.setText(SystemConstant.staff.getFullname());
+
 		
 		
 		
@@ -326,11 +329,12 @@ public class ManagementInvoice extends JFrame {
 	}
 	
 	public void setGui(int idForm) {
+		Invoice in = invoiceExecute.findOneByIdMedical(idForm);
+		if (in == null) {
+			
 		MedicalForm m = medicalForm.findOne(idForm);
-		Timestamp time = new Timestamp(System.currentTimeMillis());
-		lbDate.setText(String.valueOf(time));
+		
 		lbNamePatient.setText(m.getPatient().getFullname());
-		lbStaff.setText("Ngo Hoang Dung");
 		lbAddress.setText(m.getPatient().getAddress());
 		lbPhone.setText(m.getPatient().getPhone());
 		String st = AutoID.CreateAutoID(m.getIdPatient());
@@ -340,14 +344,26 @@ public class ManagementInvoice extends JFrame {
 		showTable1(idForm);
 		double price = Double.parseDouble(lbTotalMedicine.getText())+Double.parseDouble(lbTotalService.getText());
 		TotalPrice.setText(String.valueOf(price));
-		
+		} else 
+		{
+			MedicalForm m = medicalForm.findOne(idForm);
+
+			lbNamePatient.setText(m.getPatient().getFullname());
+			lbAddress.setText(m.getPatient().getAddress());
+			lbPhone.setText(m.getPatient().getPhone());
+			lbID.setText(in.getId());
+			showTableMedicine(idForm);
+			showTable1(idForm);
+			double price = Double.parseDouble(lbTotalMedicine.getText())+Double.parseDouble(lbTotalService.getText());
+			TotalPrice.setText(String.valueOf(price));
+		}
 	}
 	
 	public Invoice getGui() {
 		Invoice inv = new Invoice();
 		inv.setId(lbID.getText());
 		inv.setIdMedicalForm(Integer.parseInt(textIDMedical.getText()));
-		inv.setIdStaff(9);//// phan quyen
+		inv.setIdStaff(SystemConstant.staff.getId());//// phan quyen
 		inv.setPayDate(Timestamp.valueOf(lbDate.getText()));
 		inv.setTotalPrice(Double.parseDouble(TotalPrice.getText()));
 		inv.setTotalPriceMedicine(Double.parseDouble(lbTotalMedicine.getText()));

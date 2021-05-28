@@ -11,8 +11,8 @@ public class MedicalFormBUS implements IMedicalFormBUS{
 
 	MedicalFormDAL form = new MedicalFormDAL();
 	@Override
-	public List<MedicalForm> findAll() {
-		return form.findAll();
+	public List<MedicalForm> findAll(int id_staff) {
+		return form.findAll(id_staff);
 	}
 
 	@Override

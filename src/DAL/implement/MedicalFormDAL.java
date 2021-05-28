@@ -10,10 +10,10 @@ import Mapper.MedicalFormMapper;
 public class MedicalFormDAL extends AbstractDAL<MedicalForm> implements IMedicalFormDAL {
 
 	@Override
-	public List<MedicalForm> findAll() {
+	public List<MedicalForm> findAll(int id_staff) {
 		StringBuilder st =new StringBuilder("select *from medical_form inner join patient on medical_form.id_patient=patient.id ");
-		st.append("inner join staff on medical_form.id_doctor=staff.id");
-		return query(st.toString(),new MedicalFormMapper());
+		st.append("inner join staff on medical_form.id_doctor=staff.id where medical_form.id_doctor=?");
+		return query(st.toString(),new MedicalFormMapper(),id_staff);
 	}
 
 	@Override

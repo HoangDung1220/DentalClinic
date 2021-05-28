@@ -37,4 +37,10 @@ public class StaffBUS implements IStaffBUS{
 		return staff.findOne(id);
 	}
 
+	@Override
+	public Staff searchByUserNameAndPassword(String username, String password) {
+		
+		return staff.searchByUserNameAndPassword(username, password);
+	}
+
 }

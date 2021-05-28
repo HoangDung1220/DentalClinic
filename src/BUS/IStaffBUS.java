@@ -11,5 +11,6 @@ public interface IStaffBUS {
 	public void update(Staff p);
 	public void delete(List<Integer> list);
 	public Staff findOne(int id);
+	public Staff searchByUserNameAndPassword(String username,String password);
 
 }

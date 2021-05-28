@@ -1,7 +1,10 @@
 eclipse.preferences.version=1
 encoding//src/Constant/SystemConstant.java=UTF-8
+encoding//src/GUI/CreateMedicalForm.java=UTF-8
 encoding//src/GUI/ManagementMedicine.java=UTF-8
 encoding//src/GUI/ManagementStaff.java=UTF-8
+encoding//src/GUI/PanelTaiKhoan.java=UTF-8
+encoding//src/GUI/PatientDanhMuc.java=UTF-8
 encoding//src/GUI/PatientRegistrationGui.java=UTF-8
-encoding//src/GUI/Test.jrxml=UTF-8
+encoding//src/GUI/test.jrxml=UTF-8
 encoding//src/TestMain/Test.java=UTF-8

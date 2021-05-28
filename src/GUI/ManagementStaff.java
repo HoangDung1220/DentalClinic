@@ -1,48 +1,45 @@
 package GUI;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.SystemColor;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.border.EtchedBorder;
 import java.awt.Color;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
+import java.awt.EventQueue;
 import java.awt.Font;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.CompoundBorder;
-import com.toedter.calendar.JDateChooser;
-
-import BUS.implement.RoleBUS;
-import BUS.implement.StaffBUS;
-import DTO.Role;
-import DTO.Staff;
-
-import javax.swing.JComboBox;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
+import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Date;
-import java.awt.event.ActionEvent;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
+
+import com.toedter.calendar.JDateChooser;
+
+import BUS.implement.RoleBUS;
+import BUS.implement.StaffBUS;
+import Constant.SystemConstant;
+import DTO.Role;
+import DTO.Staff;
 
 public class ManagementStaff extends JFrame {
 
@@ -103,7 +100,7 @@ public class ManagementStaff extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("Seeek_By");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblNewLabel.setBounds(10, 34, 108, 13);
+		lblNewLabel.setBounds(10, 26, 108, 21);
 		panel.add(lblNewLabel);
 		
 		JRadioButton ID_Staff = new JRadioButton("ID_Staff");
@@ -129,16 +126,17 @@ public class ManagementStaff extends JFrame {
 		panel.add(txtChar);
 		txtChar.setColumns(10);
 		
-		JButton Search = new JButton("SEARCH");
+		JButton Search = new JButton("");
 		Search.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				
 			}
 		});
-		Search.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		Search.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		Search.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Search.setBounds(96, 189, 85, 21);
+		Search.setBounds(140, 191, 35, 35);
+		Search.setIcon(new ImageIcon(SystemConstant.img_search));
 		panel.add(Search);
 		
 		JPanel panel_1 = new JPanel();
@@ -261,7 +259,8 @@ public class ManagementStaff extends JFrame {
 		panel_1.add(dateOfWork);
 		
 		
-		JButton Save = new JButton("SAVE");
+		JButton Save = new JButton("");
+		Save.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		Save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				staff.insert(GetDataToGui());
@@ -269,10 +268,13 @@ public class ManagementStaff extends JFrame {
 			}
 		});
 		Save.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Save.setBounds(62, 250, 85, 21);
+		Save.setBounds(506, 250, 40, 35);
+		Save.setIcon(new ImageIcon(SystemConstant.img_save));
+		Save.setToolTipText("Save data");
 		panel_1.add(Save);
 		
-		JButton Edit = new JButton("EDIT");
+		JButton Edit = new JButton("");
+		Edit.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		Edit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -286,10 +288,13 @@ public class ManagementStaff extends JFrame {
 			}
 		});
 		Edit.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Edit.setBounds(239, 250, 85, 21);
+		Edit.setBounds(565, 250, 40, 35);
+		Edit.setIcon(new ImageIcon(SystemConstant.img_edit));
+		Edit.setToolTipText("Edit data");
 		panel_1.add(Edit);
 		
-		JButton Delete = new JButton("DELETE");
+		JButton Delete = new JButton("");
+		Delete.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		Delete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int[] list = table.getSelectedRows();
@@ -303,17 +308,22 @@ public class ManagementStaff extends JFrame {
 			}
 		});
 		Delete.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Delete.setBounds(426, 250, 96, 21);
+		Delete.setBounds(615, 250, 40, 35);
+		Delete.setIcon(new ImageIcon(SystemConstant.img_delete));
+		Delete.setToolTipText("Delete data");
 		panel_1.add(Delete);
 		
-		JButton Exit = new JButton("EXIT ");
+		JButton Exit = new JButton("");
+		Exit.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		Exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
 			}
 		});
 		Exit.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Exit.setBounds(599, 250, 85, 21);
+		Exit.setBounds(665, 250, 40, 35);
+		Exit.setIcon(new ImageIcon(SystemConstant.img_exit2));
+		Exit.setToolTipText("Exit");
 		panel_1.add(Exit);
 		
 		JPanel panel_2 = new JPanel();

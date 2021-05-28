@@ -21,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -180,7 +181,7 @@ public class ManagementMedicine extends JFrame {
 		lblNewLabel_6.setBounds(324, 102, 45, 13);
 		panel_1.add(lblNewLabel_6);
 		
-		JButton Save = new JButton("SAVE");
+		JButton Save = new JButton("");
 		Save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -195,10 +196,11 @@ public class ManagementMedicine extends JFrame {
 			}
 		});
 		Save.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Save.setBounds(622, 36, 96, 21);
+		Save.setBounds(656, 36, 40, 35);
+		Save.setIcon(new ImageIcon(SystemConstant.img_save1));
 		panel_1.add(Save);
 		
-		JButton Edit = new JButton("EDIT");
+		JButton Edit = new JButton("");
 		Edit.setFont(new Font("Tahoma", Font.BOLD, 14));
 		Edit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -223,10 +225,11 @@ public class ManagementMedicine extends JFrame {
 				
 			}
 		});
-		Edit.setBounds(622, 98, 96, 21);
+		Edit.setBounds(656, 100, 40, 35);
+		Edit.setIcon(new ImageIcon(SystemConstant.img_edit1));
 		panel_1.add(Edit);
 		
-		JButton Delete = new JButton("DELETE");
+		JButton Delete = new JButton("");
 		Delete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int[] listRow = table.getSelectedRows();
@@ -247,17 +250,19 @@ public class ManagementMedicine extends JFrame {
 				
 		});
 		Delete.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Delete.setBounds(622, 168, 96, 21);
+		Delete.setBounds(656, 166, 40, 35);
+		Delete.setIcon(new ImageIcon(SystemConstant.img_delete1));
 		panel_1.add(Delete);
 		
-		JButton Exit = new JButton("EXIT ");
+		JButton Exit = new JButton("");
 		Exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
 			}
 		});
 		Exit.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Exit.setBounds(622, 228, 96, 21);
+		Exit.setBounds(656, 231, 40, 35);
+		Exit.setIcon(new ImageIcon(SystemConstant.img_exit3));
 		panel_1.add(Exit);
 		
 		JLabel lblNewLabel_7 = new JLabel("Type_Medicine");

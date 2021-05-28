@@ -7,6 +7,8 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import Constant.SystemConstant;
+import DTO.Invoice;
+
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -45,6 +47,13 @@ public class PanelNghiepVu extends JPanel {
 		Patient.add(lblNewLabel_1);
 		
 		JPanel panel_1 = new JPanel();
+		panel_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ManagementMedicalForm frame = new ManagementMedicalForm();
+				frame.setVisible(true);
+			}
+		});
 		panel_1.setBackground(new Color(240, 255, 240));
 		panel_1.setBounds(325, 99, 174, 192);
 		add(panel_1);
@@ -63,15 +72,28 @@ public class PanelNghiepVu extends JPanel {
 		panel_1.add(lblNewLabel_2);
 		
 		JPanel panel_2 = new JPanel();
+		panel_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ManagementInvoice invoice = new ManagementInvoice();
+				invoice.setVisible(true);
+				
+			}
+		});
+		panel_2.setBackground(new Color(240, 255, 240));
 		panel_2.setBounds(570, 99, 174, 192);
 		add(panel_2);
 		panel_2.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("New label");
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(10, 10, 154, 131);
+		lblNewLabel.setIcon(new ImageIcon(SystemConstant.img_invoice1));
 		panel_2.add(lblNewLabel);
 		
-		JLabel lblNewLabel_3 = new JLabel("New label");
+		JLabel lblNewLabel_3 = new JLabel("Invoice");
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_3.setFont(new Font("Sitka Subheading", Font.BOLD, 16));
 		lblNewLabel_3.setBounds(10, 151, 154, 31);
 		panel_2.add(lblNewLabel_3);
 	}

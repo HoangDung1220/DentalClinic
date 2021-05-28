@@ -6,7 +6,7 @@ import java.util.List;
 import DTO.MedicalForm;
 
 public interface IMedicalFormBUS {
-	public List<MedicalForm> findAll();
+	public List<MedicalForm> findAll(int id_staff);
 	public MedicalForm findOne(int id);
 	public int insert(MedicalForm p);
 	public void update(MedicalForm p);

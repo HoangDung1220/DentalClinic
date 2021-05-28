@@ -1,16 +1,30 @@
 package GUI;
 
+import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,22 +37,6 @@ import DTO.MedicalForm;
 import DTO.Medicine;
 import DTO.Prescription;
 import DTO.TypeMedicine;
-
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.JButton;
-import java.awt.Font;
-import javax.swing.border.EtchedBorder;
-import java.awt.Color;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JTextArea;
 
 public class MedicalDetail extends JFrame {
 
@@ -188,7 +186,8 @@ public class MedicalDetail extends JFrame {
 		panel_1.add(txtPrice);
 		txtPrice.setColumns(10);
 		
-		JButton Save = new JButton("SAVE");
+		JButton Save = new JButton("");
+		Save.setToolTipText("L\u01B0u d\u1EEF li\u1EC7u");
 		Save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Prescription p = getDataByGui();
@@ -198,14 +197,17 @@ public class MedicalDetail extends JFrame {
 				Medicine m = getDataMedicine(p,true);
 				medicine.update(m);
 				refreshData();
+				refresh();
 				
 			}
 		});
+		Save.setIcon(new ImageIcon(SystemConstant.img_save1));
 		Save.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Save.setBounds(327, 24, 96, 21);
+		Save.setBounds(383, 21, 40, 35);
 		panel_1.add(Save);
 		
-		JButton Edit = new JButton("EDIT");
+		JButton Edit = new JButton("");
+		Edit.setToolTipText("Ch\u1EC9nh s\u1EEDa d\u1EEF li\u1EC7u");
 		Edit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int index = table_1.getSelectedRow();
@@ -222,13 +224,16 @@ public class MedicalDetail extends JFrame {
 				m.setQuantity(m.getQuantity()+quanIni-pre.getQuantity());
 				medicine.update(m);
 				refreshData();
+				refresh();
 			}
 		});
 		Edit.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Edit.setBounds(328, 79, 96, 21);
+		Edit.setBounds(383, 75, 40, 35);
+		Edit.setIcon(new ImageIcon(SystemConstant.img_edit1));
 		panel_1.add(Edit);
 		
-		JButton Delete = new JButton("DELETE");
+		JButton Delete = new JButton("");
+		Delete.setToolTipText("X\u00F3a d\u1EEF li\u1EC7u");
 		Delete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int[] indexs = table_1.getSelectedRows();
@@ -242,11 +247,13 @@ public class MedicalDetail extends JFrame {
 				prescription.delete(list);
 				showTable1();
 				refreshData();
+				refresh();
 				
 			}
 		});
 		Delete.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Delete.setBounds(327, 138, 96, 21);
+		Delete.setBounds(383, 132, 40, 35);
+		Delete.setIcon(new ImageIcon(SystemConstant.img_delete1));
 		panel_1.add(Delete);
 		
 		JLabel lblNewLabel_6 = new JLabel("Usage");
@@ -440,6 +447,15 @@ public class MedicalDetail extends JFrame {
 		String name = txtNameSearch.getText();
 		List<Medicine> list = medicine.searchByNameAndIDType(name, idType);
 		showTable(list);
+	}
+	
+	public void refresh() {
+		txtID.setText("");
+		comboUnit.setSelectedIndex(0);
+		txtQuantity.setText("");
+		txtPrice.setText("");
+		txtUsage.setText("");
+		txtNote.setText("");
 	}
 		
 }

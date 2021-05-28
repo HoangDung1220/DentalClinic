@@ -1,20 +1,16 @@
 package GUI;
 
-import javax.swing.JPanel;
-
-import Constant.SystemConstant;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import java.awt.Font;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-
-import javax.swing.SwingConstants;
-import javax.swing.JLabel;
 import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
+import Constant.SystemConstant;
 
 public class PanelDanhMuc extends JPanel {
 
@@ -23,16 +19,17 @@ public class PanelDanhMuc extends JPanel {
 		setSize(763, 405);
 		setLayout(null);
 		
+		
 		JPanel panel = new JPanel();
 		panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				PatientRegistrationGui patient = new PatientRegistrationGui();
-				patient.setVisible(true);
+				ManagementStaff frame1 = new ManagementStaff();
+				frame1.setVisible(true);
 			}
 		});
 		panel.setBackground(SystemColor.controlHighlight);
-		panel.setBounds(69, 39, 145, 161);
+		panel.setBounds(69, 228, 145, 161);
 		add(panel);
 		panel.setLayout(null);
 		
@@ -99,8 +96,15 @@ public class PanelDanhMuc extends JPanel {
 		panel_2.add(lblNewLabel_3);
 		
 		JPanel panel_3 = new JPanel();
+		panel_3.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ManagementMedicalForm frame = new ManagementMedicalForm();
+				frame.setVisible(true);
+			}
+		});
 		panel_3.setBackground(SystemColor.controlHighlight);
-		panel_3.setBounds(194, 236, 145, 161);
+		panel_3.setBounds(313, 236, 145, 161);
 		add(panel_3);
 		panel_3.setLayout(null);
 		
@@ -118,7 +122,7 @@ public class PanelDanhMuc extends JPanel {
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(SystemColor.controlHighlight);
-		panel_4.setBounds(440, 233, 145, 161);
+		panel_4.setBounds(554, 236, 145, 161);
 		add(panel_4);
 		panel_4.setLayout(null);
 		
@@ -133,6 +137,32 @@ public class PanelDanhMuc extends JPanel {
 		lblNewLabel_6.setFont(new Font("Sitka Subheading", Font.BOLD, 16));
 		lblNewLabel_6.setBounds(20, 130, 115, 30);
 		panel_4.add(lblNewLabel_6);
+		
+		JPanel panel_5 = new JPanel();
+		panel_5.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				PatientRegistrationGui frame = new PatientRegistrationGui();
+				frame.setVisible(true);
+				
+			}
+		});
+		panel_5.setLayout(null);
+		panel_5.setBackground(SystemColor.controlHighlight);
+		panel_5.setBounds(69, 39, 145, 161);
+		add(panel_5);
+		
+		JLabel img_1 = new JLabel("");
+		img_1.setHorizontalAlignment(SwingConstants.CENTER);
+		img_1.setBounds(10, 10, 125, 100);
+		img_1.setIcon(new ImageIcon(SystemConstant.img_patient));
+		panel_5.add(img_1);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("Patient");
+		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_1.setFont(new Font("Sitka Subheading", Font.BOLD, 17));
+		lblNewLabel_1_1.setBounds(20, 120, 115, 31);
+		panel_5.add(lblNewLabel_1_1);
 
 	}
 }

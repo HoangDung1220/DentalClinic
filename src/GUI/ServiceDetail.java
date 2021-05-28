@@ -1,39 +1,37 @@
 package GUI;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import BUS.implement.DentalServiceBUS;
 import BUS.implement.DetailServiceBUS;
 import BUS.implement.MedicalFormBUS;
+import Constant.SystemConstant;
 import DTO.DentalService;
 import DTO.DetailService;
 import DTO.MedicalForm;
-
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JButton;
-import java.awt.Font;
-import javax.swing.JComboBox;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.ActionEvent;
 
 public class ServiceDetail extends JFrame {
 
@@ -105,12 +103,14 @@ public class ServiceDetail extends JFrame {
 			}
 		});
 		Search.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Search.setBounds(536, 28, 121, 21);
+		Search.setBounds(457, 26, 121, 21);
 		panel.add(Search);
 		
-		JButton Exit = new JButton("EXIT");
+		JButton Exit = new JButton("");
+		Exit.setToolTipText("Tho\u00E1t");
 		Exit.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Exit.setBounds(835, 28, 85, 21);
+		Exit.setBounds(1032, 14, 40, 35);
+		Exit.setIcon(new ImageIcon(SystemConstant.img_exit3));
 		Exit.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -125,15 +125,69 @@ public class ServiceDetail extends JFrame {
 		});
 		panel.add(Exit);
 		
+		JButton Save = new JButton("");
+		Save.setToolTipText("L\u01B0u th\u00F4ng tin");
+		Save.setBounds(882, 14, 40, 35);
+		Save.setIcon(new ImageIcon(SystemConstant.img_save1));
+		panel.add(Save);
+		Save.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				DetailService de = getDataByGui();
+				detailService.insert(de);
+				txtPrice.setText(String.valueOf(de.getPrice()));
+				showTable1();
+				refresh();
+			}
+		});
+		Save.setFont(new Font("Tahoma", Font.BOLD, 14));
+		
+		JButton Edit = new JButton("");
+		Edit.setToolTipText("Ch\u1EC9nh s\u1EEDa th\u00F4ng tin");
+		Edit.setBounds(932, 14, 40, 35);
+		Edit.setIcon(new ImageIcon(SystemConstant.img_edit1));
+		panel.add(Edit);
+		Edit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				DetailService de = getDataByGui();
+				int index = table_1.getSelectedRow();
+				int id = Integer.parseInt(table_1.getValueAt(index, 0).toString());
+				de.setId(id);
+				detailService.update(de);
+				txtPrice.setText(String.valueOf(de.getPrice()));
+				showTable1();
+				refresh();
+			}
+		});
+		Edit.setFont(new Font("Tahoma", Font.BOLD, 14));
+		
+		JButton Delete = new JButton("");
+		Delete.setToolTipText("X\u00F3a th\u00F4ng tin");
+		Delete.setBounds(982, 14, 40, 35);
+		Delete.setIcon(new ImageIcon(SystemConstant.img_delete1));
+		panel.add(Delete);
+		Delete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int[] indexs = table_1.getSelectedRows();
+				List<Integer> list = new ArrayList<Integer>();
+				for (int i: indexs) {
+					list.add(Integer.parseInt(table_1.getValueAt(i, 0).toString()));
+				}
+				detailService.delete(list);
+				showTable1();
+				refresh();
+			}
+		});
+		Delete.setFont(new Font("Tahoma", Font.BOLD, 14));
+		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(SystemColor.activeCaption);
 		panel_1.setBorder(new TitledBorder(null, "Danh s\u00E1ch d\u1ECBch v\u1EE5", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(10, 78, 563, 199);
+		panel_1.setBounds(10, 78, 688, 199);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 20, 543, 169);
+		scrollPane.setBounds(10, 20, 668, 169);
 		panel_1.add(scrollPane);
 		
 		table = new JTable(defaultTable);
@@ -165,7 +219,7 @@ public class ServiceDetail extends JFrame {
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(SystemColor.activeCaption);
 		panel_2.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_2.setBounds(604, 78, 480, 199);
+		panel_2.setBounds(708, 78, 376, 199);
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 		
@@ -191,18 +245,18 @@ public class ServiceDetail extends JFrame {
 		
 		txtID = new JTextField();
 		txtID.setEnabled(false);
-		txtID.setBounds(125, 18, 96, 19);
+		txtID.setBounds(125, 18, 229, 19);
 		panel_2.add(txtID);
 		txtID.setColumns(10);
 		
 		txtQuantity = new JTextField();
-		txtQuantity.setBounds(125, 118, 96, 19);
+		txtQuantity.setBounds(125, 118, 229, 19);
 		panel_2.add(txtQuantity);
 		txtQuantity.setColumns(10);
 		
 		txtPrice = new JTextField();
 		txtPrice.setEnabled(false);
-		txtPrice.setBounds(125, 170, 96, 19);
+		txtPrice.setBounds(125, 170, 229, 19);
 		panel_2.add(txtPrice);
 		txtPrice.setColumns(10);
 		
@@ -210,54 +264,8 @@ public class ServiceDetail extends JFrame {
 	    for (String i:Constant.SystemConstant.listConstantService) {
 	    	comboUnit.addItem(i);
 	    }
-		comboUnit.setBounds(125, 69, 96, 21);
+		comboUnit.setBounds(125, 69, 229, 21);
 		panel_2.add(comboUnit);
-		
-		JButton Save = new JButton("SAVE");
-		Save.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				DetailService de = getDataByGui();
-				detailService.insert(de);
-				txtPrice.setText(String.valueOf(de.getPrice()));
-				showTable1();
-			}
-		});
-		Save.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Save.setBounds(334, 18, 96, 21);
-		panel_2.add(Save);
-		
-		JButton Edit = new JButton("EDIT");
-		Edit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				DetailService de = getDataByGui();
-				int index = table_1.getSelectedRow();
-				int id = Integer.parseInt(table_1.getValueAt(index, 0).toString());
-				de.setId(id);
-				detailService.update(de);
-				txtPrice.setText(String.valueOf(de.getPrice()));
-				showTable1();
-			}
-		});
-		Edit.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Edit.setBounds(334, 92, 96, 21);
-		panel_2.add(Edit);
-		
-		JButton Delete = new JButton("DELETE");
-		Delete.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				int[] indexs = table_1.getSelectedRows();
-				List<Integer> list = new ArrayList<Integer>();
-				for (int i: indexs) {
-					list.add(Integer.parseInt(table_1.getValueAt(i, 0).toString()));
-				}
-				detailService.delete(list);
-				showTable1();
-			}
-		});
-		Delete.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Delete.setBounds(334, 169, 96, 21);
-		
-		panel_2.add(Delete);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBorder(new TitledBorder(null, "Danh s\u00E1ch s\u1EED d\u1EE5ng d\u1ECBch v\u1EE5", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -354,6 +362,14 @@ public class ServiceDetail extends JFrame {
 		
 		
 	
+	}
+	
+	public void refresh() {
+		txtID.setText("");
+		comboUnit.setSelectedIndex(0);
+		txtQuantity.setText("");
+		txtPrice.setText("");
+		
 	}
 	
 }

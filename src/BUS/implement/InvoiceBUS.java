@@ -38,4 +38,14 @@ public class InvoiceBUS implements IInvoiceBUS {
 		
 	}
 
+	@Override
+	public void printf(String id1) {
+		invoice.printf(id1);
+	}
+
+	@Override
+	public Invoice findOneByIdMedical(int id) {
+		return invoice.fidOneByIdMedical(id);
+	}
+
 }

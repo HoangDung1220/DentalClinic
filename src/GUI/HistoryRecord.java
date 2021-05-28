@@ -19,9 +19,11 @@ import javax.swing.table.DefaultTableModel;
 
 import BUS.implement.DetailServiceBUS;
 import BUS.implement.MedicalFormBUS;
+import BUS.implement.PatientBUS;
 import BUS.implement.PrescriptionBUS;
 import DTO.DetailService;
 import DTO.MedicalForm;
+import DTO.Patient;
 import DTO.Prescription;
 
 import javax.swing.JScrollPane;
@@ -30,6 +32,9 @@ import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class HistoryRecord extends JFrame {
 
@@ -45,10 +50,11 @@ public class HistoryRecord extends JFrame {
 	private JRadioButton Male ;
 	private JRadioButton Female ;
 
-	private MedicalForm medical = new MedicalForm();
-	private MedicalFormBUS medicalForm = new MedicalFormBUS();
+	private Patient patient = new Patient();
+	private PatientBUS patientProcess = new PatientBUS();
 	private PrescriptionBUS prescription = new PrescriptionBUS();
 	private DetailServiceBUS detailService = new DetailServiceBUS();
+	private MedicalFormBUS medicalForm = new MedicalFormBUS();
 	
 	DefaultTableModel defaultTable = new DefaultTableModel();
 	DefaultTableModel defaultTable1 = new DefaultTableModel();
@@ -200,16 +206,26 @@ public class HistoryRecord extends JFrame {
 		
 		table_2 = new JTable(defaultTable1);
 		scrollPane_2.setViewportView(table_2);
+		
+		JButton btnNewButton = new JButton("Exit");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
+		btnNewButton.setFont(new Font("Berlin Sans FB Demi", Font.PLAIN, 16));
+		btnNewButton.setBounds(822, 599, 85, 21);
+		contentPane.add(btnNewButton);
 		getInit();
 	}
 	
 	public void getInit() {
-	    medical = medicalForm.findOne(id_Form);
-		txtName.setText(medical.getPatient().getFullname());
-		txtBirthday.setText(String.valueOf(medical.getPatient().getBirthday()));
-		txtAddress.setText(medical.getPatient().getAddress());
-		txtICard.setText(medical.getPatient().getiCard());
-		if (medical.getPatient().getGender()) {
+	    patient = patientProcess.findOne(id_Form);
+		txtName.setText(patient.getFullname());
+		txtBirthday.setText(String.valueOf(patient.getBirthday()));
+		txtAddress.setText(patient.getAddress());
+		txtICard.setText(patient.getiCard());
+		if (patient.getGender()) {
 			Male.setSelected(true);
 		} else 
 			Female.setSelected(true);
@@ -222,7 +238,7 @@ public class HistoryRecord extends JFrame {
 				"ID","Name_Doctor","Date_Cure","Status_Before_Of_Patient","Status_After_Of_Patient","Content_Cure"
 		});
 		
-		List<MedicalForm> list = medicalForm.searchByIDPatient(medicalForm.findOne(id_Form).getIdPatient());
+		List<MedicalForm> list = medicalForm.searchByIDPatient(id_Form);
 		for (MedicalForm i:list) {
 			Object[] o = new Object[] {
 				i.getId(),i.getStaff().getFullname(),i.getDateCure(),i.getStatusBeforeCure(),i.getStatusAfterCure(),i.getContentCure()	
@@ -263,5 +279,4 @@ public class HistoryRecord extends JFrame {
 			defaultTable2.addRow(row);
 		}
 	}
-	
 }

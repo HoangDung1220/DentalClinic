@@ -8,5 +8,29 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="Resource/mysql-connector-java-8.0.22.jar"/>
 	<classpathentry kind="lib" path="Resource/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="ResourceJasper/bcprov-jdk15on-1.64.jar"/>
+	<classpathentry kind="lib" path="ResourceJasper/castor-core-1.4.1.jar"/>
+	<classpathentry kind="lib" path="ResourceJasper/castor-xml-1.4.1.jar"/>
+	<classpathentry kind="lib" path="ResourceJasper/commons-beanutils-1.9.4.jar"/>
+	<classpathentry kind="lib" path="ResourceJasper/commons-collections-3.2.2.jar"/>
+	<classpathentry kind="lib" path="ResourceJasper/commons-collections4-4.2.jar"/>
+	<classpathentry kind="lib" path="ResourceJasper/commons-digester-2.1.jar"/>
+	<classpathentry kind="lib" path="ResourceJasper/commons-fileupload-1.3.jar"/>
+	<classpathentry kind="lib" path="ResourceJasper/commons-io-2.8.0.jar"/>
+	<classpathentry kind="lib" path="ResourceJasper/commons-lang3-3.4.jar"/>
+	<classpathentry kind="lib" path="ResourceJasper/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="ResourceJasper/ecj-3.21.0.jar"/>
+	<classpathentry kind="lib" path="ResourceJasper/itext-2.1.7.js8.jar"/>
+	<classpathentry kind="lib" path="ResourceJasper/jackson-annotations-2.12.2.jar"/>
+	<classpathentry kind="lib" path="ResourceJasper/jackson-core-2.12.2.jar"/>
+	<classpathentry kind="lib" path="ResourceJasper/jackson-databind-2.12.2.jar"/>
+	<classpathentry kind="lib" path="ResourceJasper/jasperreports-6.17.0.jar"/>
+	<classpathentry kind="lib" path="ResourceJasper/jasperreports-functions-6.17.0.jar"/>
+	<classpathentry kind="lib" path="ResourceJasper/javax.inject-1.jar"/>
+	<classpathentry kind="lib" path="ResourceJasper/jcommon-1.0.23.jar"/>
+	<classpathentry kind="lib" path="ResourceJasper/jfreechart-1.0.19.jar"/>
+	<classpathentry kind="lib" path="ResourceJasper/joda-time-2.9.9.jar"/>
+	<classpathentry kind="lib" path="ResourceJasper/jstl-1.2.jar"/>
+	<classpathentry kind="lib" path="ResourceJasper/poi-4.1.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -10,4 +10,6 @@ public interface IInvoiceBUS {
 	public void Save(Invoice invoice);
 	public void Update(Invoice invoice);
 	public void Delete(int id);
+	public void printf(String id1);
+	public Invoice findOneByIdMedical(int id);
 }

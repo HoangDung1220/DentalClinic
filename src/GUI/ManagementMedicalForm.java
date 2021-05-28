@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.SystemColor;
@@ -22,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
 
 import BUS.implement.MedicalFormBUS;
 import BUS.implement.StaffBUS;
+import Constant.SystemConstant;
 import DTO.MedicalForm;
 
 import javax.swing.border.EtchedBorder;
@@ -62,7 +64,7 @@ public class ManagementMedicalForm extends JFrame {
 
 	
 	public ManagementMedicalForm() {
-		showTable(medicalForm.findAll());
+		showTable(medicalForm.findAll(SystemConstant.staff.getId()));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 780, 458);
 		contentPane = new JPanel();
@@ -72,6 +74,7 @@ public class ManagementMedicalForm extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton Create = new JButton("Create New Medical Form");
+		Create.setBackground(Color.WHITE);
 		Create.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				MedicalForm m = null;
@@ -80,12 +83,13 @@ public class ManagementMedicalForm extends JFrame {
 				dispose();
 			}
 		});
-		Create.setBounds(394, 22, 213, 26);
+		Create.setBounds(493, 22, 227, 26);
 		contentPane.add(Create);
 		Create.setFont(new Font("Tahoma", Font.BOLD, 12));
 		
-		JButton Exit = new JButton("Exit");
-		Exit.setBounds(630, 22, 126, 26);
+		JButton Exit = new JButton("");
+		Exit.setBounds(730, 22, 26, 26);
+		Exit.setIcon(new ImageIcon(SystemConstant.img_exit4));
 		contentPane.add(Exit);
 		Exit.setFont(new Font("Tahoma", Font.BOLD, 12));
 		
@@ -185,7 +189,7 @@ public class ManagementMedicalForm extends JFrame {
 		
 		for (MedicalForm i :list ) {
 			Object[] row = new Object[] {
-				i.getId(),i.getPatient().getFullname(),staff.findOne(i.getIdDoctor()).getFullname(),i.getDateCure()	
+				i.getId(),i.getPatient().getFullname(),staff.findOne(i.getIdDoctor()).getFullname(),i.getDateCure(),"Detail"	
 			};
 			defaultTable.addRow(row);
 		}

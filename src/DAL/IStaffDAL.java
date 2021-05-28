@@ -11,6 +11,7 @@ public interface IStaffDAL {
 	public void insert(Staff p);
 	public void update(Staff p);
 	public void delete(int id);
+	public Staff searchByUserNameAndPassword(String username,String password);
 	
 
 }

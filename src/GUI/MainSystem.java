@@ -1,39 +1,42 @@
 package GUI;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import Constant.SystemConstant;
-
-import javax.swing.JSplitPane;
-import javax.swing.JTextField;
-import java.awt.SystemColor;
-import javax.swing.JLabel;
-import java.awt.Font;
-import java.awt.Image;
-
-import javax.swing.ImageIcon;
-import javax.swing.UIManager;
 import java.awt.Color;
-import javax.swing.SwingConstants;
-import java.awt.Label;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.LineBorder;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+
+import Constant.SystemConstant;
+import DTO.Staff;
 
 public class MainSystem extends JFrame {
 
 	private JPanel contentPane;
 	private JLabel labelSetting = new JLabel("");
 	private PanelDanhMuc DanhMuc;
-	JPanel panel_1;
+	private PanelNghiepVu NghiepVu;
+	private PanelTaiKhoan TaiKhoan;
+	private PanelChangeAccount ChangeAccount;
+	private JLabel labelDanhmuc;
+	private JLabel labelCure;
+	private JLabel lableAccount;
 
+
+
+	
+	private JPanel panel_1;
+	private static Staff staff_main;
+	private JLabel lblNewLabel_1;
+	private JLabel lblNewLabel;
 
 
 
@@ -42,7 +45,7 @@ public class MainSystem extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainSystem frame = new MainSystem();
+					MainSystem frame = new MainSystem(staff_main);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -52,7 +55,8 @@ public class MainSystem extends JFrame {
 	}
 
 
-	public MainSystem() {
+	public MainSystem(Staff s) {
+		staff_main =s;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1025, 496);
 		contentPane = new JPanel();
@@ -61,15 +65,15 @@ public class MainSystem extends JFrame {
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(153, 204, 204));
-		panel.setBounds(0, 54, 250, 439);
+		panel.setBackground(SystemColor.activeCaption);
+		panel.setBounds(0, 54, 250, 405);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		DanhMuc = new PanelDanhMuc();
 		DanhMuc.setBounds(3, 1, 760, 404);
 		
-		JLabel labelDanhmuc = new JLabel("DANH M\u1EE4C");
+		labelDanhmuc = new JLabel("DANH M\u1EE4C");
 		labelDanhmuc.setForeground(new Color(240, 255, 240));
 		labelDanhmuc.setFont(new Font("Sitka Subheading", Font.BOLD, 17));
 		labelDanhmuc.setBounds(10, 31, 251, 37);
@@ -78,14 +82,25 @@ public class MainSystem extends JFrame {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				labelDanhmuc.setForeground(Color.yellow);
-				DanhMuc.setVisible(true);
+				clicked(DanhMuc,labelDanhmuc);
+
+
 			}
 			
 		});
 		panel.add(labelDanhmuc);
+		NghiepVu = new PanelNghiepVu();
+		NghiepVu.setBounds(3, 1, 760, 404);
 		
-		JLabel labelCure = new JLabel("NGHI\u1EC6P V\u1EE4 KH\u00C1M B\u1EC6NH");
+		labelCure = new JLabel("NGHI\u1EC6P V\u1EE4 KH\u00C1M B\u1EC6NH");
+		labelCure.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				clicked(NghiepVu,labelCure);
+				
+			}
+		});
 		labelCure.setForeground(new Color(240, 255, 240));
 		labelCure.setFont(new Font("Sitka Subheading", Font.BOLD, 17));
 		labelCure.setBounds(10, 78, 240, 37);
@@ -100,7 +115,15 @@ public class MainSystem extends JFrame {
 		labelStatistic.setIcon(new ImageIcon(SystemConstant.img_statistic));
 		panel.add(labelStatistic);
 		
-		JLabel lableAccount = new JLabel("Account");
+		TaiKhoan = new PanelTaiKhoan();
+		TaiKhoan.setBounds(3, 1, 760, 404);
+		lableAccount = new JLabel("Account");
+		lableAccount.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				clicked(TaiKhoan,lableAccount);
+			}
+		});
 		lableAccount.setForeground(new Color(240, 255, 240));
 		lableAccount.setFont(new Font("Sitka Subheading", Font.BOLD, 17));
 		lableAccount.setBounds(10, 172, 251, 37);
@@ -110,35 +133,40 @@ public class MainSystem extends JFrame {
 		JPanel viewsetting = new JPanel();
 		viewsetting.setBorder(new LineBorder(new Color(0, 0, 0)));
 		viewsetting.setBackground(new Color(153, 204, 204));
-		viewsetting.setBounds(10, 219, 149, 97);
+		viewsetting.setBounds(10, 219, 230, 97);
 		viewsetting.setEnabled(false);
 		viewsetting.setVisible(false);
 		panel.add(viewsetting);
 		viewsetting.setLayout(null);
 		
-		JLabel labelLogin = new JLabel("Login");
-		labelLogin.addMouseListener(new MouseAdapter() {
+		ChangeAccount = new PanelChangeAccount();
+		ChangeAccount.setBounds(3, 1, 760, 404);
+		lblNewLabel_1 = new JLabel("Change username and password");
+		lblNewLabel_1.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 13));
+		lblNewLabel_1.setBounds(10, 10, 210, 27);
+		lblNewLabel_1.addMouseListener(new MouseAdapter() {
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
-				Login login = new Login();
-				dispose();
-				login.setVisible(true);
-		}
+				DanhMuc.setVisible(false);
+				labelDanhmuc.setForeground(Color.white);
+				labelCure.setForeground(Color.white);
+				lableAccount.setForeground(Color.white);
+				NghiepVu.setVisible(false);
+				TaiKhoan.setVisible(false);
+				ChangeAccount.setVisible(true);
+			}
+			
 		});
-		labelLogin.setBounds(15, 10, 124, 27);
-		viewsetting.add(labelLogin);
-		labelLogin.setFont(new Font("Sitka Subheading", Font.BOLD, 14));
-		labelLogin.setIcon(new ImageIcon(SystemConstant.img_login));
+		viewsetting.add(lblNewLabel_1);
 		
-		JLabel labelExit = new JLabel("Exit");
-		labelExit.setBounds(15, 57, 126, 30);
-		viewsetting.add(labelExit);
-		labelExit.setFont(new Font("Sitka Subheading", Font.BOLD, 14));
-		labelExit.setIcon(new ImageIcon(SystemConstant.img_exit));
+		lblNewLabel = new JLabel("Log out");
+		lblNewLabel.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 13));
+		lblNewLabel.setBounds(10, 47, 113, 18);
+		viewsetting.add(lblNewLabel);
 		
 		JLabel set1 = new JLabel("");
-		set1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		set1.setBorder(null);
 		set1.setHorizontalAlignment(SwingConstants.CENTER);
 		set1.setBounds(10, 337, 80, 59);
 		set1.setIcon(new ImageIcon(SystemConstant.img_setting));
@@ -158,7 +186,6 @@ public class MainSystem extends JFrame {
 		});
 		panel.add(set1);
 		
-		//JLabel labelSetting = new JLabel("");
 		labelSetting.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -171,7 +198,7 @@ public class MainSystem extends JFrame {
 				
 			}
 		});
-		labelSetting.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		labelSetting.setBorder(null);
 		labelSetting.setHorizontalAlignment(SwingConstants.CENTER);
 		labelSetting.setBounds(10, 337, 80, 59);
 		labelSetting.setIcon(new ImageIcon(SystemConstant.img_setting));
@@ -184,23 +211,39 @@ public class MainSystem extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		panel_1.add(DanhMuc);
+		panel_1.add(NghiepVu);
+		panel_1.add(TaiKhoan);
+		panel_1.add(ChangeAccount);
 		DanhMuc.setVisible(false);
+		NghiepVu.setVisible(false);
+		TaiKhoan.setVisible(false);
+		ChangeAccount.setVisible(false);
 		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBorder(null);
-		panel_5.setBackground(new Color(153, 204, 204));
+		panel_5.setBackground(SystemColor.activeCaption);
 		panel_5.setBounds(0, 0, 1011, 55);
 		contentPane.add(panel_5);
 		panel_5.setLayout(null);
 		
-		Label label = new Label("New label");
-		label.setBounds(721, 10, 280, 36);
-		panel_5.add(label);
+		JLabel labelMain = new JLabel("");
+		labelMain.setFont(new Font("Berlin Sans FB Demi", Font.PLAIN, 14));
+		labelMain.setBounds(721, 10, 280, 36);
+		labelMain.setIcon(new ImageIcon(SystemConstant.img_login));
+		labelMain.setText("Welcome, "+SystemConstant.staff.getFullname());
+		
+		panel_5.add(labelMain);
 	}
 	
-	public void clicked(JPanel panel) {
+	public void clicked(JPanel panel,JLabel label) {
 		DanhMuc.setVisible(false);
-		panel_1.setVisible(false);
+		labelDanhmuc.setForeground(Color.white);
+		labelCure.setForeground(Color.white);
+		lableAccount.setForeground(Color.white);
+		NghiepVu.setVisible(false);
+		TaiKhoan.setVisible(false);
+		ChangeAccount.setVisible(false);
 		panel.setVisible(true);
+		label.setForeground(Color.cyan);
 	}
 }

@@ -1,6 +1,5 @@
 package GUI;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -17,6 +16,7 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -31,15 +31,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+
+import com.toedter.calendar.JDateChooser;
 
 import BUS.IPatientBUS;
 import BUS.implement.PatientBUS;
+import Constant.SystemConstant;
 import DTO.Patient;
-
-import com.toedter.calendar.JDateChooser;
 
 public class PatientRegistrationGui extends JFrame{
 	private static JPanel contentPane;
@@ -55,6 +54,7 @@ public class PatientRegistrationGui extends JFrame{
 	private static JButton btnNewButtonSearch,btnNewButtonSave,btnNewButtonUpdate,btnNewButtonDelete;
 	private static JRadioButton rdbtnNewRadioButtonMale, rdbtnNewRadioButtonFemale;
     private static JDateChooser dateChooser;
+    private JButton exit;
 	
 	public static void setColumn(Vector<String> v)
 	{
@@ -342,26 +342,35 @@ public class PatientRegistrationGui extends JFrame{
 		bg.add(rdbtnNewRadioButtonMale);
 		bg.add(rdbtnNewRadioButtonFemale);
 		
-	    btnNewButtonSave = new JButton("SAVE");
+	    btnNewButtonSave = new JButton("");
 		btnNewButtonSave.setFont(new Font("Sitka Small", Font.BOLD, 14));
-		btnNewButtonSave.setBounds(32, 305, 103, 33);
+		btnNewButtonSave.setBounds(32, 305, 40, 35);
+		btnNewButtonSave.setIcon(new ImageIcon(SystemConstant.img_save1));
 		panel_1.add(btnNewButtonSave);
 		
-	    btnNewButtonUpdate = new JButton("UPDATE");
+	    btnNewButtonUpdate = new JButton("");
 		btnNewButtonUpdate.setFont(new Font("Sitka Small", Font.BOLD, 14));
-		btnNewButtonUpdate.setBounds(221, 305, 103, 33);
+		btnNewButtonUpdate.setBounds(94, 305, 40, 35);
+		btnNewButtonUpdate.setIcon(new ImageIcon(SystemConstant.img_edit1));
 		panel_1.add(btnNewButtonUpdate);
 		
-		 btnNewButtonDelete = new JButton("DELETE");
+		 btnNewButtonDelete = new JButton("");
 		
 		btnNewButtonDelete.setFont(new Font("Sitka Small", Font.BOLD, 14));
-		btnNewButtonDelete.setBounds(395, 305, 103, 33);
+		btnNewButtonDelete.setBounds(167, 305, 40, 35);
+		btnNewButtonDelete.setIcon(new ImageIcon(SystemConstant.img_delete));
 	//	btnNewButtonDelete.addActionListener(this);
 		panel_1.add(btnNewButtonDelete);
 		
 		dateChooser = new JDateChooser();
 		dateChooser.setBounds(384, 81, 153, 25);
 		panel_1.add(dateChooser);
+		
+		exit = new JButton("");
+		exit.setFont(new Font("Sitka Small", Font.BOLD, 14));
+		exit.setIcon(new ImageIcon(SystemConstant.img_exit2));
+		exit.setBounds(233, 305, 40, 35);
+		panel_1.add(exit);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "DANH S\u00C1CH B\u1EC6NH NH\u00C2N ", TitledBorder.LEADING, TitledBorder.TOP, null, SystemColor.textInactiveText));
