@@ -28,7 +28,6 @@ import BUS.implement.MedicalFormBUS;
 import BUS.implement.PrescriptionBUS;
 import Checked.AutoID;
 import Constant.SystemConstant;
-import DAL.implement.InvoiceDAL;
 import DTO.DetailService;
 import DTO.Invoice;
 import DTO.MedicalForm;
@@ -55,6 +54,8 @@ public class ManagementInvoice extends JFrame {
 	private JLabel lbTotalService = new JLabel("");
 	private JLabel TotalPrice = new JLabel("");
 	private JLabel lbID = new JLabel("");
+	private JButton btnNewButton_1 ;
+
 
 	private InvoiceBUS invoiceExecute = new InvoiceBUS();
 
@@ -77,7 +78,7 @@ public class ManagementInvoice extends JFrame {
 	public ManagementInvoice() {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1041, 617);
+		setBounds(100, 100, 1041, 543);
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.activeCaption);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -116,7 +117,7 @@ public class ManagementInvoice extends JFrame {
 		panel.add(lbDate);
 		
 		lbStaff = new JLabel("");
-		lbStaff.setBounds(134, 147, 120, 17);
+		lbStaff.setBounds(134, 147, 184, 17);
 		lbStaff.setForeground(Color.white);
 		panel.add(lbStaff);
 		
@@ -153,19 +154,19 @@ public class ManagementInvoice extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(SystemColor.activeCaption);
 		panel_1.setBorder(new TitledBorder(null, "Th\u00F4ng tin d\u1ECBch v\u1EE5 v\u00E0 thu\u1ED1c", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(384, 214, 633, 212);
+		panel_1.setBounds(10, 214, 1007, 135);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 20, 613, 86);
+		scrollPane.setBounds(10, 20, 475, 105);
 		panel_1.add(scrollPane);
 		
 		table_service = new JTable(defaultTableService);
 		scrollPane.setViewportView(table_service);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(10, 119, 613, 83);
+		scrollPane_1.setBounds(496, 20, 501, 105);
 		panel_1.add(scrollPane_1);
 		
 		table_medicine = new JTable(defaultTableMedicine);
@@ -174,7 +175,7 @@ public class ManagementInvoice extends JFrame {
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(null, "T\u00ECm ki\u1EBFm ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_2.setBackground(SystemColor.activeCaption);
-		panel_2.setBounds(10, 23, 362, 547);
+		panel_2.setBounds(10, 23, 362, 181);
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 		
@@ -188,28 +189,21 @@ public class ManagementInvoice extends JFrame {
 		panel_2.add(textIDMedical);
 		textIDMedical.setColumns(10);
 		
-		JScrollPane scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(10, 90, 342, 430);
-		panel_2.add(scrollPane_2);
-		
-		JPanel panel_4 = new JPanel();
-		scrollPane_2.setViewportView(panel_4);
-		
-		JButton btnNewButton_3 = new JButton("");
-		btnNewButton_3.setIcon(new ImageIcon(SystemConstant.img_add));
-		btnNewButton_3.addActionListener(new ActionListener() {
+		JButton search = new JButton("");
+		search.setIcon(new ImageIcon(SystemConstant.img_add));
+		search.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setGui(Integer.parseInt(textIDMedical.getText()));
 			}
 		});
-		btnNewButton_3.setFont(new Font("Tahoma", Font.BOLD, 9));
-		btnNewButton_3.setBounds(310, 43, 42, 21);
-		panel_2.add(btnNewButton_3);
+		search.setFont(new Font("Tahoma", Font.BOLD, 9));
+		search.setBounds(310, 43, 42, 21);
+		panel_2.add(search);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(SystemColor.activeCaption);
 		panel_3.setBorder(new TitledBorder(null, "S\u1EF1 ki\u1EC7n c\u1EE7a h\u00F3a \u0111\u01A1n", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_3.setBounds(384, 440, 633, 130);
+		panel_3.setBounds(10, 359, 996, 130);
 		contentPane.add(panel_3);
 		panel_3.setLayout(null);
 		
@@ -222,7 +216,67 @@ public class ManagementInvoice extends JFrame {
 		lbTotalMedicine.setForeground(Color.white);
 		panel_3.add(lbTotalMedicine);
 		
-		JButton btnNewButton = new JButton("Create new invoice");
+		btnNewButton_1 = new JButton("");
+		btnNewButton_1.setToolTipText("Save Data");
+		btnNewButton_1.setIcon(new ImageIcon(SystemConstant.img_save));
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Invoice inv = getGui();
+				invoiceExecute.Save(inv);
+				JOptionPane.showMessageDialog(null, "save data successful");
+				
+			}
+		});
+		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnNewButton_1.setBounds(820, 85, 40, 35);
+		panel_3.add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("");
+		btnNewButton_2.setToolTipText("Print Invoice");
+		btnNewButton_2.setIcon(new ImageIcon(SystemConstant.img_print));
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				invoiceExecute.printf(lbID.getText());
+			}
+		});
+		btnNewButton_2.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnNewButton_2.setBounds(884, 85, 40, 35);
+		panel_3.add(btnNewButton_2);
+		
+		JLabel lblNewLabel_11 = new JLabel("Total_Price_Service");
+		lblNewLabel_11.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel_11.setBounds(10, 64, 155, 13);
+		panel_3.add(lblNewLabel_11);
+		
+		lbTotalService.setBounds(196, 65, 143, 13);
+		lbTotalService.setForeground(Color.white);
+		panel_3.add(lbTotalService);
+		
+		JLabel lblNewLabel_13 = new JLabel("Total_Price");
+		lblNewLabel_13.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel_13.setBounds(10, 104, 85, 13);
+		panel_3.add(lblNewLabel_13);
+		
+		TotalPrice.setBounds(196, 99, 107, 13);
+		TotalPrice.setForeground(Color.red);
+		panel_3.add(TotalPrice);
+		
+		JButton btnNewButton_4 = new JButton("");
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
+		btnNewButton_4.setToolTipText("Exit");
+		btnNewButton_4.setIcon(new ImageIcon(SystemConstant.img_exit3));
+		btnNewButton_4.setBounds(946, 85, 40, 35);
+		panel_3.add(btnNewButton_4);
+		
+		JButton btnNewButton = new JButton("");
+		btnNewButton.setToolTipText("Create New Invoice");
+		btnNewButton.setBounds(755, 85, 40, 35);
+		btnNewButton.setIcon(new ImageIcon(SystemConstant.img_new));
+		panel_3.add(btnNewButton);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				textIDMedical.setText("");
@@ -238,49 +292,6 @@ public class ManagementInvoice extends JFrame {
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnNewButton.setBounds(27, 99, 176, 21);
-		panel_3.add(btnNewButton);
-		
-		JButton btnNewButton_1 = new JButton("Save");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Invoice inv = getGui();
-				invoiceExecute.Save(inv);
-				JOptionPane.showMessageDialog(null, "save data successful");
-				
-			}
-		});
-		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnNewButton_1.setBounds(409, 99, 107, 21);
-		panel_3.add(btnNewButton_1);
-		
-		JButton btnNewButton_2 = new JButton("Print");
-		btnNewButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				invoiceExecute.printf(lbID.getText());
-			}
-		});
-		btnNewButton_2.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnNewButton_2.setBounds(538, 99, 85, 21);
-		panel_3.add(btnNewButton_2);
-		
-		JLabel lblNewLabel_11 = new JLabel("Total_Price_Service");
-		lblNewLabel_11.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblNewLabel_11.setBounds(10, 64, 155, 13);
-		panel_3.add(lblNewLabel_11);
-		
-		lbTotalService.setBounds(196, 65, 143, 13);
-		lbTotalService.setForeground(Color.white);
-		panel_3.add(lbTotalService);
-		
-		JLabel lblNewLabel_13 = new JLabel("Total_Price");
-		lblNewLabel_13.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblNewLabel_13.setBounds(365, 33, 85, 13);
-		panel_3.add(lblNewLabel_13);
-		
-		TotalPrice.setBounds(471, 33, 107, 13);
-		TotalPrice.setForeground(Color.red);
-		panel_3.add(TotalPrice);
 		
 		Timestamp time = new Timestamp(System.currentTimeMillis());
 		lbDate.setText(String.valueOf(time));
@@ -290,6 +301,7 @@ public class ManagementInvoice extends JFrame {
 		
 		
 	}
+	
 	
 	public void showTableMedicine(int idForm) {
 		double s_price =0;
@@ -329,8 +341,8 @@ public class ManagementInvoice extends JFrame {
 	}
 	
 	public void setGui(int idForm) {
-		Invoice in = invoiceExecute.findOneByIdMedical(idForm);
-		if (in == null) {
+		
+		lbStaff.setText(SystemConstant.staff.getFullname());
 			
 		MedicalForm m = medicalForm.findOne(idForm);
 		
@@ -339,24 +351,13 @@ public class ManagementInvoice extends JFrame {
 		lbPhone.setText(m.getPatient().getPhone());
 		String st = AutoID.CreateAutoID(m.getIdPatient());
 		lbID.setText(st);
-	
+		Timestamp time = new Timestamp(System.currentTimeMillis());
+		lbDate.setText(String.valueOf(time));	
 		showTableMedicine(idForm);
 		showTable1(idForm);
 		double price = Double.parseDouble(lbTotalMedicine.getText())+Double.parseDouble(lbTotalService.getText());
 		TotalPrice.setText(String.valueOf(price));
-		} else 
-		{
-			MedicalForm m = medicalForm.findOne(idForm);
-
-			lbNamePatient.setText(m.getPatient().getFullname());
-			lbAddress.setText(m.getPatient().getAddress());
-			lbPhone.setText(m.getPatient().getPhone());
-			lbID.setText(in.getId());
-			showTableMedicine(idForm);
-			showTable1(idForm);
-			double price = Double.parseDouble(lbTotalMedicine.getText())+Double.parseDouble(lbTotalService.getText());
-			TotalPrice.setText(String.valueOf(price));
-		}
+		
 	}
 	
 	public Invoice getGui() {

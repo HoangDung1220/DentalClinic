@@ -44,4 +44,20 @@ public class PatientBUS implements IPatientBUS{
 		return patient.findOne(id);
 	}
 
+	@Override
+	public List<Patient> searchByNameAndIcard(String name, String icard) {
+		return patient.searchByNameAndIcard(name,icard);
+	}
+
+	@Override
+	public List<Patient> searchByName(String fullname) {
+		return patient.searchByName(fullname);
+	}
+
+	@Override
+	public List<Patient> searchByIcard(String icard) {
+		// TODO Auto-generated method stub
+		return patient.searchByIcard(icard);
+	}
+
 }

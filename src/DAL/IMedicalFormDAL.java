@@ -7,6 +7,7 @@ import DTO.MedicalForm;
 
 public interface IMedicalFormDAL {
 	public List<MedicalForm> findAll(int id_staff);
+	public List<MedicalForm> findAll1();
 	public MedicalForm findOne(int id);
 	public int insert(MedicalForm p);
 	public void update(MedicalForm p);

@@ -3,6 +3,8 @@ package Mapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
+
 import DTO.Invoice;
 import DTO.Staff;
 
@@ -28,7 +30,7 @@ public class InvoiceMapper implements RowMapper<Invoice> {
 				
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "loi");
 		}
 		return invoice;
 	}

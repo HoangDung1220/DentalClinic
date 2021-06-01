@@ -23,7 +23,6 @@ import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
-import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -38,7 +37,6 @@ import DTO.MedicalForm;
 import DTO.Patient;
 import DTO.Prescription;
 import DTO.Staff;
-import javax.swing.UIManager;
 
 public class CreateMedicalForm extends JFrame {
 
@@ -356,14 +354,14 @@ public class CreateMedicalForm extends JFrame {
 					if (res!= JOptionPane.YES_OPTION) {
 						return ;
 					
-				}
+				} else dispose();
 					
 				} else 
 				{
 					int res=JOptionPane.showConfirmDialog(null, "Data is not saved, you still exit ","confirm", JOptionPane.YES_NO_OPTION);
 					if (res!= JOptionPane.YES_OPTION) {
 						return ;
-					} 
+					} else dispose(); 
 				}
 				}
 			

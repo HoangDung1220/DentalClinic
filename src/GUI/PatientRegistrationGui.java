@@ -55,6 +55,7 @@ public class PatientRegistrationGui extends JFrame{
 	private static JRadioButton rdbtnNewRadioButtonMale, rdbtnNewRadioButtonFemale;
     private static JDateChooser dateChooser;
     private JButton exit;
+    private PatientBUS patientExecute = new PatientBUS();
 	
 	public static void setColumn(Vector<String> v)
 	{
@@ -248,6 +249,18 @@ public class PatientRegistrationGui extends JFrame{
 		panel.add(scrollPane);
 		
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int index = table.getSelectedRow();
+				int id = Integer.parseInt(table.getValueAt(index, 0).toString());
+				Patient p = patientExecute.findOne(id);
+				getGui(p);
+				
+			}
+			
+		});
 		scrollPane.setViewportView(table);
 		
 		JPanel panel_1 = new JPanel();
@@ -263,6 +276,7 @@ public class PatientRegistrationGui extends JFrame{
 		panel_1.add(lblNewLabel_2);
 		
 		textFieldID = new JTextField();
+		textFieldID.setOpaque(false);
 		textFieldID.setEnabled(false);
 		textFieldID.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		textFieldID.setBounds(94, 29, 154, 25);
@@ -329,6 +343,7 @@ public class PatientRegistrationGui extends JFrame{
 		rdbtnNewRadioButtonMale.setFont(new Font("Sitka Small", Font.PLAIN, 13));
 		rdbtnNewRadioButtonMale.setBackground(SystemColor.activeCaption);
 		rdbtnNewRadioButtonMale.setBounds(281, 158, 70, 21);
+		rdbtnNewRadioButtonMale.setSelected(true);
 		panel_1.add(rdbtnNewRadioButtonMale);
 		
 		
@@ -367,6 +382,11 @@ public class PatientRegistrationGui extends JFrame{
 		panel_1.add(dateChooser);
 		
 		exit = new JButton("");
+		exit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
 		exit.setFont(new Font("Sitka Small", Font.BOLD, 14));
 		exit.setIcon(new ImageIcon(SystemConstant.img_exit2));
 		exit.setBounds(233, 305, 40, 35);
@@ -384,6 +404,20 @@ public class PatientRegistrationGui extends JFrame{
 		panel_2.add(scrollPane_1);
 		
 		table_1 = new JTable();
+		table_1.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int index = table_1.getSelectedRow();
+				int id = Integer.parseInt(table_1.getValueAt(index, 0).toString());
+				Patient p = patientExecute.findOne(id);
+				getGui(p);
+				
+			}
+			
+		});
+		
+		
 		scrollPane_1.setViewportView(table_1);
 		
 //Search		
@@ -422,7 +456,11 @@ public class PatientRegistrationGui extends JFrame{
 
 					
 						Patient p=(Patient)list.get(SelectedRowIndex);
-						patient.delete(p.getId());
+						int res=JOptionPane.showConfirmDialog(null, "You sure delete data ","confirm", JOptionPane.YES_NO_OPTION);
+						if (res!= JOptionPane.YES_OPTION) {
+							return ;
+						}  else 
+							patient.delete(p.getId());
 						table_1.setModel(showDataToTable("",""));
 			}
 	    });
@@ -447,7 +485,7 @@ public class PatientRegistrationGui extends JFrame{
 				Patient p=(Patient)list.get(index);
 				getData(p);
 			    patient.update(p);
-				
+				JOptionPane.showMessageDialog(null, "You update data successful");
 
 				table_1.setModel(showDataToTable("",""));
 				
@@ -474,6 +512,15 @@ public static void main(String[] args) {
 	});
 	
 	
+}
+
+public void getGui(Patient patient) {
+	textFieldID.setText(String.valueOf(patient.getId()));
+	textFieldFullName.setText(patient.getFullname());
+	textFieldICard.setText(patient.getiCard());
+	textFieldAddress.setText(patient.getAddress());
+	textFieldPhone.setText(patient.getPhone());
+	dateChooser.setDate(patient.getBirthday());
 }
 }
 	

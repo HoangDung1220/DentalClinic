@@ -12,13 +12,13 @@ public class InvoiceBUS implements IInvoiceBUS {
 	@Override
 	public List<Invoice> findAll() {
 		// TODO Auto-generated method stub
-		return null;
+		return invoice.findAll();
 	}
 
 	@Override
-	public Invoice findOne(int id) {
+	public Invoice findOne(String id) {
 		// TODO Auto-generated method stub
-		return null;
+		return invoice.findOne(id);
 	}
 
 	@Override
@@ -48,4 +48,5 @@ public class InvoiceBUS implements IInvoiceBUS {
 		return invoice.fidOneByIdMedical(id);
 	}
 
+	
 }

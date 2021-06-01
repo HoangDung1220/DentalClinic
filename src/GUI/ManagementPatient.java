@@ -33,7 +33,8 @@ package GUI;
 
 	import BUS.IPatientBUS;
 	import BUS.implement.PatientBUS;
-	import DTO.Patient;
+import Constant.SystemConstant;
+import DTO.Patient;
 
 	import com.toedter.calendar.JDateChooser;
 
@@ -349,9 +350,9 @@ package GUI;
 					p.setPhone( textFieldPhone.getText());
 					p.setAddress(textFieldAddress.getText());
 					p.setiCard(textFieldICard.getText());
-					p.setCreatedBy("HBB");
+					p.setCreatedBy(SystemConstant.staff.getFullname());
 					p.setCreatedDate(new Timestamp(System.currentTimeMillis()));
-					p.setModifiedBy("HBB");
+					p.setModifiedBy(SystemConstant.staff.getFullname());
 					p.setModifiedDate(new Timestamp(System.currentTimeMillis()));
 					patient.insert(p);
 

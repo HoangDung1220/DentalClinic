@@ -19,12 +19,12 @@ public class InvoiceDAL extends AbstractDAL<Invoice> implements IInvoiceDAL {
 
 	@Override
 	public List<Invoice> findAll() {
-		String st ="select *from invoice inner join staff on invoice.id_staff = staff.id";
-		return query(st,new InvoiceMapper());
+		StringBuilder st = new StringBuilder("SELECT *FROM invoice inner join staff ON invoice.id_staff = staff.id ");
+		return query(st.toString(),new InvoiceMapper());
 	}
 
 	@Override
-	public Invoice findOne(int id) {
+	public Invoice findOne(String id) {
 		String st ="select *from invoice inner join staff on invoice.id_staff = staff.id where invoice.id=?";
 		List<Invoice> list = query(st,new InvoiceMapper(),id);
 		return list.isEmpty()?null:list.get(0);
@@ -77,7 +77,10 @@ public class InvoiceDAL extends AbstractDAL<Invoice> implements IInvoiceDAL {
 		List<Invoice> list = query(st.toString(),new InvoiceMapper(),id);
 		return list.isEmpty()?null:list.get(0);
 	}
-		
+
+	
+
+
 	
 
 }

@@ -136,7 +136,7 @@ public class ManagementStaff extends JFrame {
 		Search.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		Search.setFont(new Font("Tahoma", Font.BOLD, 14));
 		Search.setBounds(140, 191, 35, 35);
-		Search.setIcon(new ImageIcon(SystemConstant.img_search));
+		Search.setIcon(new ImageIcon(SystemConstant.img_search1));
 		panel.add(Search);
 		
 		JPanel panel_1 = new JPanel();
@@ -152,6 +152,8 @@ public class ManagementStaff extends JFrame {
 		panel_1.add(lblNewLabel_2);
 		
 		txtID = new JTextField();
+		txtID.setEditable(false);
+		txtID.setOpaque(false);
 		txtID.setBounds(113, 29, 156, 19);
 		panel_1.add(txtID);
 		txtID.setColumns(10);

@@ -127,6 +127,13 @@ public class PanelDanhMuc extends JPanel {
 		panel_4.setLayout(null);
 		
 		JLabel img5 = new JLabel("");
+		img5.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				InvoiceDanhMuc frame = new InvoiceDanhMuc();
+				frame.setVisible(true);
+			}
+		});
 		img5.setHorizontalAlignment(SwingConstants.CENTER);
 		img5.setBounds(10, 8, 125, 100);
 		img5.setIcon(new ImageIcon(SystemConstant.img_invoice));
@@ -142,7 +149,7 @@ public class PanelDanhMuc extends JPanel {
 		panel_5.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				PatientRegistrationGui frame = new PatientRegistrationGui();
+				PatientDanhMuc frame = new PatientDanhMuc();
 				frame.setVisible(true);
 				
 			}

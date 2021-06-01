@@ -11,6 +11,8 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -27,12 +29,15 @@ import Constant.SystemConstant;
 import DTO.MedicalForm;
 
 import javax.swing.border.EtchedBorder;
+
+import java.awt.Button;
 import java.awt.Color;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import com.toedter.calendar.JDateChooser;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.border.BevelBorder;
 
 public class ManagementMedicalForm extends JFrame {
 
@@ -42,11 +47,12 @@ public class ManagementMedicalForm extends JFrame {
 	private JCheckBox checkName ;
 	private JCheckBox checkDate ;
 	private StaffBUS staff = new StaffBUS();
-
+	
 
 	MedicalFormBUS medicalForm = new MedicalFormBUS();
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     DefaultTableModel defaultTable = new DefaultTableModel();
+    private JTextField lbDetail;
 
 	
 	public static void main(String[] args) {
@@ -66,7 +72,7 @@ public class ManagementMedicalForm extends JFrame {
 	public ManagementMedicalForm() {
 		showTable(medicalForm.findAll(SystemConstant.staff.getId()));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 780, 458);
+		setBounds(100, 100, 780, 488);
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.activeCaption);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -88,6 +94,11 @@ public class ManagementMedicalForm extends JFrame {
 		Create.setFont(new Font("Tahoma", Font.BOLD, 12));
 		
 		JButton Exit = new JButton("");
+		Exit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
 		Exit.setBounds(730, 22, 26, 26);
 		Exit.setIcon(new ImageIcon(SystemConstant.img_exit4));
 		contentPane.add(Exit);
@@ -120,7 +131,7 @@ public class ManagementMedicalForm extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setBackground(SystemColor.activeCaption);
 		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Danh s\u00E1ch Medical_Form", TitledBorder.LEADING, TitledBorder.TOP, null, Color.YELLOW));
-		panel.setBounds(10, 147, 746, 264);
+		panel.setBounds(10, 147, 746, 294);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -129,7 +140,35 @@ public class ManagementMedicalForm extends JFrame {
 		panel.add(scrollPane);
 		
 		table = new JTable(defaultTable);
+		table.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int index = table.getSelectedRow();
+				int id = Integer.parseInt(table.getValueAt(index, 0).toString());
+				lbDetail.setText(String.valueOf(id));
+			}
+			
+		});
+		
 		scrollPane.setViewportView(table);
+		
+		lbDetail = new JTextField();
+		lbDetail.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		lbDetail.setOpaque(false);
+		lbDetail.setBounds(496, 265, 96, 19);
+		panel.add(lbDetail);
+		lbDetail.setColumns(10);
+		
+		JButton btnNewButton = new JButton("Detail");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				CreateMedicalFormManagements frame1 = new CreateMedicalFormManagements(medicalForm.findOne(Integer.parseInt(lbDetail.getText())));
+				frame1.setVisible(true);
+			}
+		});
+		btnNewButton.setBounds(625, 264, 85, 21);
+		panel.add(btnNewButton);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setFont(new Font("Tahoma", Font.ITALIC, 10));
@@ -189,11 +228,10 @@ public class ManagementMedicalForm extends JFrame {
 		
 		for (MedicalForm i :list ) {
 			Object[] row = new Object[] {
-				i.getId(),i.getPatient().getFullname(),staff.findOne(i.getIdDoctor()).getFullname(),i.getDateCure(),"Detail"	
+				i.getId(),i.getPatient().getFullname(),staff.findOne(i.getIdDoctor()).getFullname(),i.getDateCure()
 			};
 			defaultTable.addRow(row);
+			
 		}
 	}
-	
-
 }

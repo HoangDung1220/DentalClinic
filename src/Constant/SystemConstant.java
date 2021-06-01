@@ -61,7 +61,7 @@ public class SystemConstant {
 	public static final Image img_edit1 = new ImageIcon(ManagementService.class.getResource("/icon_project/edit_icon.jpg")).getImage().getScaledInstance(40, 35, Image.SCALE_SMOOTH);
 	public static final Image img_delete1= new ImageIcon(ManagementService.class.getResource("/icon_project/delete_icon.jpg")).getImage().getScaledInstance(40, 35, Image.SCALE_SMOOTH);
 	public static final Image img_exit3 = new ImageIcon(ManagementService.class.getResource("/icon_project/exit1_icon.jpg")).getImage().getScaledInstance(40, 35, Image.SCALE_SMOOTH);
-	public static final Image img_search1 = new ImageIcon(ManagementService.class.getResource("/icon_project/search.png")).getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
+	public static final Image img_search1 = new ImageIcon(ManagementService.class.getResource("/icon_project/search_icon.png")).getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
 
 	public static final Image img_create = new ImageIcon(ManagementService.class.getResource("/icon_project/create1_icon.png")).getImage().getScaledInstance(26, 22, Image.SCALE_SMOOTH);
 	public static final Image img_exit4 = new ImageIcon(ManagementService.class.getResource("/icon_project/exit1_icon.jpg")).getImage().getScaledInstance(26, 26, Image.SCALE_SMOOTH);
@@ -74,5 +74,11 @@ public class SystemConstant {
 	
 	public static final Image img_loginfirst = new ImageIcon(MainSystem.class.getResource("/icon_project/main_icon.jpg")).getImage().getScaledInstance(600,143, Image.SCALE_SMOOTH);
 	public static final Image img_edit2 = new ImageIcon(ManagementService.class.getResource("/icon_project/edit1_icon.png")).getImage().getScaledInstance(50, 25, Image.SCALE_SMOOTH);
+	public static final Image img_print = new ImageIcon(PanelDanhMuc.class.getResource("/icon_project/print_icon.png")).getImage().getScaledInstance(40, 35, Image.SCALE_SMOOTH);
+	public static final Image img_new = new ImageIcon(PanelDanhMuc.class.getResource("/icon_project/new_icon.png")).getImage().getScaledInstance(40, 35, Image.SCALE_SMOOTH);
+
+	public static final Image img_patient_statistic = new ImageIcon(PanelDanhMuc.class.getResource("/icon_project/patient_statistic_icon.png")).getImage().getScaledInstance(162, 116, Image.SCALE_SMOOTH);
+	public static final Image img_invoice_statistic = new ImageIcon(PanelDanhMuc.class.getResource("/icon_project/invoice_statistic_icon.jpg")).getImage().getScaledInstance(162, 116, Image.SCALE_SMOOTH);
+	public static final Image img_detail = new ImageIcon(PanelDanhMuc.class.getResource("/icon_project/detail_icon.png")).getImage().getScaledInstance(40, 35, Image.SCALE_SMOOTH);
 
 }

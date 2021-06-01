@@ -140,7 +140,8 @@ public class ManagementMedicine extends JFrame {
 		panel_1.add(lblNewLabel_2);
 		
 		txtID = new JTextField();
-		txtID.setEnabled(false);
+		txtID.setEditable(false);
+		txtID.setOpaque(false);
 		txtID.setBounds(154, 39, 160, 19);
 		
 		panel_1.add(txtID);

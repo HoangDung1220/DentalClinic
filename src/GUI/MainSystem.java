@@ -25,10 +25,13 @@ public class MainSystem extends JFrame {
 	private PanelDanhMuc DanhMuc;
 	private PanelNghiepVu NghiepVu;
 	private PanelTaiKhoan TaiKhoan;
+	private PanelStatistic ThongKe;
 	private PanelChangeAccount ChangeAccount;
 	private JLabel labelDanhmuc;
 	private JLabel labelCure;
 	private JLabel lableAccount;
+	private JLabel labelStatistic;
+
 
 
 
@@ -107,8 +110,16 @@ public class MainSystem extends JFrame {
 		labelCure.setIcon(new ImageIcon(SystemConstant.img_cure));
 
 		panel.add(labelCure);
-		
-		JLabel labelStatistic = new JLabel("TH\u1ED0NG K\u00CA");
+		ThongKe = new PanelStatistic();
+		ThongKe.setBounds(3, 1, 760, 404);
+		labelStatistic = new JLabel("TH\u1ED0NG K\u00CA");
+		labelStatistic.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				clicked(ThongKe,labelStatistic);
+
+			}
+		});
 		labelStatistic.setForeground(new Color(240, 255, 240));
 		labelStatistic.setFont(new Font("Sitka Subheading", Font.BOLD, 17));
 		labelStatistic.setBounds(10, 125, 251, 37);
@@ -214,11 +225,12 @@ public class MainSystem extends JFrame {
 		panel_1.add(NghiepVu);
 		panel_1.add(TaiKhoan);
 		panel_1.add(ChangeAccount);
+		panel_1.add(ThongKe);
 		DanhMuc.setVisible(false);
 		NghiepVu.setVisible(false);
 		TaiKhoan.setVisible(false);
 		ChangeAccount.setVisible(false);
-		
+		ThongKe.setVisible(false);
 		JPanel panel_5 = new JPanel();
 		panel_5.setBorder(null);
 		panel_5.setBackground(SystemColor.activeCaption);
@@ -240,9 +252,11 @@ public class MainSystem extends JFrame {
 		labelDanhmuc.setForeground(Color.white);
 		labelCure.setForeground(Color.white);
 		lableAccount.setForeground(Color.white);
+		labelStatistic.setForeground(Color.white);
 		NghiepVu.setVisible(false);
 		TaiKhoan.setVisible(false);
 		ChangeAccount.setVisible(false);
+		ThongKe.setVisible(false);
 		panel.setVisible(true);
 		label.setForeground(Color.cyan);
 	}

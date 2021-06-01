@@ -45,4 +45,23 @@ public class PatientDAL extends AbstractDAL<Patient> implements IPatientDAL{
 	    return list.isEmpty()?null:list.get(0);
 	}
 
+	
+	@Override
+	public List<Patient> searchByNameAndIcard(String fullname, String icard) {
+		String st = "select * from patient where fullname = ? and icard = ?";
+		return query(st, new PatientMapper(), fullname, icard);
+	}
+
+	@Override
+	public List<Patient> searchByName(String fullname) {
+		String st = "select * from patient where fullname = ?";
+		 return query(st, new PatientMapper(), fullname);
+	}
+
+	@Override
+	public List<Patient> searchByIcard(String icard) {
+		String st = "select * from patient where icard = ?";
+		return query(st, new PatientMapper(), icard);
+	}
+	
 }

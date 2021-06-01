@@ -48,4 +48,9 @@ public class MedicalFormBUS implements IMedicalFormBUS{
 		return form.searchByIDPatient(id);
 	}
 
+	@Override
+	public List<MedicalForm> findAll1() {
+		return form.findAll1();
+	}
+
 }

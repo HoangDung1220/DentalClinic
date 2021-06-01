@@ -10,5 +10,7 @@ public interface IPatientBUS {
 	public int insert(Patient p);
 	public void update(Patient p);
 	public void delete(int id);
-
+	public List<Patient> searchByNameAndIcard(String fullname, String icard);
+	public List<Patient> searchByName(String fullname);
+	public List<Patient> searchByIcard(String icard);
 }

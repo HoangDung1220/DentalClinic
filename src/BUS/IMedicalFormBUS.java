@@ -13,6 +13,8 @@ public interface IMedicalFormBUS {
 	public void delete(int id);
 	public List<MedicalForm> search(boolean isName,boolean isDate, String name,Date date);
 	public List<MedicalForm> searchByIDPatient(int id);
+	public List<MedicalForm> findAll1();
+
 
 
 }

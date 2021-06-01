@@ -6,7 +6,7 @@ import DTO.Invoice;
 
 public interface IInvoiceDAL {
 	public List<Invoice> findAll();
-	public Invoice findOne(int id);
+	public Invoice findOne(String id);
 	public void Save(Invoice invoice);
 	public void Update(Invoice invoice);
 	public void Delete(int id);

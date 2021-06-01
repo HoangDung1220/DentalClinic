@@ -70,4 +70,11 @@ public class MedicalFormDAL extends AbstractDAL<MedicalForm> implements IMedical
 		return query(st.toString(),new MedicalFormMapper(),id);
 	}
 
+	@Override
+	public List<MedicalForm> findAll1() {
+		StringBuilder st =new StringBuilder("select *from medical_form inner join patient on medical_form.id_patient=patient.id ");
+		st.append("inner join staff on medical_form.id_doctor=staff.id");
+		return query(st.toString(),new MedicalFormMapper());
+	}
+
 }
