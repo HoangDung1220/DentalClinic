@@ -19,8 +19,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
@@ -34,7 +32,6 @@ import BUS.implement.StaffBUS;
 import Constant.SystemConstant;
 import DTO.DetailService;
 import DTO.MedicalForm;
-import DTO.Patient;
 import DTO.Prescription;
 import DTO.Staff;
 
@@ -93,58 +90,60 @@ public class CreateMedicalFormManagements extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Th\u00F4ng tin kh\u00E1m", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_1.setBackground(SystemColor.activeCaption);
-		panel_1.setBounds(20, 78, 980, 197);
+		panel_1.setBounds(20, 78, 980, 155);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
 		JLabel lblNewLabel_3 = new JLabel("IDPatient :");
-		lblNewLabel_3.setFont(new Font("Segoe UI Black", Font.BOLD, 12));
-		lblNewLabel_3.setBounds(25, 26, 71, 13);
+		lblNewLabel_3.setFont(new Font("Segoe UI Black", Font.BOLD, 13));
+		lblNewLabel_3.setBounds(25, 26, 71, 24);
 		panel_1.add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel("Name_Patient :");
 		lblNewLabel_4.setFont(new Font("Segoe UI Black", Font.BOLD, 13));
-		lblNewLabel_4.setBounds(25, 72, 114, 13);
+		lblNewLabel_4.setBounds(25, 72, 114, 24);
 		panel_1.add(lblNewLabel_4);
 		
 		JLabel lblNewLabel_7 = new JLabel("StatusBeforeCure :");
 		lblNewLabel_7.setFont(new Font("Segoe UI Black", Font.BOLD, 13));
-		lblNewLabel_7.setBounds(25, 109, 137, 24);
+		lblNewLabel_7.setBounds(25, 109, 137, 38);
 		panel_1.add(lblNewLabel_7);
 		
 		txtbefore = new JTextArea();
+		txtbefore.setForeground(Color.WHITE);
 		txtbefore.setEditable(false);
 		txtbefore.setOpaque(false);
 		txtbefore.setBorder(null);
-		txtbefore.setFont(new Font("Tahoma", Font.BOLD, 12));
+		txtbefore.setFont(new Font("Tahoma", Font.BOLD, 13));
 		txtbefore.setBackground(SystemColor.scrollbar);
-		txtbefore.setBounds(163, 109, 269, 37);
+		txtbefore.setBounds(163, 109, 269, 30);
 		panel_1.add(txtbefore);
 		
 		JLabel lblNewLabel_6 = new JLabel("Content_Cure :");
 		lblNewLabel_6.setFont(new Font("Segoe UI Black", Font.BOLD, 13));
-		lblNewLabel_6.setBounds(442, 99, 102, 13);
+		lblNewLabel_6.setBounds(436, 72, 102, 24);
 		panel_1.add(lblNewLabel_6);
 		
 		txtContent_cure = new JTextArea();
+		txtContent_cure.setForeground(Color.WHITE);
 		txtContent_cure.setEditable(false);
 		txtContent_cure.setOpaque(false);
 		txtContent_cure.setBorder(null);
 		txtContent_cure.setBackground(new Color(245, 245, 245));
-		txtContent_cure.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txtContent_cure.setBounds(591, 99, 352, 64);
+		txtContent_cure.setFont(new Font("Tahoma", Font.BOLD, 13));
+		txtContent_cure.setBounds(591, 72, 379, 53);
 		panel_1.add(txtContent_cure);
 		
 		txtIDPatient = new JLabel("");
-		txtIDPatient.setForeground(SystemColor.menu);
-		txtIDPatient.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txtIDPatient.setBounds(164, 26, 252, 23);
+		txtIDPatient.setForeground(Color.WHITE);
+		txtIDPatient.setFont(new Font("Tahoma", Font.BOLD, 12));
+		txtIDPatient.setBounds(164, 26, 252, 24);
 		panel_1.add(txtIDPatient);
 		
 		txtNamePatient = new JLabel("");
-		txtNamePatient.setForeground(SystemColor.menu);
-		txtNamePatient.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txtNamePatient.setBounds(163, 72, 257, 20);
+		txtNamePatient.setForeground(Color.WHITE);
+		txtNamePatient.setFont(new Font("Tahoma", Font.BOLD, 13));
+		txtNamePatient.setBounds(163, 72, 257, 24);
 		panel_1.add(txtNamePatient);
 		
 		JLabel lblNewLabel_9 = new JLabel("Status_After_Cure:");
@@ -153,11 +152,12 @@ public class CreateMedicalFormManagements extends JFrame {
 		lblNewLabel_9.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		
 		txtAfter = new JTextArea();
-		txtAfter.setBounds(591, 20, 360, 22);
+		txtAfter.setForeground(Color.WHITE);
+		txtAfter.setBounds(591, 20, 360, 30);
 		panel_1.add(txtAfter);
 		txtAfter.setEnabled(false);
 		txtAfter.setEditable(false);
-		txtAfter.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		txtAfter.setFont(new Font("Tahoma", Font.BOLD, 13));
 		txtAfter.setOpaque(false);
 		txtAfter.setBackground(new Color(211, 211, 211));
 		txtAfter.setBorder(null);
@@ -172,28 +172,28 @@ public class CreateMedicalFormManagements extends JFrame {
 		
 		JLabel lblNewLabel_1 = new JLabel("IDForm :");
 		lblNewLabel_1.setFont(new Font("Segoe UI Black", Font.BOLD, 13));
-		lblNewLabel_1.setBounds(20, 14, 61, 22);
+		lblNewLabel_1.setBounds(20, 14, 61, 24);
 		panel_4.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Dentist :");
 		lblNewLabel_2.setFont(new Font("Segoe UI Black", Font.BOLD, 13));
-		lblNewLabel_2.setBounds(262, 14, 61, 22);
+		lblNewLabel_2.setBounds(262, 14, 61, 24);
 		panel_4.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_5 = new JLabel("Date-Cure :");
-		lblNewLabel_5.setBounds(559, 14, 88, 22);
+		lblNewLabel_5.setBounds(559, 14, 88, 24);
 		panel_4.add(lblNewLabel_5);
 		lblNewLabel_5.setFont(new Font("Segoe UI Black", Font.BOLD, 13));
 		txtDate.setEnabled(false);
-		txtDate.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txtDate.setForeground(SystemColor.menu);
+		txtDate.setFont(new Font("Tahoma", Font.BOLD, 13));
+		txtDate.setForeground(Color.WHITE);
 		
 		txtDate.setBounds(669, 14, 145, 22);
 		panel_4.add(txtDate);
 		
 		txtNameDentist = new JLabel("");
-		txtNameDentist.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txtNameDentist.setForeground(SystemColor.menu);
+		txtNameDentist.setFont(new Font("Tahoma", Font.BOLD, 13));
+		txtNameDentist.setForeground(Color.WHITE);
 		txtNameDentist.setBounds(334, 14, 221, 22);
 		
 		panel_4.add(txtNameDentist);
@@ -205,10 +205,11 @@ public class CreateMedicalFormManagements extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				{
-					int res=JOptionPane.showConfirmDialog(null, "You sure exit ","confirm", JOptionPane.YES_NO_OPTION);
+					int res=JOptionPane.showConfirmDialog(null, "Are you sure you want to exit ","confirm", JOptionPane.YES_NO_OPTION);
 					if (res== JOptionPane.YES_OPTION) {
 						dispose();
 					} 
+					
 				
 				}}
 		});
@@ -217,7 +218,9 @@ public class CreateMedicalFormManagements extends JFrame {
 		btnNewButton_5.setIcon(new ImageIcon(SystemConstant.img_exit3));
 		
 		txtForm = new JLabel("");
-		txtForm.setBounds(91, 14, 96, 19);
+		txtForm.setForeground(Color.WHITE);
+		txtForm.setFont(new Font("Tahoma", Font.BOLD, 13));
+		txtForm.setBounds(91, 14, 96, 24);
 		panel_4.add(txtForm);
 
 		

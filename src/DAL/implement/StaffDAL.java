@@ -3,6 +3,8 @@ package DAL.implement;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import Constant.SystemConstant;
 import DAL.IStaffDAL;
 import DTO.Staff;
@@ -12,7 +14,7 @@ public class StaffDAL extends AbstractDAL<Staff> implements IStaffDAL {
 
 	@Override
 	public List<Staff> findAll() {
-		 String st ="select *from staff inner join role on staff.id_role=role.id";    
+		 String st ="select *from staff inner join role on staff.id_role=role.id ";    
 			return query(st,new StaffMapper());
 	}
 
@@ -25,18 +27,17 @@ public class StaffDAL extends AbstractDAL<Staff> implements IStaffDAL {
 	}
 
 	@Override
-	public void insert(Staff p) {
+	public int insert(Staff p) {
 		StringBuilder st = new StringBuilder(); 
 		p.setCreatedBy(SystemConstant.staff.getFullname());
 		p.setCreatedDate(new Timestamp(System.currentTimeMillis()));
-		p.setUsername("NV01");
 		p.setPassword("00000");
 		st.append("insert into staff(fullname,gender,birthday,phone,address,icard,email");
-		st.append(",date_start_work,id_role,username,password,created_date,created_by)");
-		st.append(" values (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+		st.append(",date_start_work,id_role,password,created_date,created_by)");
+		st.append(" values (?,?,?,?,?,?,?,?,?,?,?,?)");
 		
-	    insert(st.toString(),p.getFullname(),p.getGender(),p.getBirthday(),p.getPhone(),p.getAddress()
-				,p.getiCard(),p.getEmail(),p.getDateStartWork(),p.getIdRole(),p.getUsername(),p.getPassword(),p.getCreatedDate(),p.getCreatedBy());
+	    return insert(st.toString(),p.getFullname(),p.getGender(),p.getBirthday(),p.getPhone(),p.getAddress()
+				,p.getiCard(),p.getEmail(),p.getDateStartWork(),p.getIdRole(),p.getPassword(),p.getCreatedDate(),p.getCreatedBy());
 	
 		
 	}
@@ -61,9 +62,26 @@ public class StaffDAL extends AbstractDAL<Staff> implements IStaffDAL {
 
 	@Override
 	public Staff searchByUserNameAndPassword(String username, String password) {
-		 String st ="select *from staff inner join role on staff.id_role=role.id where staff.username=? and staff.password=?";    
+		 String st ="select *from staff inner join role on staff.id_role=role.id where staff.username=? and staff.password=? ";    
 		 List<Staff> list = query(st,new StaffMapper(),username,password);
 		return list.isEmpty()?null:list.get(0);
+	}
+
+	@Override
+	public List<Staff> searchByIDOrName(int id, String name) {
+		List<Staff> listStaff = null;
+		 StringBuilder st = new StringBuilder("select *from staff inner join role on staff.id_role=role.id ");
+		
+		if (String.valueOf(id)!=null || name!=null) {
+			 if (id!=-1 ){
+				 st.append("where staff.id like '%"+String.valueOf(id)+"%'");
+			 } else
+			 if (name!=null ){
+				 st.append("where staff.fullname like '%"+name+"%'");
+			 }
+		}
+		 listStaff=query(st.toString(),new StaffMapper());
+		 return listStaff;
 	}
 
 }

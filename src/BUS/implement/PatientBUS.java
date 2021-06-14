@@ -34,9 +34,11 @@ public class PatientBUS implements IPatientBUS{
 	}
 
 	@Override
-	public void delete(int id) {
+	public void delete(List<Integer> list) {
 
-		patient.delete(id);
+		for (int i: list) {
+			patient.delete(i);
+		}
 	}
 
 	@Override
@@ -58,6 +60,11 @@ public class PatientBUS implements IPatientBUS{
 	public List<Patient> searchByIcard(String icard) {
 		// TODO Auto-generated method stub
 		return patient.searchByIcard(icard);
+	}
+
+	@Override
+	public List<Patient> findAllByDate() {
+		return patient.findAllByDate();
 	}
 
 }

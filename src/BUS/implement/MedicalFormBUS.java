@@ -32,11 +32,7 @@ public class MedicalFormBUS implements IMedicalFormBUS{
 		form.update(p);
 	}
 
-	@Override
-	public void delete(int id) {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	@Override
 	public List<MedicalForm> search(boolean isName, boolean isDate, String name, Date date) {
@@ -52,5 +48,30 @@ public class MedicalFormBUS implements IMedicalFormBUS{
 	public List<MedicalForm> findAll1() {
 		return form.findAll1();
 	}
+
+	@Override
+	public void deleteByStaff(List<Integer> list) {
+		for (Integer i: list) {
+			form.deleteByStaff(i);
+		
+		}
+	}
+
+	@Override
+	public void deleteByPatient(List<Integer> list) {
+		for (Integer i: list) {
+			form.deleteByPatient(i);
+		
+		}		
+	}
+
+	@Override
+	public void delete(List<Integer> list) {
+		for (Integer i: list) {
+			form.delete(i);
+		
+		}			
+	}
+
 
 }

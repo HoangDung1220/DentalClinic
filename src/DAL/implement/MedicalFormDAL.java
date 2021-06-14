@@ -37,8 +37,16 @@ public class MedicalFormDAL extends AbstractDAL<MedicalForm> implements IMedical
 	}
 
 	@Override
-	public void delete(int id) {
-		// TODO Auto-generated method stub
+	public void deleteByStaff(int id) {
+		String st = "delete from medical_form where id_staff =?";
+		delete(st,id);
+		
+	}
+	
+	@Override
+	public void deleteByPatient(int id) {
+		String st = "delete from medical_form where id_patient =?";
+		delete(st,id);
 		
 	}
 
@@ -75,6 +83,13 @@ public class MedicalFormDAL extends AbstractDAL<MedicalForm> implements IMedical
 		StringBuilder st =new StringBuilder("select *from medical_form inner join patient on medical_form.id_patient=patient.id ");
 		st.append("inner join staff on medical_form.id_doctor=staff.id");
 		return query(st.toString(),new MedicalFormMapper());
+	}
+
+	@Override
+	public void delete(int id) {
+		String st = "delete from medical_form where id =?";
+		delete(st,id);
+		
 	}
 
 }

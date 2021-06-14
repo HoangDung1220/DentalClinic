@@ -80,5 +80,6 @@ public class SystemConstant {
 	public static final Image img_patient_statistic = new ImageIcon(PanelDanhMuc.class.getResource("/icon_project/patient_statistic_icon.png")).getImage().getScaledInstance(162, 116, Image.SCALE_SMOOTH);
 	public static final Image img_invoice_statistic = new ImageIcon(PanelDanhMuc.class.getResource("/icon_project/invoice_statistic_icon.jpg")).getImage().getScaledInstance(162, 116, Image.SCALE_SMOOTH);
 	public static final Image img_detail = new ImageIcon(PanelDanhMuc.class.getResource("/icon_project/detail_icon.png")).getImage().getScaledInstance(40, 35, Image.SCALE_SMOOTH);
+	public static final Image img_main = new ImageIcon(PanelDanhMuc.class.getResource("/icon_project/main.png")).getImage().getScaledInstance(40, 35, Image.SCALE_SMOOTH);
 
 }

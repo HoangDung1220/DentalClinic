@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -35,8 +37,10 @@ import javax.swing.table.DefaultTableModel;
 
 import com.toedter.calendar.JDateChooser;
 
+import BUS.implement.MedicalFormBUS;
 import BUS.implement.RoleBUS;
 import BUS.implement.StaffBUS;
+import Checked.DataChecked;
 import Constant.SystemConstant;
 import DTO.Role;
 import DTO.Staff;
@@ -59,12 +63,22 @@ public class ManagementStaff extends JFrame {
     private	JDateChooser dateOfBirth;
 	private JComboBox<Role> comboRole;
 	private JTable table;
-	
-	
+	private JRadioButton NameStaff;
+	private JRadioButton ID_Staff;
+	private JLabel lbNote;
+	private JScrollPane scrollPane;
+	private JPanel panel_2;
+	private JLabel lbNote1;
+
+
+
+
+
 	RoleBUS role = new RoleBUS();
 	DefaultTableModel defaultTable = new DefaultTableModel();
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	StaffBUS staff = new StaffBUS();
+	
 
 	
 	public static void main(String[] args) {
@@ -103,17 +117,35 @@ public class ManagementStaff extends JFrame {
 		lblNewLabel.setBounds(10, 26, 108, 21);
 		panel.add(lblNewLabel);
 		
-		JRadioButton ID_Staff = new JRadioButton("ID_Staff");
+		ID_Staff = new JRadioButton("ID_Staff",true);
+		ID_Staff.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lbNote.setText("");
+			}
+		});
 		ID_Staff.setBackground(SystemColor.activeCaption);
 		ID_Staff.setFont(new Font("Tahoma", Font.BOLD, 13));
 		ID_Staff.setBounds(15, 68, 103, 21);
 		panel.add(ID_Staff);
 		
-		JRadioButton NameStaff = new JRadioButton("Name_Staff");
+		NameStaff = new JRadioButton("Name_Staff");
+		NameStaff.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lbNote.setText("");
+			}
+		});
 		NameStaff.setFont(new Font("Tahoma", Font.BOLD, 13));
 		NameStaff.setBackground(SystemColor.activeCaption);
 		NameStaff.setBounds(174, 68, 103, 21);
 		panel.add(NameStaff);
+		
+		ButtonGroup bg1 = new ButtonGroup();
+		bg1.add(ID_Staff);
+		bg1.add(NameStaff);
+		
+		
 		
 		JLabel lblNewLabel_1 = new JLabel("Char");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -121,6 +153,12 @@ public class ManagementStaff extends JFrame {
 		panel.add(lblNewLabel_1);
 		
 		txtChar = new JTextField();
+		txtChar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lbNote.setText("");
+			}
+		});
 		txtChar.setBorder(new CompoundBorder());
 		txtChar.setBounds(107, 128, 140, 19);
 		panel.add(txtChar);
@@ -129,8 +167,41 @@ public class ManagementStaff extends JFrame {
 		JButton Search = new JButton("");
 		Search.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				
+				 List<Staff> list = new ArrayList<Staff>();
+				String ch = txtChar.getText();
+				  if (ID_Staff.isSelected()) {
+					  boolean check = true;
+					  for (int i=0;i<ch.length();i++) {
+						  if (ch.charAt(i)<'0' || ch.charAt(i)>'9' ) {
+							  check = false;
+							  break;
+						  }
+					  }
+					  if (check) {
+					  list = staff.searchByIDOrName(Integer.parseInt(ch), null);} 
+					  else
+					  {
+						  lbNote.setText("Khong co du lieu phu hop");
+
+					  }
+				  } else 
+				  {
+						 list = staff.searchByIDOrName(-1,ch);
+						 
+				  }
+				  if (list.size()>0)
+				  {
+				  showTable(list); 
+				  lbNote.setText("");
+
+				  }
+				  else 
+				  {
+					  lbNote.setText("Khong co du lieu phu hop");
+					   
+
+				  }
+					  
 			}
 		});
 		Search.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
@@ -175,6 +246,7 @@ public class ManagementStaff extends JFrame {
 		
 		dateOfBirth = new JDateChooser();
 		dateOfBirth.setBounds(113, 133, 156, 19);
+		dateOfBirth.setDate(new Timestamp(System.currentTimeMillis()));
 		panel_1.add(dateOfBirth);
 		
 		JLabel lblNewLabel_4 = new JLabel("Phonenumber");
@@ -183,6 +255,12 @@ public class ManagementStaff extends JFrame {
 		panel_1.add(lblNewLabel_4);
 		
 		txtPhone = new JTextField();
+		txtPhone.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lbNote1.setText("");
+			}
+		});
 		txtPhone.setBounds(113, 189, 156, 19);
 		panel_1.add(txtPhone);
 		txtPhone.setColumns(10);
@@ -193,6 +271,13 @@ public class ManagementStaff extends JFrame {
 		panel_1.add(lblNewLabel_5);
 		
 		txtEmail = new JTextField();
+		txtEmail.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lbNote1.setText("");
+
+			}
+		});
 		txtEmail.setBounds(362, 29, 145, 19);
 		panel_1.add(txtEmail);
 		txtEmail.setColumns(10);
@@ -203,6 +288,13 @@ public class ManagementStaff extends JFrame {
 		panel_1.add(lblNewLabel_6);
 		
 		txtICard = new JTextField();
+		txtICard.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lbNote1.setText("");
+
+			}
+		});
 		txtICard.setBounds(362, 79, 145, 19);
 		panel_1.add(txtICard);
 		txtICard.setColumns(10);
@@ -258,6 +350,7 @@ public class ManagementStaff extends JFrame {
 		
 	    dateOfWork = new JDateChooser();
 		dateOfWork.setBounds(362, 133, 145, 19);
+		dateOfWork.setDate(new Timestamp(System.currentTimeMillis()));
 		panel_1.add(dateOfWork);
 		
 		
@@ -265,12 +358,25 @@ public class ManagementStaff extends JFrame {
 		Save.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		Save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				staff.insert(GetDataToGui());
+				Staff s = null;
+				s = GetDataToGui(s);
+				if (checkData(s))
+				{
+				txtID.setText(String.valueOf(staff.insert(s)));
 			    showTable(staff.findAll());
+				
+				Staff sta = staff.findOne(Integer.parseInt(txtID.getText()));
+				StringBuilder st = new StringBuilder("NV");
+				st.append(txtID.getText());
+				sta.setUsername(st.toString());
+				staff.update(sta);
+				JOptionPane.showMessageDialog(null, "Data Saved Successfully");
+				refresh();
+				}
 			}
 		});
 		Save.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Save.setBounds(506, 250, 40, 35);
+		Save.setBounds(515, 250, 40, 35);
 		Save.setIcon(new ImageIcon(SystemConstant.img_save));
 		Save.setToolTipText("Save data");
 		panel_1.add(Save);
@@ -279,14 +385,14 @@ public class ManagementStaff extends JFrame {
 		Edit.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		Edit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-			
-			    
-				Staff s= GetDataToGui();
-				s.setId(Integer.parseInt(txtID.getText()));
-			
-				staff.update(s);
+				Staff sm = staff.findOne(Integer.parseInt(txtID.getText()));
+			    sm = GetDataToGui(sm);	
+			    if (checkData(sm)) {
+				staff.update(sm);
+				JOptionPane.showMessageDialog(null, "Data edited Succesfully");
 				showTable(staff.findAll());
+				refresh();
+				}
 			}
 		});
 		Edit.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -304,9 +410,11 @@ public class ManagementStaff extends JFrame {
 				for (int i:list) {
 					listId.add(Integer.parseInt(table.getValueAt(i, 0).toString()));
 				}
-				
 				staff.delete(listId);
+				
+				JOptionPane.showMessageDialog(null, "Data deleted Succesfully");
 				showTable(staff.findAll());
+				refresh();
 			}
 		});
 		Delete.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -319,7 +427,12 @@ public class ManagementStaff extends JFrame {
 		Exit.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		Exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				dispose();
+				
+				int res=JOptionPane.showConfirmDialog(null, "Are you sure you want to exit ","confirm", JOptionPane.YES_NO_OPTION);
+				if (res== JOptionPane.YES_OPTION) {
+					dispose();
+				} 
+				
 			}
 		});
 		Exit.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -328,19 +441,42 @@ public class ManagementStaff extends JFrame {
 		Exit.setToolTipText("Exit");
 		panel_1.add(Exit);
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(23, 364, 1069, 185);
+		lbNote1 = new JLabel("");
+		lbNote1.setForeground(Color.RED);
+		lbNote1.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lbNote1.setBounds(21, 252, 382, 33);
+		panel_1.add(lbNote1);
+		
+		JButton btnNewButton = new JButton("");
+		btnNewButton.setToolTipText("Refresh");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				refresh();
+			}
+		});
+		btnNewButton.setBounds(467, 250, 40, 35);
+		btnNewButton.setIcon(new ImageIcon(SystemConstant.img_new));
+		panel_1.add(btnNewButton);
+		
+		panel_2 = new JPanel();
+		panel_2.setBounds(23, 346, 1069, 203);
 		contentPane.add(panel_2);
 		panel_2.setBackground(SystemColor.activeCaption);
 		panel_2.setBorder(new TitledBorder(null, "Danh s\u00E1ch nh\u00E2n vi\u00EAn", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_2.setLayout(null);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 20, 1049, 155);
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 48, 1049, 145);
 		panel_2.add(scrollPane);
 		
 		table = new JTable(defaultTable);
 		scrollPane.setViewportView(table);
+		
+		lbNote = new JLabel("");
+		lbNote.setBounds(10, 18, 337, 20);
+		panel_2.add(lbNote);
+		lbNote.setForeground(Color.RED);
+		lbNote.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
 		table.addMouseListener(new MouseAdapter() {
 
@@ -369,6 +505,7 @@ public class ManagementStaff extends JFrame {
 	}
 	
 	public void showTable(List<Staff> list) {
+		if (list!=null) {
 		String gender;
 		defaultTable.setRowCount(0);
 		defaultTable.setColumnIdentifiers(new String[] {
@@ -383,16 +520,17 @@ public class ManagementStaff extends JFrame {
 			};
 			defaultTable.addRow(row);
 		}
+		}
 	}
-	public Staff GetDataToGui() {
-	
+	public Staff GetDataToGui(Staff s) {
+	 if (s==null) 
+	 {
+		 s = new Staff();
+	 }
 		String st = sdf.format(dateOfBirth.getDate());
 	    Date date1 = Date.valueOf(st);
-	    
 	    String st1 = sdf.format(dateOfWork.getDate());
 	    Date date2 = Date.valueOf(st1);
-	    
-		Staff s= new Staff();
 		s.setFullname(txtName.getText());
 		s.setGender(Male.isSelected());
 		s.setAddress(txtAddress.getText());
@@ -403,8 +541,6 @@ public class ManagementStaff extends JFrame {
 	    s.setiCard(txtICard.getText());
 	    s.setRole((Role) comboRole.getSelectedItem());
 	    s.setIdRole(((Role)comboRole.getSelectedItem()).getId());
-	    
-		
 		return s;
 	}
 	
@@ -424,7 +560,81 @@ public class ManagementStaff extends JFrame {
 		else Female.setSelected(true);
 		dateOfBirth.setDate(s.getBirthday());
 		dateOfWork.setDate(s.getDateStartWork());
-		
-
 	}
+	
+	public void refresh() {
+		txtID.setText("");
+		txtName.setText("");
+		txtAddress.setText("");
+		txtPhone.setText("");
+		txtICard.setText("");
+		txtEmail.setText("");
+		comboRole.setSelectedIndex(0);;
+		
+			Male.setSelected(true);
+			
+		dateOfBirth.setDate(new Timestamp(System.currentTimeMillis()));
+		dateOfWork.setDate(new Timestamp(System.currentTimeMillis()));
+	}
+	
+	public boolean checkData(Staff s) {
+		boolean[] list = {true,true,true} ;
+		
+		if (s.getPhone().length()>0) {
+		if (DataChecked.checkSDT(s.getPhone())){
+			list[0]= true;
+		} else
+		{
+			txtPhone.setText("");
+			list[0]= false;
+		}
+		}
+	
+		if (s.getEmail().length()>0) {
+		if (DataChecked.checkEmail(s.getEmail())){
+			list[1]= true;
+		} else
+		{
+			txtEmail.setText("");
+			list[1]= false;
+		}
+		}
+		
+		if (s.getiCard().length()>0) {
+		if (DataChecked.checkICard(s.getiCard())){
+			list[2]= true;
+		} else
+		{
+			txtICard.setText("");
+			list[2]= false;
+		}
+		}
+		StringBuilder st = new StringBuilder();
+
+		
+		for (int i = 0;i<list.length;i++) {
+			if (!list[i])
+			switch (i) {
+			case 0:
+				st.append("Phone,");
+				break;
+			case 1:
+				st.append("Email,");
+				break;
+			case 2:
+				st.append("Identified Card,");
+				break;
+			}
+		}
+		if (st.toString().equals(""))
+		{	return true;
+		}
+		else 
+		{
+			
+			st.append(" is errored");
+			lbNote1.setText(st.toString());
+		return false;
+		}
+	} 
 }

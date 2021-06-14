@@ -14,15 +14,7 @@ public class AutoID {
 		st.append(String.valueOf(month));
 		int year = date.getYear();
 		st.append(String.valueOf(year));
-		/*String st ="HD";
-		st += String.valueOf(id_patient);
-		Date date = new Date(System.currentTimeMillis());
-		int day = date.getDay();
-		st +=
-		int month = date.getMonth();
-		st.append(month);
-		int year = date.getYear();
-		st.append(year);*/
+		
 		
 		return st.toString();
 		

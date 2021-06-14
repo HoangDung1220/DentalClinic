@@ -41,4 +41,10 @@ public class PrescriptionDAL extends AbstractDAL<Prescription> implements IPresc
 		delete (st,id);
 	}
 
+	@Override
+	public List<Prescription> findByIDMedicine(int id) {
+		String st ="select *from prescription inner join medicine on prescription.id_medicine = medicine.id where prescription.id_medicine =?";
+		return query(st,new PrescriptionMapper(),id);
+	}
+
 }

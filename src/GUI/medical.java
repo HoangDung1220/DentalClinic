@@ -231,7 +231,7 @@ public class medical extends JFrame {
 			s_price +=i.getPrice();
 			defaultTableMedicine.addRow(row);
 		}
-		lbTotalMedicine.setText(String.valueOf(s_price));
+		//lbTotalMedicine.setText(String.valueOf(s_price));
 
 	}
 	
@@ -250,7 +250,7 @@ public class medical extends JFrame {
 			s_price +=i.getPrice();
 			defaultTableService.addRow(row);
 		}
-		lbTotalService.setText(String.valueOf(s_price));
+		//lbTotalService.setText(String.valueOf(s_price));
 	}
 	public void setGui(int idForm) {
 		
@@ -265,6 +265,8 @@ public class medical extends JFrame {
 			lbStaff.setText(invoiceExecute.findOne(idInvoice).getStaff().getFullname());
 			showTableMedicine(idForm);
 			showTable1(idForm);
+			lbTotalMedicine.setText(String.valueOf(invoiceExecute.findOne(idInvoice).getTotalPriceMedicine()));
+			lbTotalService.setText(String.valueOf(invoiceExecute.findOne(idInvoice).getTotalPriceService()));
 			double price = Double.parseDouble(lbTotalMedicine.getText())+Double.parseDouble(lbTotalService.getText());
 			TotalPrice.setText(String.valueOf(price));
 		

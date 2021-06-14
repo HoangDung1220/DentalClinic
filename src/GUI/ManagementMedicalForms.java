@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -154,16 +155,23 @@ public class ManagementMedicalForms extends JFrame {
 		lbDetail.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		lbDetail.setOpaque(false);
 		lbDetail.setBounds(496, 265, 96, 19);
+		lbDetail.setText("0");
 		panel.add(lbDetail);
 		lbDetail.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Detail");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				String st = lbDetail.getText();
+				if (Integer.parseInt(st)!=0){
 				MedicalForm medical = null;
-				medical = medicalForm.findOne(Integer.parseInt(lbDetail.getText()));
+				medical = medicalForm.findOne(Integer.parseInt(st));
 				CreateMedicalFormManagements frame1 = new CreateMedicalFormManagements(medical);
 				frame1.setVisible(true);
+		} else 
+		{
+			JOptionPane.showMessageDialog(null, st);
+		}
 			}
 		});
 		btnNewButton.setBounds(625, 264, 85, 21);

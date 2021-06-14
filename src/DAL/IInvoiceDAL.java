@@ -9,7 +9,7 @@ public interface IInvoiceDAL {
 	public Invoice findOne(String id);
 	public void Save(Invoice invoice);
 	public void Update(Invoice invoice);
-	public void Delete(int id);
+	public void Delete(String id);
 	public void printf(String id1);
 	public Invoice fidOneByIdMedical(int id);
 	

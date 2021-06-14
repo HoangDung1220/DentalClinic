@@ -6,15 +6,38 @@ import java.util.regex.Pattern;
 
 public class DataChecked {
 
-	public boolean checkSDT(String st) {
-		String regex = "[\\d]";
+	public static boolean checkSDT(String st) {
+		String regex = "^\\d{10}$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(st);
-		if (matcher.find()) {
-		return true;
-		}
-		return false;
+		 if (matcher.matches()) {
+			 return true;
+		 }
+		 return false;
 		
 	}
+	
+	public static boolean checkEmail(String st) {
+		String regex = "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(st);
+		 if (matcher.matches()) {
+			 return true;
+		 }
+		 return false;
+		
+	}
+	
+	public static boolean checkICard(String st) {
+		String regex = "^\\d{9}$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(st);
+		 if (matcher.matches()) {
+			 return true;
+		 }
+		 return false;
+		
+	}
+	
 	
 }

@@ -31,7 +31,6 @@ import javax.swing.table.DefaultTableModel;
 import BUS.IInvoiceBUS;
 import BUS.implement.InvoiceBUS;
 import BUS.implement.MedicalFormBUS;
-import BUS.implement.StaffBUS;
 import Constant.SystemConstant;
 import DTO.Invoice;
 
@@ -41,10 +40,8 @@ public class InvoiceDanhMuc extends JFrame{
 	private static JTextField txtIDStaff;
 	private static JTable table_1;
 	private static JButton btnNewButtonSearch,btnDetail;
-    private medical form;
     private MedicalFormBUS medicalForm = new MedicalFormBUS();
     private InvoiceBUS invoiceExecute = new InvoiceBUS();
-    private StaffBUS staff = new StaffBUS();
     private JLabel lbInvoice ;
     private JLabel lbNamePatient;
     private JLabel lbNameStaff;
@@ -71,7 +68,6 @@ public class InvoiceDanhMuc extends JFrame{
 		row.add(p.getIdMedicalForm());
 		row.add(p.getTotalPriceMedicine());
 		row.add(p.getTotalPriceService());
-		//double getTotalPrice = p.getTotalPriceMedicine() + p.getTotalPriceService();
 		row.add(p.getTotalPrice());
 		row.add(p.getPayDate());
 		
@@ -140,12 +136,26 @@ public class InvoiceDanhMuc extends JFrame{
 		panel.add(lblNewLabel_1);
 		
 		txtIDmedicalform = new JTextField();
+		txtIDmedicalform.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnDetail.setEnabled(false);
+				refresh();
+			}
+		});
 		txtIDmedicalform.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		txtIDmedicalform.setBounds(149, 93, 178, 25);
 		panel.add(txtIDmedicalform);
 		txtIDmedicalform.setColumns(10);
 		
 		txtIDStaff = new JTextField();
+		txtIDStaff.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnDetail.setEnabled(false);
+				refresh();
+			}
+		});
 		txtIDStaff.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		txtIDStaff.setBounds(148, 35, 179, 25);
 		panel.add(txtIDStaff);
@@ -232,7 +242,7 @@ public class InvoiceDanhMuc extends JFrame{
 	     btnDetail = new JButton("");
 	     btnDetail.setToolTipText("Show Detail Data");
 	     btnDetail.setIcon(new ImageIcon(SystemConstant.img_detail));
-		btnDetail.addActionListener(new ActionListener() {
+		 btnDetail.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					medical frame1 = new medical(lbInvoice.getText());
 					frame1.setVisible(true);
@@ -247,6 +257,8 @@ public class InvoiceDanhMuc extends JFrame{
 		btnNewButtonSearch.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				refresh();
+				btnDetail.setEnabled(false);
 				table_1.setModel(showDataToTable(txtIDmedicalform.getText(),txtIDStaff.getText()));
 
 			}
@@ -273,6 +285,13 @@ public class InvoiceDanhMuc extends JFrame{
 		lbNameStaff.setText(String.valueOf(inv.getStaff().getFullname()));
 
 		lbTotal.setText(String.valueOf(inv.getTotalPrice()));
+	}
+	
+	public void refresh() {
+		lbInvoice.setText("");
+		lbNamePatient.setText("");
+		lbNameStaff.setText("");
+		lbTotal.setText("");
 	}
 	
 

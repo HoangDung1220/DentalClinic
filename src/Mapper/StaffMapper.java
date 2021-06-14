@@ -28,6 +28,7 @@ public class StaffMapper implements RowMapper<Staff>{
 			s.setPassword(rs.getString("password"));
 			s.setPhone(rs.getString("phone"));
 			s.setUsername(rs.getString("username"));
+			
 			try {
 				Role r = new Role();
 				r.setId(rs.getInt("id"));

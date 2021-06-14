@@ -7,6 +7,7 @@ import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -221,11 +222,12 @@ public static DefaultTableModel showDataToTable_Month(Date d1, Date d2)
 		
 		JLabel lblNewLabel_1_1 = new JLabel("\u0110\u1EBFn ng\u00E0y:");
 		lblNewLabel_1_1.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		lblNewLabel_1_1.setBounds(658, 57, 67, 17);
+		lblNewLabel_1_1.setBounds(712, 57, 67, 17);
 		contentPane.add(lblNewLabel_1_1);
 		
 		dateChooserFrom = new JDateChooser();
 		dateChooserFrom.setBounds(538, 52, 110, 20);
+		dateChooserFrom.setDate(new Timestamp(System.currentTimeMillis()));
 		contentPane.add(dateChooserFrom);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -236,7 +238,8 @@ public static DefaultTableModel showDataToTable_Month(Date d1, Date d2)
 		scrollPane.setViewportView(table);
 		
 		 dateChooserTo = new JDateChooser();
-		dateChooserTo.setBounds(733, 55, 110, 20);
+		dateChooserTo.setBounds(815, 55, 110, 20);
+		dateChooserTo.setDate(new Timestamp(System.currentTimeMillis()));
 		contentPane.add(dateChooserTo);
 		
 		 btnNewButtonTK = new JButton("");
@@ -271,8 +274,8 @@ public static DefaultTableModel showDataToTable_Month(Date d1, Date d2)
 		
 		choice = new Choice();
 		choice.setBounds(135, 54, 241, 18);
-		choice.addItem("Thống kê theo ngày");
-		choice.addItem("Thống kê theo tháng");
+		choice.addItem("Thong kê theo ngày");
+		choice.addItem("Thong kê theo tháng");
 		contentPane.add(choice);
 		
 		btnNewButton = new JButton("");
@@ -306,7 +309,7 @@ public static DefaultTableModel showDataToTable_Month(Date d1, Date d2)
 		    
 		        @SuppressWarnings("deprecation")
 				Date date2 = new Date(Integer.parseInt(y1)-1900, Integer.parseInt(m1)-1, Integer.parseInt(d1));
-                    if (choice.getSelectedItem().toString()=="Thống kê theo ngày")
+                    if (choice.getSelectedItem().toString()=="Thong kê theo ngày")
                     {
   
     				    table.setModel(showDataToTable_Day(date1, date2));

@@ -120,7 +120,6 @@ public class PatientDanhMuc extends JFrame {
 				defaultTable.setRowCount(0);
 				if(fullname.length() == 0 && icard.length() == 0)
 				{
-					JOptionPane.showMessageDialog(null, "nhap đi");
 					showTable(patient1.findAll());
 				}
 				else
@@ -163,7 +162,11 @@ public class PatientDanhMuc extends JFrame {
 		JButton btnNewButton_1 = new JButton("");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				dispose();
+				int res=JOptionPane.showConfirmDialog(null, "Are you sure you want to exit ","confirm", JOptionPane.YES_NO_OPTION);
+				if (res== JOptionPane.YES_OPTION) {
+					dispose();
+				} 
+				
 			}
 		});
 		btnNewButton_1.setToolTipText("Exit");

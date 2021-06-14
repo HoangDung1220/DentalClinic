@@ -15,7 +15,8 @@ package GUI;
 	import java.util.Vector;
 
 	import javax.swing.ButtonGroup;
-	import javax.swing.JButton;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 	import javax.swing.JFrame;
 	import javax.swing.JLabel;
 	import javax.swing.JOptionPane;
@@ -54,9 +55,8 @@ import DTO.Patient;
 	    private JRadioButton rdbtnNewRadioButtonFemale;
 	    private JButton btnNewButtonUpdate;
 	    private JDateChooser dateChooser;
-		/**
-		 * Launch the application.
-		 */
+		
+	    
 		public static void main(String[] args) {
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
@@ -70,9 +70,7 @@ import DTO.Patient;
 			});
 		}
 
-		/**
-		 * Create the frame.
-		 */
+		
 		public ManagementPatient() {
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setBounds(100, 100, 1134, 750);
@@ -218,28 +216,54 @@ import DTO.Patient;
 			bg.add(rdbtnNewRadioButtonMale);
 			bg.add(rdbtnNewRadioButtonFemale);
 
-		    btnNewButtonSave = new JButton("SAVE");
+		    btnNewButtonSave = new JButton("");
+		    btnNewButtonSave.setToolTipText("Save Data");
 			btnNewButtonSave.setFont(new Font("Sitka Small", Font.BOLD, 14));
-			btnNewButtonSave.setBounds(32, 305, 103, 33);
+			btnNewButtonSave.setBounds(138, 305, 40, 35);
+			btnNewButtonSave.setIcon(new ImageIcon(SystemConstant.img_save1));
 			btnNewButtonSave.addActionListener(this);
 			panel_1.add(btnNewButtonSave);
 
-		    btnNewButtonUpdate = new JButton("UPDATE");
+		    btnNewButtonUpdate = new JButton("");
+		    btnNewButtonUpdate.setToolTipText("Edit Data");
 			btnNewButtonUpdate.setFont(new Font("Sitka Small", Font.BOLD, 14));
-			btnNewButtonUpdate.setBounds(221, 305, 103, 33);
+			btnNewButtonUpdate.setBounds(188, 305, 40, 35);
 			btnNewButtonUpdate.addActionListener(this);
+			btnNewButtonUpdate.setIcon(new ImageIcon(SystemConstant.img_edit1));
 			panel_1.add(btnNewButtonUpdate);
 
-			JButton btnNewButtonDelete = new JButton("DELETE");
+			JButton btnNewButtonDelete = new JButton("");
+			btnNewButtonDelete.setToolTipText("Delete Data");
 
 			btnNewButtonDelete.setFont(new Font("Sitka Small", Font.BOLD, 14));
-			btnNewButtonDelete.setBounds(395, 305, 103, 33);
+			btnNewButtonDelete.setBounds(238, 305, 40, 35);
 			btnNewButtonDelete.addActionListener(this);
+			btnNewButtonDelete.setIcon(new ImageIcon(SystemConstant.img_delete1));
 			panel_1.add(btnNewButtonDelete);
 
 			 dateChooser = new JDateChooser();
 			dateChooser.setBounds(384, 81, 153, 25);
 			panel_1.add(dateChooser);
+			
+			JButton btnNewButton = new JButton("");
+			btnNewButton.setToolTipText("Exit");
+			btnNewButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					int res=JOptionPane.showConfirmDialog(null, "Are you sure you want to exit ","confirm", JOptionPane.YES_NO_OPTION);
+					if (res== JOptionPane.YES_OPTION) {
+						dispose();
+					} 
+				}
+			});
+			btnNewButton.setBounds(288, 305, 40, 35);
+			btnNewButton.setIcon(new ImageIcon(SystemConstant.img_exit2));
+			panel_1.add(btnNewButton);
+			
+			JButton btnNewButton_1 = new JButton("");
+			btnNewButton_1.setToolTipText("Refresh");
+			btnNewButton_1.setBounds(88, 305, 40, 35);
+			btnNewButton_1.setIcon(new ImageIcon(SystemConstant.img_new));
+			panel_1.add(btnNewButton_1);
 
 			JPanel panel_2 = new JPanel();
 			panel_2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "DANH S\u00C1CH B\u1EC6NH NH\u00C2N ", TitledBorder.LEADING, TitledBorder.TOP, null, SystemColor.textInactiveText));
@@ -258,7 +282,6 @@ import DTO.Patient;
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
 			if (e.getSource()==btnNewButtonSearch )
 			{   
 
@@ -312,12 +335,12 @@ import DTO.Patient;
 
 			if (e.getSource()==btnNewButtonSave)
 		{   // Exception 
-				if (Integer.parseInt(textFieldID.getText()) ==0 || textFieldFullName.getText().equals("") || textFieldICard.getText().equals("") 
+				/*if (Integer.parseInt(textFieldID.getText()) ==0 || textFieldFullName.getText().equals("") || textFieldICard.getText().equals("") 
 			                            || textFieldAddress.getText().equals("") || textFieldPhone.getText().equals("") )
 
 			   {
 				 JOptionPane.showMessageDialog(null, "Please complete all information !");
-			   }
+			   }*/
 
 				// Insert new patient
 				if (Integer.parseInt(textFieldID.getText()) !=0 && textFieldFullName.getText() !=null && textFieldICard.getText() !=null 
@@ -411,5 +434,4 @@ import DTO.Patient;
 		public void showTable() {
 			
 		}
-	
 }

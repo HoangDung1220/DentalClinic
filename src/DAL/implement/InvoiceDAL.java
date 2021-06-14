@@ -44,9 +44,10 @@ public class InvoiceDAL extends AbstractDAL<Invoice> implements IInvoiceDAL {
 	}
 
 	@Override
-	public void Delete(int id) {
-		// TODO Auto-generated method stub
-		
+	//public void Delete(List<Integer> list) {
+	public void Delete(String id) {
+		String st ="delete from invoice where id=?";
+		delete(st, id);
 	}
 
 	@Override

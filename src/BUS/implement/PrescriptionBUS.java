@@ -37,4 +37,9 @@ public class PrescriptionBUS implements IPrescriptionBUS {
 		}
 	}
 
+	@Override
+	public List<Prescription> findByIDMedicine(int id) {
+		return prescription.findByIDMedicine(id);
+	}
+
 }

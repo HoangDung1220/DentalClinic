@@ -32,6 +32,10 @@ import DTO.DetailService;
 import DTO.Invoice;
 import DTO.MedicalForm;
 import DTO.Prescription;
+import java.awt.event.InputMethodListener;
+import java.awt.event.InputMethodEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ManagementInvoice extends JFrame {
 
@@ -55,6 +59,8 @@ public class ManagementInvoice extends JFrame {
 	private JLabel TotalPrice = new JLabel("");
 	private JLabel lbID = new JLabel("");
 	private JButton btnNewButton_1 ;
+	private JLabel lblNewLabel_6 ;
+
 
 
 	private InvoiceBUS invoiceExecute = new InvoiceBUS();
@@ -185,6 +191,13 @@ public class ManagementInvoice extends JFrame {
 		panel_2.add(lblNewLabel_15);
 		
 		textIDMedical = new JTextField();
+		textIDMedical.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lblNewLabel_6.setText("");
+			}
+		});
+		
 		textIDMedical.setBounds(162, 44, 131, 19);
 		panel_2.add(textIDMedical);
 		textIDMedical.setColumns(10);
@@ -193,12 +206,24 @@ public class ManagementInvoice extends JFrame {
 		search.setIcon(new ImageIcon(SystemConstant.img_add));
 		search.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if ((textIDMedical.getText()).length()>0) {
 				setGui(Integer.parseInt(textIDMedical.getText()));
+				} else 
+				{
+					lblNewLabel_6.setText("Please fill out this field");
+
+				}
 			}
 		});
 		search.setFont(new Font("Tahoma", Font.BOLD, 9));
 		search.setBounds(310, 43, 42, 21);
 		panel_2.add(search);
+		
+		lblNewLabel_6 = new JLabel("");
+		lblNewLabel_6.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNewLabel_6.setForeground(Color.RED);
+		lblNewLabel_6.setBounds(20, 117, 332, 30);
+		panel_2.add(lblNewLabel_6);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(SystemColor.activeCaption);
@@ -264,7 +289,11 @@ public class ManagementInvoice extends JFrame {
 		JButton btnNewButton_4 = new JButton("");
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				dispose();
+				int res=JOptionPane.showConfirmDialog(null, "Are you sure you want to exit ","confirm", JOptionPane.YES_NO_OPTION);
+				if (res== JOptionPane.YES_OPTION) {
+					dispose();
+				} 
+				
 			}
 		});
 		btnNewButton_4.setToolTipText("Exit");
@@ -345,7 +374,7 @@ public class ManagementInvoice extends JFrame {
 		lbStaff.setText(SystemConstant.staff.getFullname());
 			
 		MedicalForm m = medicalForm.findOne(idForm);
-		
+		if (m!=null) {
 		lbNamePatient.setText(m.getPatient().getFullname());
 		lbAddress.setText(m.getPatient().getAddress());
 		lbPhone.setText(m.getPatient().getPhone());
@@ -357,6 +386,10 @@ public class ManagementInvoice extends JFrame {
 		showTable1(idForm);
 		double price = Double.parseDouble(lbTotalMedicine.getText())+Double.parseDouble(lbTotalService.getText());
 		TotalPrice.setText(String.valueOf(price));
+		} else 
+		{
+			lblNewLabel_6.setText("ID_Medical_Form is invalid! ");
+		}
 		
 	}
 	

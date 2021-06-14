@@ -6,6 +6,7 @@ import DTO.Patient;
 
 public interface IPatientDAL  {
 	public List<Patient> findAll();
+	public List<Patient> findAllByDate();
 	public Patient findOne(int id);
 	public int insert(Patient p);
 	public void update(Patient p);

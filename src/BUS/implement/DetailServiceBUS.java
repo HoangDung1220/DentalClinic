@@ -36,4 +36,17 @@ public class DetailServiceBUS implements IDetailServiceBUS{
 		}
 	}
 
+	@Override
+	public void deleteMedicalForm(List<Integer> listId) {
+		for (int id :listId) {
+			detailService.deleteMedicalForm(id);		
+		}		
+	}
+
+	@Override
+	public List<DetailService> findAllByIDDental(int id) {
+		
+		return detailService.findAllByIDDental(id);
+	}
+
 }

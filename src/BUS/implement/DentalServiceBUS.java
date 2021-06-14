@@ -1,14 +1,17 @@
 package BUS.implement;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import BUS.IDentalServiceBUS;
 import DAL.implement.DentalServiceDAL;
 import DTO.DentalService;
+import DTO.DetailService;
 
 public class DentalServiceBUS implements IDentalServiceBUS {
 
 	DentalServiceDAL service = new DentalServiceDAL();
+	DetailServiceBUS detail = new DetailServiceBUS();
 	@Override
 	public List<DentalService> findAll() {
 		return service.findAll();
@@ -33,8 +36,14 @@ public class DentalServiceBUS implements IDentalServiceBUS {
 
 	@Override
 	public void delete(List<Integer> list) {
-		// TODO Auto-generated method stub
+		
 		for (Integer i:list) {
+			List<DetailService> listDetail = detail.findAllByIDDental(i);
+			List<Integer> listIdDetail = new ArrayList<Integer>();
+			for (DetailService j: listDetail) {
+				listIdDetail.add(j.getId());
+			}
+			detail.delete(listIdDetail);
 			service.delete(i);
 		}
 		

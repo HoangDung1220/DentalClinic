@@ -81,10 +81,10 @@ public class PanelChangeAccount extends JPanel {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				lblNewLabel_2_1.setVisible(false);
-				txtNewUser.setVisible(false);
-				btnNewButton_1.setVisible(false);
-				btnNewButton.setVisible(true);
+				lblNewLabel_2_1.setEnabled(false);
+				txtNewUser.setEnabled(false);
+				btnNewButton_1.setEnabled(false);
+				btnNewButton.setEnabled(true);
 
 			}
 			
@@ -94,12 +94,12 @@ public class PanelChangeAccount extends JPanel {
 		txtNewUser = new JTextField();
 		txtNewUser.setBounds(328, 171, 310, 25);
 		add(txtNewUser);
-		txtNewUser.setVisible(false);
+		txtNewUser.setEnabled(false);
 		txtNewUser.setColumns(10);
 		
 		lblNewLabel_2_1 = new JLabel("New Username");
 		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblNewLabel_2_1.setVisible(false);
+		lblNewLabel_2_1.setEnabled(false);
 		lblNewLabel_2_1.setBounds(195, 171, 102, 25);
 		add(lblNewLabel_2_1);
 		
@@ -114,10 +114,10 @@ public class PanelChangeAccount extends JPanel {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				lblNewLabel_2_1.setVisible(true);
-				txtNewUser.setVisible(true);
-				btnNewButton.setVisible(false);
-				btnNewButton_1.setVisible(true);
+				lblNewLabel_2_1.setEnabled(true);
+				txtNewUser.setEnabled(true);
+				btnNewButton.setEnabled(false);
+				btnNewButton_1.setEnabled(true);
 
 			}
 
@@ -133,10 +133,10 @@ public class PanelChangeAccount extends JPanel {
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (txtPass.getText().equals(SystemConstant.staff.getPassword())) {
-					lblNewLabel_2_1_1.setVisible(true);
-					lblNewLabel_2_1_1_1.setVisible(true);
-					txtNewPass.setVisible(true);
-					txtConfirmPass.setVisible(true);
+					lblNewLabel_2_1_1.setEnabled(true);
+					lblNewLabel_2_1_1_1.setEnabled(true);
+					txtNewPass.setEnabled(true);
+					txtConfirmPass.setEnabled(true);
 				} else 
 					{lbNotice.setText("Password is not right");
 					txtPass.setText("");
@@ -150,14 +150,14 @@ public class PanelChangeAccount extends JPanel {
 		lblNewLabel_2_1_1 = new JLabel("New Password");
 		lblNewLabel_2_1_1.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_2_1_1.setBounds(195, 251, 130, 25);
-		lblNewLabel_2_1_1.setVisible(false);
+		lblNewLabel_2_1_1.setEnabled(false);
 
 		add(lblNewLabel_2_1_1);
 		
 		lblNewLabel_2_1_1_1 = new JLabel("Confirm Password");
 		lblNewLabel_2_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_2_1_1_1.setBounds(195, 291, 121, 25);
-		lblNewLabel_2_1_1_1.setVisible(false);
+		lblNewLabel_2_1_1_1.setEnabled(false);
 		add(lblNewLabel_2_1_1_1);
 		
 		JButton btnNewButton_3 = new JButton("Save Change\r\n");
@@ -205,7 +205,7 @@ public class PanelChangeAccount extends JPanel {
 			}
 		});
 		txtNewPass.setBounds(328, 251, 309, 25);
-		txtNewPass.setVisible(false);
+		txtNewPass.setEnabled(false);;
 		add(txtNewPass);
 		
 		txtConfirmPass = new JPasswordField();
@@ -216,7 +216,7 @@ public class PanelChangeAccount extends JPanel {
 			}
 		});
 		txtConfirmPass.setBounds(328, 291, 309, 25);
-		txtConfirmPass.setVisible(false);
+		txtConfirmPass.setEnabled(false);
 		add(txtConfirmPass);
 		
 		JButton btnNewButton_2_1 = new JButton("");
@@ -238,6 +238,11 @@ public class PanelChangeAccount extends JPanel {
 		add(lbNotice);
 		
 		JButton btnNewButton_4 = new JButton("");
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setVisible(false);
+			}
+		});
 		btnNewButton_4.setBounds(690, 32, 40, 35);
 		btnNewButton_4.setIcon(new ImageIcon(SystemConstant.img_exit3));
 		add(btnNewButton_4);

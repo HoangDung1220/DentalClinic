@@ -195,6 +195,7 @@ public class ManagementService extends JFrame {
 					return ;
 				} else 
 				{
+					
 					service.delete(listId);
 					showTable(service.findAll());
 					refresh();
@@ -210,7 +211,10 @@ public class ManagementService extends JFrame {
 		JButton Exit = new JButton("");
 		Exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				dispose();
+				int res=JOptionPane.showConfirmDialog(null, "Are you sure you want to exit ","confirm", JOptionPane.YES_NO_OPTION);
+				if (res== JOptionPane.YES_OPTION) {
+					dispose();
+				} 
 			}
 		});
 		Exit.setFont(new Font("Tahoma", Font.BOLD, 14));

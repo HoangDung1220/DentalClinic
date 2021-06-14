@@ -1,14 +1,11 @@
 package GUI;
 
+import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -17,27 +14,28 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import javax.swing.JLabel;
-import javax.swing.JTextField;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+
+import com.toedter.calendar.JDateChooser;
 
 import BUS.implement.MedicalFormBUS;
 import BUS.implement.StaffBUS;
 import Constant.SystemConstant;
 import DTO.MedicalForm;
-
-import javax.swing.border.EtchedBorder;
-
-import java.awt.Button;
-import java.awt.Color;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
-import com.toedter.calendar.JDateChooser;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.border.BevelBorder;
 
 public class ManagementMedicalForm extends JFrame {
 
@@ -154,6 +152,7 @@ public class ManagementMedicalForm extends JFrame {
 		scrollPane.setViewportView(table);
 		
 		lbDetail = new JTextField();
+		lbDetail.setText("0");
 		lbDetail.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		lbDetail.setOpaque(false);
 		lbDetail.setBounds(496, 265, 96, 19);
@@ -163,9 +162,17 @@ public class ManagementMedicalForm extends JFrame {
 		JButton btnNewButton = new JButton("Detail");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				CreateMedicalFormManagements frame1 = new CreateMedicalFormManagements(medicalForm.findOne(Integer.parseInt(lbDetail.getText())));
+			
+				
+				String st = lbDetail.getText();
+				if (Integer.parseInt(st)!=0){
+				MedicalForm medical = null;
+				medical = medicalForm.findOne(Integer.parseInt(st));
+				CreateMedicalFormManagements frame1 = new CreateMedicalFormManagements(medical);
 				frame1.setVisible(true);
+		} 
 			}
+			
 		});
 		btnNewButton.setBounds(625, 264, 85, 21);
 		panel.add(btnNewButton);

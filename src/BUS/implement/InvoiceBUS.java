@@ -33,8 +33,8 @@ public class InvoiceBUS implements IInvoiceBUS {
 	}
 
 	@Override
-	public void Delete(int id) {
-		// TODO Auto-generated method stub
+	public void Delete(String id) {
+		invoice.Delete(id);
 		
 	}
 

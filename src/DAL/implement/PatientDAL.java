@@ -1,5 +1,6 @@
 package DAL.implement;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import DAL.IPatientDAL;
@@ -62,6 +63,12 @@ public class PatientDAL extends AbstractDAL<Patient> implements IPatientDAL{
 	public List<Patient> searchByIcard(String icard) {
 		String st = "select * from patient where icard = ?";
 		return query(st, new PatientMapper(), icard);
+	}
+
+	@Override
+	public List<Patient> findAllByDate() {
+		 String st ="select *from patient where created_date=?";    
+			return query(st,new PatientMapper(), new Timestamp(System.currentTimeMillis()));
 	}
 	
 }

@@ -21,6 +21,7 @@ public class Staff extends AbstractPerson<Staff> {
 		this.username = username;
 		this.password = password;
 		this.idRole = idRole;
+		
 	}
 
 	public String getEmail() {
@@ -71,6 +72,7 @@ public class Staff extends AbstractPerson<Staff> {
 	public void setRole(Role role) {
 		this.role = role;
 	}
+
 	
 	
 	

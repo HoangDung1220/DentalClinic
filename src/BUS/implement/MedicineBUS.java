@@ -1,15 +1,19 @@
 package BUS.implement;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import BUS.IMedicineBUS;
 import DAL.IMedicineDAL;
 import DAL.implement.MedicineDAL;
+import DTO.DetailService;
 import DTO.Medicine;
+import DTO.Prescription;
 
 public class MedicineBUS implements IMedicineBUS{
 	
 	IMedicineDAL medicine = new MedicineDAL();
+	PrescriptionBUS prescription = new PrescriptionBUS();
 
 	@Override
 	public List<Medicine> findAll() {
@@ -35,8 +39,16 @@ public class MedicineBUS implements IMedicineBUS{
 
 	@Override
 	public void delete(List<Integer> list) {
-		for (int id : list)
-		medicine.delete(id);
+		
+		for (Integer i:list) {
+			List<Prescription> listDetail = prescription.findByIDMedicine(i);
+			List<Integer> listIdDetail = new ArrayList<Integer>();
+			for (Prescription j: listDetail) {
+				listIdDetail.add(j.getId());
+			}
+			prescription.delete(listIdDetail);
+			medicine.delete(i);
+		}
 	}
 
 	@Override

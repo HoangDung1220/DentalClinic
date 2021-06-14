@@ -197,9 +197,7 @@ public class CreateMedicalForm extends JFrame {
 				MedicalForm m = getDataByGui();
 				txtForm.setText(String.valueOf(medical_form.insert(m)));
 				JOptionPane.showMessageDialog(null, "You create medical_form successful");
-				btnNewButton_4.setEnabled(true);
-				Medicine.setEnabled(true);
-				Dental_service.setEnabled(true);
+				
 				
 				
 			}
@@ -340,7 +338,6 @@ public class CreateMedicalForm extends JFrame {
 	
 			}
 		});
-		btnNewButton_4.setEnabled(false);
 		btnNewButton_4.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnNewButton_4.setBounds(880, 10, 40, 35);
 		btnNewButton_4.setIcon(new ImageIcon(SystemConstant.img_save1));
@@ -383,7 +380,7 @@ public class CreateMedicalForm extends JFrame {
 				dispose();
 			}
 		});
-		Medicine.setEnabled(false);
+		
 		Medicine.setIcon(new ImageIcon(SystemConstant.img_medicine1));
 		Medicine.setFont(new Font("Tahoma", Font.BOLD, 13));
 		
@@ -399,7 +396,7 @@ public class CreateMedicalForm extends JFrame {
 				
 			}
 		});
-		Dental_service.setEnabled(false);
+		
 		Dental_service.setFont(new Font("Tahoma", Font.BOLD, 13));
 		Dental_service.setIcon(new ImageIcon(SystemConstant.img_dental2));
 		

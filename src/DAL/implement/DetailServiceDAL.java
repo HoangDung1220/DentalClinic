@@ -3,7 +3,6 @@ package DAL.implement;
 import java.util.List;
 
 import DAL.IDetailServiceDAL;
-import DTO.DentalService;
 import DTO.DetailService;
 import Mapper.DetailServiceMapper;
 
@@ -38,6 +37,19 @@ public class DetailServiceDAL extends AbstractDAL<DetailService> implements IDet
 	public void delete(int id) {
 		String st ="delete from detail_service where id=?";
 		delete(st,id);
+	}
+
+	@Override
+	public void deleteMedicalForm(int id) {
+		String st ="delete from detail_service where id_medical_form=?";
+		delete(st,id);
+		
+	}
+
+	@Override
+	public List<DetailService> findAllByIDDental(int id) {
+		String st ="select *from detail_service inner join dental_service on detail_service.id_dental_service=dental_service.id where detail_service.id_dental_service=?";
+		return query(st,new DetailServiceMapper(),id);
 	}
 
 }

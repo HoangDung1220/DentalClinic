@@ -37,8 +37,10 @@ import com.toedter.calendar.JDateChooser;
 
 import BUS.IPatientBUS;
 import BUS.implement.PatientBUS;
+import Checked.DataChecked;
 import Constant.SystemConstant;
 import DTO.Patient;
+import DTO.Staff;
 
 public class PatientRegistrationGui extends JFrame{
 	private static JPanel contentPane;
@@ -158,20 +160,19 @@ public class PatientRegistrationGui extends JFrame{
 // 
 	public static void getData(Patient p)
 	{   
-		// CheckPhone check =new CheckPhone();
-		 // Exception 
-	/*	if (textFieldFullName.getText().equals("") || textFieldICard.getText().equals("") 
-	                            || textFieldAddress.getText().equals("") ||  check.checkSDT( textFieldPhone.getText())==false )*/
+		/*
 			
 			if (textFieldFullName.getText().equals("") || textFieldICard.getText().equals("") 
                     || textFieldAddress.getText().equals("")  )
 	
 	   {
 		 JOptionPane.showMessageDialog(null, "Please complete all information !");
-	   }
-		if ( textFieldFullName.getText() !=null && textFieldICard.getText() !=null 
-				&& textFieldAddress.getText()!=null   /*&&   check.checkSDT( textFieldPhone.getText())==true  */ )
+	   }*/
+		/*if ( textFieldFullName.getText() !=null && textFieldICard.getText() !=null 
+				&& textFieldAddress.getText()!=null   )*/
 		{  
+		
+			
 		    p.setFullname(textFieldFullName.getText());
 		    if (rdbtnNewRadioButtonFemale.isSelected()) p.setGender(false);
 		    else if ( rdbtnNewRadioButtonMale.isSelected()) p.setGender(true);
@@ -191,10 +192,10 @@ public class PatientRegistrationGui extends JFrame{
 	       	p.setPhone( textFieldPhone.getText());
 	    	p.setAddress(textFieldAddress.getText());
 		    p.setiCard(textFieldICard.getText());
-		    p.setCreatedBy("HBB");
+		    p.setCreatedBy(SystemConstant.staff.getFullname());
 		    p.setCreatedDate(new Timestamp(System.currentTimeMillis()));
-		    p.setModifiedBy("HBB");
-		    p.setModifiedDate(new Timestamp(System.currentTimeMillis()));
+		 //   p.setModifiedBy("HBB");
+		  //  p.setModifiedDate(new Timestamp(System.currentTimeMillis()));
 		}
 	}
 	public PatientRegistrationGui() {
@@ -384,7 +385,12 @@ public class PatientRegistrationGui extends JFrame{
 		exit = new JButton("");
 		exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				dispose();
+				
+				int res=JOptionPane.showConfirmDialog(null, "Are you sure you want to exit ","confirm", JOptionPane.YES_NO_OPTION);
+				if (res== JOptionPane.YES_OPTION) {
+					dispose();
+				} 
+				
 			}
 		});
 		exit.setFont(new Font("Sitka Small", Font.BOLD, 14));
@@ -435,11 +441,13 @@ public class PatientRegistrationGui extends JFrame{
 				    
 			    	IPatientBUS patient = new PatientBUS();
 					Patient p=new Patient();
-					getData(p);			
+					getData(p);		
+					if (checkData(p)){
 					int id =patient.insert(p);		
 					textFieldID.setText(String.valueOf(id));
-					JOptionPane.showMessageDialog(null, "Save successful");
+					JOptionPane.showMessageDialog(null, "Data Saved successfully");
 					table_1.setModel(showDataToTable("",""));
+					}
 					
 					
 				
@@ -449,19 +457,15 @@ public class PatientRegistrationGui extends JFrame{
 		btnNewButtonDelete.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				   int SelectedRowIndex=table_1.getSelectedRow();
-				    IPatientBUS patient = new PatientBUS();
-					List<Patient> list =new ArrayList<Patient>();
-					list= patient.findAll();     // find all patient
-
-					
-						Patient p=(Patient)list.get(SelectedRowIndex);
-						int res=JOptionPane.showConfirmDialog(null, "You sure delete data ","confirm", JOptionPane.YES_NO_OPTION);
-						if (res!= JOptionPane.YES_OPTION) {
-							return ;
-						}  else 
-							patient.delete(p.getId());
-						table_1.setModel(showDataToTable("",""));
+				int[] list = table_1.getSelectedRows();
+				List<Integer> listId = new ArrayList<Integer>(); 
+				for (int i:list) {
+					listId.add(Integer.parseInt(table_1.getValueAt(i, 0).toString()));
+				}
+				patientExecute.delete(listId);
+				
+				JOptionPane.showMessageDialog(null, "Data deleted Succesfully");							
+				table_1.setModel(showDataToTable("",""));
 			}
 	    });
 //loadData from Row Selected to panel_1
@@ -485,12 +489,14 @@ public class PatientRegistrationGui extends JFrame{
 				Patient p=(Patient)list.get(index);
 				getData(p);
 			    patient.update(p);
-				JOptionPane.showMessageDialog(null, "You update data successful");
+				JOptionPane.showMessageDialog(null, "Data updated successfully");
 
 				table_1.setModel(showDataToTable("",""));
 				
 			}
 	    });
+		table_1.setModel(showDataToTable("",""));
+
 }
 			
 	
@@ -501,10 +507,7 @@ public static void main(String[] args) {
 			try {
 				PatientRegistrationGui frame = new PatientRegistrationGui();
 				frame.setVisible(true);
-				//loadData();
-				
 				table_1.setModel(showDataToTable("",""));
-				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -513,6 +516,54 @@ public static void main(String[] args) {
 	
 	
 }
+
+public boolean checkData(Patient s) {
+	boolean[] list = {true,true,true} ;
+	
+	if (s.getPhone().length()>0) {
+	if (DataChecked.checkSDT(s.getPhone())){
+		list[0]= true;
+	} else
+	{
+		textFieldPhone.setText("");
+		list[0]= false;
+	}
+	}
+
+	if (s.getiCard().length()>0) {
+	if (DataChecked.checkICard(s.getiCard())){
+		list[1]= true;
+	} else
+	{
+		textFieldICard.setText("");
+		list[1]= false;
+	}
+	}
+	StringBuilder st = new StringBuilder();
+
+	
+	for (int i = 0;i<list.length;i++) {
+		if (!list[i])
+		switch (i) {
+		case 0:
+			st.append("Phone,");
+			break;
+		case 1:
+			st.append("Identified Card,");
+			break;
+		}
+	}
+	if (st.toString().equals(""))
+	{	return true;
+	}
+	else 
+	{
+		
+		st.append(" is errored");
+		JOptionPane.showMessageDialog(null,st.toString());
+	return false;
+	}
+} 
 
 public void getGui(Patient patient) {
 	textFieldID.setText(String.valueOf(patient.getId()));

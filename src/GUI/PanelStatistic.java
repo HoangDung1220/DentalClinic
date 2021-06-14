@@ -28,8 +28,8 @@ public class PanelStatistic extends JPanel {
 				frame1.setVisible(true);
 			}
 		});
-		panel.setBackground(new Color(176, 224, 230));
-		panel.setBounds(111, 73, 182, 190);
+		panel.setBackground(new Color(192, 192, 192));
+		panel.setBounds(123, 73, 182, 190);
 		add(panel);
 		panel.setLayout(null);
 		
@@ -52,8 +52,8 @@ public class PanelStatistic extends JPanel {
 				frame1.setVisible(true);
 			}
 		});
-		panel_1.setBackground(new Color(176, 224, 230));
-		panel_1.setBounds(400, 73, 182, 190);
+		panel_1.setBackground(new Color(192, 192, 192));
+		panel_1.setBounds(442, 73, 182, 190);
 		add(panel_1);
 		panel_1.setLayout(null);
 		

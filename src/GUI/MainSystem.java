@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -77,9 +78,15 @@ public class MainSystem extends JFrame {
 		DanhMuc.setBounds(3, 1, 760, 404);
 		
 		labelDanhmuc = new JLabel("DANH M\u1EE4C");
+		labelDanhmuc.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				moved(labelDanhmuc);
+			}
+		});
 		labelDanhmuc.setForeground(new Color(240, 255, 240));
 		labelDanhmuc.setFont(new Font("Sitka Subheading", Font.BOLD, 17));
-		labelDanhmuc.setBounds(10, 31, 251, 37);
+		labelDanhmuc.setBounds(10, 10, 251, 37);
 		labelDanhmuc.setIcon(new ImageIcon(SystemConstant.img_list));
 		labelDanhmuc.addMouseListener(new MouseAdapter() {
 
@@ -96,6 +103,12 @@ public class MainSystem extends JFrame {
 		NghiepVu.setBounds(3, 1, 760, 404);
 		
 		labelCure = new JLabel("NGHI\u1EC6P V\u1EE4 KH\u00C1M B\u1EC6NH");
+		labelCure.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				moved(labelCure);
+			}
+		});
 		labelCure.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -106,13 +119,19 @@ public class MainSystem extends JFrame {
 		});
 		labelCure.setForeground(new Color(240, 255, 240));
 		labelCure.setFont(new Font("Sitka Subheading", Font.BOLD, 17));
-		labelCure.setBounds(10, 78, 240, 37);
+		labelCure.setBounds(10, 57, 240, 37);
 		labelCure.setIcon(new ImageIcon(SystemConstant.img_cure));
 
 		panel.add(labelCure);
 		ThongKe = new PanelStatistic();
 		ThongKe.setBounds(3, 1, 760, 404);
 		labelStatistic = new JLabel("TH\u1ED0NG K\u00CA");
+		labelStatistic.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				moved(labelStatistic);
+			}
+		});
 		labelStatistic.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -122,13 +141,19 @@ public class MainSystem extends JFrame {
 		});
 		labelStatistic.setForeground(new Color(240, 255, 240));
 		labelStatistic.setFont(new Font("Sitka Subheading", Font.BOLD, 17));
-		labelStatistic.setBounds(10, 125, 251, 37);
+		labelStatistic.setBounds(10, 104, 251, 37);
 		labelStatistic.setIcon(new ImageIcon(SystemConstant.img_statistic));
 		panel.add(labelStatistic);
 		
 		TaiKhoan = new PanelTaiKhoan();
 		TaiKhoan.setBounds(3, 1, 760, 404);
 		lableAccount = new JLabel("Account");
+		lableAccount.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				moved(lableAccount);
+			}
+		});
 		lableAccount.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -137,7 +162,7 @@ public class MainSystem extends JFrame {
 		});
 		lableAccount.setForeground(new Color(240, 255, 240));
 		lableAccount.setFont(new Font("Sitka Subheading", Font.BOLD, 17));
-		lableAccount.setBounds(10, 172, 251, 37);
+		lableAccount.setBounds(10, 151, 251, 37);
 		lableAccount.setIcon(new ImageIcon(SystemConstant.img_login));
 		panel.add(lableAccount);
 
@@ -153,6 +178,14 @@ public class MainSystem extends JFrame {
 		ChangeAccount = new PanelChangeAccount();
 		ChangeAccount.setBounds(3, 1, 760, 404);
 		lblNewLabel_1 = new JLabel("Change username and password");
+		lblNewLabel_1.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				lblNewLabel_1.setForeground(Color.white);
+				lblNewLabel.setForeground(Color.black);
+
+			}
+		});
 		lblNewLabel_1.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 13));
 		lblNewLabel_1.setBounds(10, 10, 210, 27);
 		lblNewLabel_1.addMouseListener(new MouseAdapter() {
@@ -172,6 +205,21 @@ public class MainSystem extends JFrame {
 		viewsetting.add(lblNewLabel_1);
 		
 		lblNewLabel = new JLabel("Log out");
+		lblNewLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				dispose();
+				FirstPrimitiveSystem f = new FirstPrimitiveSystem();
+				f.setVisible(true);
+			}
+		});
+		lblNewLabel.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				lblNewLabel.setForeground(Color.white);
+				lblNewLabel_1.setForeground(Color.black);
+			}
+		});
 		lblNewLabel.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 13));
 		lblNewLabel.setBounds(10, 47, 113, 18);
 		viewsetting.add(lblNewLabel);
@@ -239,10 +287,13 @@ public class MainSystem extends JFrame {
 		panel_5.setLayout(null);
 		
 		JLabel labelMain = new JLabel("");
-		labelMain.setFont(new Font("Berlin Sans FB Demi", Font.PLAIN, 14));
+		labelMain.setFont(new Font("Berlin Sans FB Demi", Font.PLAIN, 12));
 		labelMain.setBounds(721, 10, 280, 36);
 		labelMain.setIcon(new ImageIcon(SystemConstant.img_login));
-		labelMain.setText("Welcome, "+SystemConstant.staff.getFullname());
+	
+		StringBuilder st = new StringBuilder("Welcome, ");
+		st.append(SystemConstant.staff.getFullname());
+		labelMain.setText(st.toString());
 		
 		panel_5.add(labelMain);
 	}
@@ -258,6 +309,16 @@ public class MainSystem extends JFrame {
 		ChangeAccount.setVisible(false);
 		ThongKe.setVisible(false);
 		panel.setVisible(true);
-		label.setForeground(Color.cyan);
+		label.setForeground(Color.black);
+	}
+	
+	public void moved(JLabel label) {
+		labelDanhmuc.setForeground(Color.white);
+		labelCure.setForeground(Color.white);
+		lableAccount.setForeground(Color.white);
+		labelStatistic.setForeground(Color.white);
+		
+		label.setForeground(Color.black);
+		
 	}
 }
