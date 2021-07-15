@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -107,6 +108,7 @@ public class ServiceDetail extends JFrame {
 		panel.add(Search);
 		
 		JButton Exit = new JButton("");
+		
 		Exit.setToolTipText("Tho\u00E1t");
 		Exit.setFont(new Font("Tahoma", Font.BOLD, 14));
 		Exit.setBounds(1032, 14, 40, 35);
@@ -132,11 +134,16 @@ public class ServiceDetail extends JFrame {
 		panel.add(Save);
 		Save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if (txtQuantity.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Please enter field Quatity");
+				} else 
+				{
 				DetailService de = getDataByGui();
 				detailService.insert(de);
 				txtPrice.setText(String.valueOf(de.getPrice()));
 				showTable1();
 				refresh();
+				}
 			}
 		});
 		Save.setFont(new Font("Tahoma", Font.BOLD, 14));

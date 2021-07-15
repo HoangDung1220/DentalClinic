@@ -33,6 +33,7 @@ import BUS.implement.InvoiceBUS;
 import BUS.implement.MedicalFormBUS;
 import Constant.SystemConstant;
 import DTO.Invoice;
+import javax.swing.SwingConstants;
 
 public class InvoiceDanhMuc extends JFrame{
 	private static JPanel contentPane;
@@ -220,7 +221,7 @@ public class InvoiceDanhMuc extends JFrame{
 		panel_2.setLayout(null);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(10, 21, 923, 210);
+		scrollPane_1.setBounds(10, 21, 923, 170);
 		panel_2.add(scrollPane_1);
 		
 		table_1 = new JTable();
@@ -275,6 +276,41 @@ public class InvoiceDanhMuc extends JFrame{
 		btnNewButton.setBounds(842, 251, 40, 35);
 		btnNewButton.setIcon(new ImageIcon(SystemConstant.img_exit3));
 		panel_2.add(btnNewButton);
+		
+		JButton btnfirst = new JButton("<<");
+		btnfirst.setForeground(new Color(0, 51, 153));
+		btnfirst.setBackground(SystemColor.activeCaption);
+		btnfirst.setOpaque(false);
+		btnfirst.setBounds(283, 216, 57, 21);
+		panel_2.add(btnfirst);
+		
+		JButton btnbefor = new JButton("<");
+		btnbefor.setBackground(SystemColor.activeCaption);
+		btnbefor.setOpaque(false);
+		btnbefor.setBounds(340, 216, 57, 21);
+		panel_2.add(btnbefor);
+		
+		JButton btnafter = new JButton(">");
+		btnafter.setBackground(SystemColor.activeCaption);
+		btnafter.setOpaque(false);
+		btnafter.setBounds(495, 216, 57, 21);
+		panel_2.add(btnafter);
+		
+		JLabel lbpage = new JLabel("1");
+		lbpage.setHorizontalAlignment(SwingConstants.CENTER);
+		lbpage.setBounds(407, 220, 35, 13);
+		panel_2.add(lbpage);
+		
+		JButton btnlast = new JButton(">>\r\n\r\n\r\n");
+		btnlast.setBackground(SystemColor.activeCaption);
+		btnlast.setOpaque(false);
+		btnlast.setBounds(552, 216, 57, 21);
+		panel_2.add(btnlast);
+		
+		JLabel lborder = new JLabel("1/5");
+		lborder.setHorizontalAlignment(SwingConstants.CENTER);
+		lborder.setBounds(440, 220, 35, 13);
+		panel_2.add(lborder);
 
 }
 

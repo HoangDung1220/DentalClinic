@@ -74,6 +74,7 @@ public class InvoiceDAL extends AbstractDAL<Invoice> implements IInvoiceDAL {
 	@Override
 	public Invoice fidOneByIdMedical(int id) {
 		StringBuilder st =new StringBuilder("select *from invoice inner join medical_form ON invoice.id_medical_form = medical_form.id ");
+		st.append("inner join staff ON invoice.id_staff = staff.id ");
 		st.append("inner join patient ON medical_form.id_patient = patient.id where invoice.id_medical_form=?");
 		List<Invoice> list = query(st.toString(),new InvoiceMapper(),id);
 		return list.isEmpty()?null:list.get(0);

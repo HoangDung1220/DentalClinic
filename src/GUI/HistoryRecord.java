@@ -1,19 +1,25 @@
 package GUI;
 
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
+import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,16 +31,6 @@ import DTO.DetailService;
 import DTO.MedicalForm;
 import DTO.Patient;
 import DTO.Prescription;
-
-import javax.swing.JScrollPane;
-import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JRadioButton;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.BevelBorder;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class HistoryRecord extends JFrame {
 
@@ -118,36 +114,46 @@ public class HistoryRecord extends JFrame {
 		panel.add(lblNewLabel_4);
 		
 		txtName = new JTextField();
+		txtName.setEditable(false);
+		txtName.setOpaque(false);
 		txtName.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, SystemColor.activeCaptionBorder, null, null, null));
-		txtName.setBounds(155, 37, 197, 19);
+		txtName.setBounds(155, 37, 228, 20);
 		panel.add(txtName);
 		txtName.setColumns(10);
 		
 		txtAddress = new JTextField();
+		txtAddress.setEditable(false);
+		txtAddress.setOpaque(false);
 		txtAddress.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, SystemColor.inactiveCaptionBorder, null, null, null));
-		txtAddress.setBounds(155, 80, 197, 19);
+		txtAddress.setBounds(155, 80, 228, 20);
 		panel.add(txtAddress);
 		txtAddress.setColumns(10);
 		
 		txtBirthday = new JTextField();
+		txtBirthday.setEditable(false);
+		txtBirthday.setOpaque(false);
 		txtBirthday.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, SystemColor.activeCaptionBorder, null, null, null));
-		txtBirthday.setBounds(155, 124, 197, 19);
+		txtBirthday.setBounds(155, 124, 228, 20);
 		panel.add(txtBirthday);
 		txtBirthday.setColumns(10);
 		
 		txtICard = new JTextField();
+		txtICard.setEditable(false);
+		txtICard.setOpaque(false);
 		txtICard.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, SystemColor.activeCaptionBorder, null, null, null));
-		txtICard.setBounds(155, 172, 197, 19);
+		txtICard.setBounds(155, 172, 228, 20);
 		panel.add(txtICard);
 		txtICard.setColumns(10);
 		
 		Male = new JRadioButton("Male");
+		Male.setOpaque(false);
 		Male.setFont(new Font("Tahoma", Font.BOLD, 12));
 		Male.setBackground(SystemColor.activeCaption);
 		Male.setBounds(155, 213, 103, 21);
 		panel.add(Male);
 		
 		Female = new JRadioButton("Female");
+		Female.setOpaque(false);
 		Female.setBackground(SystemColor.activeCaption);
 		Female.setFont(new Font("Tahoma", Font.BOLD, 12));
 		Female.setBounds(284, 213, 103, 21);

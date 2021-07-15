@@ -65,7 +65,6 @@ public class ManagementInvoice extends JFrame {
 
 	private InvoiceBUS invoiceExecute = new InvoiceBUS();
 
-
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -206,8 +205,23 @@ public class ManagementInvoice extends JFrame {
 		search.setIcon(new ImageIcon(SystemConstant.img_add));
 		search.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				btnNewButton_1.setEnabled(true);
 				if ((textIDMedical.getText()).length()>0) {
-				setGui(Integer.parseInt(textIDMedical.getText()));
+					int id_form = Integer.parseInt(textIDMedical.getText());
+					Invoice invoice = invoiceExecute.findOneByIdMedical(id_form);
+					if (invoice != null)
+						{
+						btnNewButton_1.setEnabled(false);
+						setGui(id_form);
+						lbDate.setText(String.valueOf(invoice.getPayDate()));
+						lbTotalMedicine.setText(String.valueOf(invoice.getTotalPriceMedicine()));
+						lbTotalService.setText(String.valueOf(invoice.getTotalPriceService()));
+						TotalPrice.setText(String.valueOf(invoice.getTotalPrice()));
+						}
+					else
+					{
+					setGui(id_form);
+					}
 				} else 
 				{
 					lblNewLabel_6.setText("Please fill out this field");

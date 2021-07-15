@@ -17,7 +17,6 @@ public class InvoiceBUS implements IInvoiceBUS {
 
 	@Override
 	public Invoice findOne(String id) {
-		// TODO Auto-generated method stub
 		return invoice.findOne(id);
 	}
 
@@ -28,7 +27,6 @@ public class InvoiceBUS implements IInvoiceBUS {
 
 	@Override
 	public void Update(Invoice invoice1) {
-		// TODO Auto-generated method stub
 		
 	}
 

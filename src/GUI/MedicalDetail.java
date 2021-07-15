@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -190,7 +191,16 @@ public class MedicalDetail extends JFrame {
 		Save.setToolTipText("L\u01B0u d\u1EEF li\u1EC7u");
 		Save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+			if (txtQuantity.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "Please enter field Quatity");
+			} else 
+			{
 				Prescription p = getDataByGui();
+				Medicine medicine1 = medicine.findOne(p.getIdMedicine());
+				if (medicine1.getQuantity()<Integer.parseInt(txtQuantity.getText())) {
+					JOptionPane.showMessageDialog(null, "The quantity of medicine is not enough");
+				} else 
+				{
 				txtPrice.setText(String.valueOf(p.getPrice()));
 				prescription.insert(p);
 				showTable1();
@@ -198,7 +208,8 @@ public class MedicalDetail extends JFrame {
 				medicine.update(m);
 				refreshData();
 				refresh();
-				
+				}
+			}	
 			}
 		});
 		Save.setIcon(new ImageIcon(SystemConstant.img_save1));
@@ -358,6 +369,10 @@ public class MedicalDetail extends JFrame {
 		txtNameSearch.setColumns(10);
 		
 		JButton btnNewButton_4 = new JButton("EXIT ");
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnNewButton_4.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnNewButton_4.setBounds(922, 569, 85, 21);
 		btnNewButton_4.addMouseListener(new MouseAdapter() {

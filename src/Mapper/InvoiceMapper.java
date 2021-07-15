@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 import DTO.Invoice;
+import DTO.Patient;
 import DTO.Staff;
 
 public class InvoiceMapper implements RowMapper<Invoice> {
@@ -25,12 +26,12 @@ public class InvoiceMapper implements RowMapper<Invoice> {
 			try {
 				Staff staff = new StaffMapper().mapRow(rs);
 				invoice.setStaff(staff);
+				
 			}
 			catch (Exception e) {
 				
 			}
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, "loi");
 		}
 		return invoice;
 	}

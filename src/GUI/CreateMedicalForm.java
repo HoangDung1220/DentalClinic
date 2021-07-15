@@ -37,12 +37,12 @@ import DTO.MedicalForm;
 import DTO.Patient;
 import DTO.Prescription;
 import DTO.Staff;
+import javax.swing.UIManager;
 
 public class CreateMedicalForm extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtIDSearch;
-	private JTextField txtForm;
 	private JButton Search;
 	private JTable table;
 	private JTable table_1;
@@ -71,6 +71,7 @@ public class CreateMedicalForm extends JFrame {
 	PrescriptionBUS prescription = new PrescriptionBUS();
 	MedicalFormBUS form = new MedicalFormBUS();
 	PatientBUS patient = new PatientBUS();
+	private JTextField txtForm;
 
 	
 	public static void main(String[] args) {
@@ -162,9 +163,10 @@ public class CreateMedicalForm extends JFrame {
 		panel_1.add(lblNewLabel_7);
 		
 		txtbefore = new JTextArea();
+		txtbefore.setForeground(new Color(0, 51, 204));
 		txtbefore.setOpaque(false);
 		txtbefore.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		txtbefore.setFont(new Font("Tahoma", Font.BOLD, 12));
+		txtbefore.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtbefore.setBackground(SystemColor.scrollbar);
 		txtbefore.setBounds(163, 89, 269, 28);
 		panel_1.add(txtbefore);
@@ -175,6 +177,7 @@ public class CreateMedicalForm extends JFrame {
 		panel_1.add(lblNewLabel_6);
 		
 		txtContent_cure = new JTextArea();
+		txtContent_cure.setForeground(new Color(0, 51, 204));
 		txtContent_cure.setOpaque(false);
 		txtContent_cure.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		txtContent_cure.setBackground(new Color(245, 245, 245));
@@ -195,8 +198,11 @@ public class CreateMedicalForm extends JFrame {
 		Create.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				MedicalForm m = getDataByGui();
-				txtForm.setText(String.valueOf(medical_form.insert(m)));
+				int id = medical_form.insert(m);
+				txtForm.setText(String.valueOf(id));
 				JOptionPane.showMessageDialog(null, "You create medical_form successful");
+				Dental_service.setEnabled(true);
+				Medicine.setEnabled(true);
 				
 				
 				
@@ -205,19 +211,19 @@ public class CreateMedicalForm extends JFrame {
 		Create.setFont(new Font("Tahoma", Font.BOLD, 13));
 		
 		txtIDPatient = new JLabel("");
-		txtIDPatient.setForeground(SystemColor.menu);
+		txtIDPatient.setForeground(new Color(0, 51, 204));
 		txtIDPatient.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtIDPatient.setBounds(164, 16, 252, 23);
 		panel_1.add(txtIDPatient);
 		
 		txtNamePatient = new JLabel("");
-		txtNamePatient.setForeground(SystemColor.menu);
+		txtNamePatient.setForeground(new Color(0, 51, 204));
 		txtNamePatient.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtNamePatient.setBounds(163, 49, 257, 20);
 		panel_1.add(txtNamePatient);
 		
 	    txtAge = new JLabel("");
-		txtAge.setForeground(SystemColor.menu);
+		txtAge.setForeground(new Color(0, 51, 204));
 		txtAge.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtAge.setBounds(590, 21, 147, 13);
 		panel_1.add(txtAge);
@@ -234,14 +240,6 @@ public class CreateMedicalForm extends JFrame {
 		lblNewLabel_1.setBounds(20, 14, 61, 22);
 		panel_4.add(lblNewLabel_1);
 		
-		txtForm = new JTextField();
-		txtForm.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		txtForm.setBounds(104, 17, 136, 23);
-		txtForm.setVisible(false);
-		txtForm.setEnabled(false);
-		panel_4.add(txtForm);
-		txtForm.setColumns(10);
-		
 		JLabel lblNewLabel_2 = new JLabel("Dentist :");
 		lblNewLabel_2.setFont(new Font("Segoe UI Black", Font.BOLD, 13));
 		lblNewLabel_2.setBounds(282, 17, 74, 16);
@@ -252,16 +250,22 @@ public class CreateMedicalForm extends JFrame {
 		panel_4.add(lblNewLabel_5);
 		lblNewLabel_5.setFont(new Font("Segoe UI Black", Font.BOLD, 13));
 		txtDate.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txtDate.setForeground(SystemColor.menu);
+		txtDate.setForeground(new Color(0, 51, 204));
 		
 		txtDate.setBounds(105, 57, 145, 22);
 		panel_4.add(txtDate);
 		
 		txtNameDentist = new JLabel("");
 		txtNameDentist.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txtNameDentist.setForeground(SystemColor.menu);
+		txtNameDentist.setForeground(new Color(0, 51, 204));
 		txtNameDentist.setBounds(366, 14, 221, 22);
 		panel_4.add(txtNameDentist);
+		
+		txtForm = new JTextField();
+		txtForm.setEditable(false);
+		txtForm.setBounds(102, 17, 96, 19);
+		panel_4.add(txtForm);
+		txtForm.setColumns(10);
 
 		
 		JPanel panel_2 = new JPanel();
@@ -276,7 +280,6 @@ public class CreateMedicalForm extends JFrame {
 		scrollPane.setBounds(10, 24, 960, 96);
 		panel_2.add(scrollPane);
 		
-		getInit();///
 		table = new JTable(defaultTable);
 		scrollPane.setViewportView(table);
 		
@@ -307,6 +310,7 @@ public class CreateMedicalForm extends JFrame {
 		panel_5.add(lblNewLabel_9);
 		
 		txtAfter = new JTextArea();
+		txtAfter.setForeground(new Color(0, 51, 204));
 		txtAfter.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtAfter.setOpaque(false);
 		txtAfter.setBackground(new Color(211, 211, 211));
@@ -320,6 +324,7 @@ public class CreateMedicalForm extends JFrame {
 		panel_5.add(lblNewLabel_10);
 		
 		JTextArea txtNote = new JTextArea();
+		txtNote.setForeground(new Color(0, 51, 204));
 		txtNote.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtNote.setOpaque(false);
 		txtNote.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -347,7 +352,7 @@ public class CreateMedicalForm extends JFrame {
 		btnNewButton_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (check) {
-					int res=JOptionPane.showConfirmDialog(null, "You are sure delete databases","confirm", JOptionPane.YES_NO_OPTION);
+					int res=JOptionPane.showConfirmDialog(null, "You are sure you want to exit","confirm", JOptionPane.YES_NO_OPTION);
 					if (res!= JOptionPane.YES_OPTION) {
 						return ;
 					
@@ -413,6 +418,7 @@ public class CreateMedicalForm extends JFrame {
 		});
 		History_record.setFont(new Font("Tahoma", Font.BOLD, 13));
 		History_record.setToolTipText("Lịch sử bệnh án bệnh nhân ");
+		getInit();///
 		GuiInit();
 
 	}
@@ -482,7 +488,11 @@ public class CreateMedicalForm extends JFrame {
 			txtIDPatient.setText(String.valueOf(medical_Form.getIdPatient()));
 			showTableService();
 			showTable1();
-		} 
+		} else 
+		{
+			Dental_service.setEnabled(false);
+			Medicine.setEnabled(false);
+		}
 
 	}
 }

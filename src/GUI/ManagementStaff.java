@@ -44,6 +44,7 @@ import Checked.DataChecked;
 import Constant.SystemConstant;
 import DTO.Role;
 import DTO.Staff;
+import javax.swing.SwingConstants;
 
 public class ManagementStaff extends JFrame {
 
@@ -78,6 +79,12 @@ public class ManagementStaff extends JFrame {
 	DefaultTableModel defaultTable = new DefaultTableModel();
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	StaffBUS staff = new StaffBUS();
+	private JLabel lblNewLabel_11;
+	private JLabel lblNewLabel_12;
+	private JButton btnNewButton_1;
+	private JButton btnNewButton_2;
+	private JButton btnNewButton_3;
+	private JButton btnNewButton_4;
 	
 
 	
@@ -466,7 +473,7 @@ public class ManagementStaff extends JFrame {
 		panel_2.setLayout(null);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 48, 1049, 145);
+		scrollPane.setBounds(20, 18, 1049, 145);
 		panel_2.add(scrollPane);
 		
 		table = new JTable(defaultTable);
@@ -477,6 +484,54 @@ public class ManagementStaff extends JFrame {
 		panel_2.add(lbNote);
 		lbNote.setForeground(Color.RED);
 		lbNote.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		
+		lblNewLabel_11 = new JLabel("1");
+		lblNewLabel_11.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblNewLabel_11.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_11.setBounds(518, 177, 45, 13);
+		panel_2.add(lblNewLabel_11);
+		
+		lblNewLabel_12 = new JLabel("1/5\r\n");
+		lblNewLabel_12.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblNewLabel_12.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_12.setBounds(573, 177, 45, 13);
+		panel_2.add(lblNewLabel_12);
+		
+		btnNewButton_1 = new JButton("<");
+		btnNewButton_1.setOpaque(false);
+		btnNewButton_1.setForeground(new Color(0, 51, 204));
+		btnNewButton_1.setBackground(SystemColor.activeCaption);
+		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnNewButton_1.setBounds(411, 173, 55, 21);
+		panel_2.add(btnNewButton_1);
+		
+		btnNewButton_2 = new JButton("<<");
+		btnNewButton_2.setOpaque(false);
+		btnNewButton_2.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnNewButton_2.setForeground(new Color(0, 51, 204));
+		btnNewButton_2.setBackground(SystemColor.activeCaption);
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnNewButton_2.setBounds(316, 173, 60, 21);
+		panel_2.add(btnNewButton_2);
+		
+		btnNewButton_3 = new JButton(">");
+		btnNewButton_3.setOpaque(false);
+		btnNewButton_3.setBackground(SystemColor.activeCaption);
+		btnNewButton_3.setForeground(new Color(0, 51, 204));
+		btnNewButton_3.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnNewButton_3.setBounds(628, 173, 55, 21);
+		panel_2.add(btnNewButton_3);
+		
+		btnNewButton_4 = new JButton(">>");
+		btnNewButton_4.setOpaque(false);
+		btnNewButton_4.setForeground(new Color(0, 51, 204));
+		btnNewButton_4.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnNewButton_4.setBackground(SystemColor.activeCaption);
+		btnNewButton_4.setBounds(724, 173, 60, 21);
+		panel_2.add(btnNewButton_4);
 		
 		table.addMouseListener(new MouseAdapter() {
 

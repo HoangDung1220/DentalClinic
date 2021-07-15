@@ -19,6 +19,51 @@ public class AbstractPerson<T> {
 	private String iCard;
 	private List<T> list = new ArrayList<T>();
 	
+	private int totalItem;
+	private int totalPage;
+	private int limit;
+	private int page;
+	
+	public int getTotalItem() {
+		return totalItem;
+	}
+
+
+	public void setTotalItem(int totalItem) {
+		this.totalItem = totalItem;
+	}
+
+
+	public int getTotalPage() {
+		return totalPage;
+	}
+
+
+	public void setTotalPage(int totalPage) {
+		this.totalPage = totalPage;
+	}
+
+
+	public int getLimit() {
+		return limit;
+	}
+
+
+	public void setLimit(int limit) {
+		this.limit = limit;
+	}
+
+
+	public int getPage() {
+		return page;
+	}
+
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+
 	public AbstractPerson() {
 		
 	}

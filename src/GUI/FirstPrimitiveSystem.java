@@ -18,13 +18,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import Constant.SystemConstant;
+import java.awt.event.MouseMotionAdapter;
 
 public class FirstPrimitiveSystem extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtSignIn;
 	private JTextArea txtIntro;
-	private JSeparator separator;
 
 	
 	public static void main(String[] args) {
@@ -58,24 +58,27 @@ public class FirstPrimitiveSystem extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		separator = new JSeparator();
-		separator.setBounds(508, 187, 80, 13);
-		panel.add(separator);
-		
 		txtIntro = new JTextArea();
 		txtIntro.setForeground(new Color(0, 0, 0));
 		txtIntro.setBackground(SystemColor.activeCaption);
 		txtIntro.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		txtIntro.setBounds(10, 193, 600, 225);
+		txtIntro.setBounds(10, 203, 600, 215);
 		txtIntro.setText(SystemConstant.introduction.toString());
 		panel.add(txtIntro);
 		
 		txtSignIn = new JTextField();
+		txtSignIn.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				txtSignIn.setForeground(Color.LIGHT_GRAY);
+
+			}
+		});
 		txtSignIn.setForeground(new Color(0, 0, 205));
-		txtSignIn.setBounds(518, 164, 70, 19);
+		txtSignIn.setBounds(510, 169, 100, 47);
 		panel.add(txtSignIn);
 		txtSignIn.setBorder(null);
-		txtSignIn.setFont(new Font("Berlin Sans FB Demi", Font.PLAIN, 18));
+		txtSignIn.setFont(new Font("Berlin Sans FB Demi", Font.PLAIN, 22));
 		txtSignIn.setText("Sign in");
 		txtSignIn.setBackground(SystemColor.activeCaption);
 		txtSignIn.addMouseListener(new MouseAdapter() {
