@@ -2,7 +2,9 @@ package DAL;
 
 import java.util.List;
 
+
 import DTO.Staff;
+import PAGING.Pageble;
 
 
 public interface IStaffDAL {
@@ -13,6 +15,8 @@ public interface IStaffDAL {
 	public void delete(int id);
 	public Staff searchByUserNameAndPassword(String username,String password);
 	public List<Staff> searchByIDOrName(int id,String name);
+	public List<Staff> findStaffWithPage(Pageble pageble);
+
 
 	
 

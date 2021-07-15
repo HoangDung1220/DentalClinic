@@ -109,7 +109,7 @@ public class medical extends JFrame {
 		panel.add(lbDate);
 		
 		lbStaff = new JLabel("");
-		lbStaff.setBounds(123, 145, 120, 17);
+		lbStaff.setBounds(123, 145, 195, 17);
 		lbStaff.setForeground(Color.white);
 		panel.add(lbStaff);
 		

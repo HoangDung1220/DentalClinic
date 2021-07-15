@@ -3,12 +3,11 @@ package DAL.implement;
 import java.sql.Timestamp;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
 import Constant.SystemConstant;
 import DAL.IStaffDAL;
 import DTO.Staff;
 import Mapper.StaffMapper;
+import PAGING.Pageble;
 
 public class StaffDAL extends AbstractDAL<Staff> implements IStaffDAL {
 
@@ -80,8 +79,26 @@ public class StaffDAL extends AbstractDAL<Staff> implements IStaffDAL {
 				 st.append("where staff.fullname like '%"+name+"%'");
 			 }
 		}
+		
 		 listStaff=query(st.toString(),new StaffMapper());
 		 return listStaff;
+	}
+
+	
+
+	@Override
+	public List<Staff> findStaffWithPage(Pageble pageble) {
+		StringBuilder querry = new StringBuilder();
+		querry.append("select *from staff inner join role on staff.id_role=role.id ");
+		if ((Integer) pageble.getOffset()!=null && (Integer) pageble.getLimit()!=null) {
+			querry.append("limit "+pageble.getOffset()+","+pageble.getLimit()+"");
+			return query(querry.toString(),new StaffMapper());
+		}
+		else 	
+		{		
+			return query(querry.toString(),new StaffMapper());
+		}
+		
 	}
 
 }

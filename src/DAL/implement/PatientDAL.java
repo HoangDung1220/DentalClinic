@@ -6,6 +6,8 @@ import java.util.List;
 import DAL.IPatientDAL;
 import DTO.Patient;
 import Mapper.PatientMapper;
+import Mapper.StaffMapper;
+import PAGING.Pageble;
 
 public class PatientDAL extends AbstractDAL<Patient> implements IPatientDAL{
 
@@ -69,6 +71,20 @@ public class PatientDAL extends AbstractDAL<Patient> implements IPatientDAL{
 	public List<Patient> findAllByDate() {
 		 String st ="select *from patient where created_date=?";    
 			return query(st,new PatientMapper(), new Timestamp(System.currentTimeMillis()));
+	}
+
+	@Override
+	public List<Patient> findAllPage(Pageble pageble) {
+		StringBuilder querry = new StringBuilder();
+		querry.append("select *from patient ");
+		if ((Integer) pageble.getOffset()!=null && (Integer) pageble.getLimit()!=null) {
+			querry.append("limit "+pageble.getOffset()+","+pageble.getLimit()+"");
+			return query(querry.toString(),new PatientMapper());
+		}
+		else 	
+		{		
+			return query(querry.toString(),new PatientMapper());
+		}
 	}
 	
 }

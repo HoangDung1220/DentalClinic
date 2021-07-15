@@ -7,6 +7,7 @@ import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +32,14 @@ import BUS.IPatientBUS;
 import BUS.implement.PatientBUS;
 import Constant.SystemConstant;
 import DTO.Patient;
+import DTO.Staff;
+import PAGING.PageRequest;
+import PAGING.Pageble;
+
 import javax.swing.border.BevelBorder;
 import javax.swing.SwingConstants;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.SoftBevelBorder;
 
 public class PatientStatisticalGui extends JFrame {
 
@@ -44,6 +51,11 @@ public class PatientStatisticalGui extends JFrame {
 	private JDateChooser dateChooserFrom , dateChooserTo;
 	private JButton btnNewButtonListPatient;
 	private JButton btnNewButton;
+	private IPatientBUS patient = new PatientBUS();
+	private static int totalPages;
+	private JLabel lbpage;
+	private JLabel lbtotalpage;
+
 
 	/**
 	 * Launch the application.
@@ -135,8 +147,74 @@ public class PatientStatisticalGui extends JFrame {
 			return model;
 		 }
 
+		public static DefaultTableModel showDataToTable1()  
+		{
+			int count =0, countMale=0, countFemale=0;
+			DefaultTableModel model =new DefaultTableModel();
+			Vector<String> column =new Vector<String>();
+			setColumn(column);
+	        model.setColumnIdentifiers(column);
+	        IPatientBUS patient = new PatientBUS();
+			List<Patient> list =new ArrayList<Patient>();
+			list= patient.findAll();     // find all patient
+
+			
+				for (int i=0;i<list.size();i++)
+				{
+					Patient p=(Patient)list.get(i);
+					
+					{   if (p.getGender()==false) countFemale++;
+					    else if (p.getGender()==true) countMale++;
+						Vector<Object> row =new Vector<Object>();
+	    				getDataToRow(row,p);				
+	    				model.addRow(row);	
+	    				count++;
+					}
+
+
+
+				}
+			
+
+			textFieldSL.setText(""+count);
+			textFieldFemale.setText(""+countFemale);
+			textFieldMale.setText(""+countMale);
+			return model;
+		 }
+		
+		public static DefaultTableModel showDataToTable2(List<Patient> list)  
+		{
+			int count =0, countMale=0, countFemale=0;
+			DefaultTableModel model =new DefaultTableModel();
+			Vector<String> column =new Vector<String>();
+			setColumn(column);
+	        model.setColumnIdentifiers(column);
+
+			
+				for (int i=0;i<list.size();i++)
+				{
+					Patient p=(Patient)list.get(i);
+					
+					{   if (p.getGender()==false) countFemale++;
+					    else if (p.getGender()==true) countMale++;
+						Vector<Object> row =new Vector<Object>();
+	    				getDataToRow(row,p);				
+	    				model.addRow(row);	
+	    				count++;
+					}
+
+
+
+				}
+			
+
+		
+			return model;
+		 }
 
 	public PatientStatisticalGui() {
+
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 987, 662);
 		contentPane = new JPanel();
@@ -192,8 +270,9 @@ public class PatientStatisticalGui extends JFrame {
 		lblSLng.setBackground(Color.GRAY);
 
 		textFieldSL = new JTextField();
+		textFieldSL.setFont(new Font("Tahoma", Font.BOLD, 10));
+		textFieldSL.setForeground(new Color(0, 51, 0));
 		textFieldSL.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		textFieldSL.setOpaque(false);
 		textFieldSL.setBounds(178, 15, 81, 20);
 		textFieldSL.enable(false);
 		panel.add(textFieldSL);
@@ -212,7 +291,8 @@ public class PatientStatisticalGui extends JFrame {
 		panel.add(lblN);
 
 		textFieldMale = new JTextField();
-		textFieldMale.setOpaque(false);
+		textFieldMale.setFont(new Font("Tahoma", Font.BOLD, 10));
+		textFieldMale.setForeground(new Color(0, 51, 153));
 		textFieldMale.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		textFieldMale.setBounds(559, 15, 55, 20);
 		textFieldMale.setColumns(10);
@@ -220,7 +300,8 @@ public class PatientStatisticalGui extends JFrame {
 		panel.add(textFieldMale);
 
 		textFieldFemale = new JTextField();
-		textFieldFemale.setOpaque(false);
+		textFieldFemale.setFont(new Font("Tahoma", Font.BOLD, 10));
+		textFieldFemale.setForeground(new Color(0, 51, 102));
 		textFieldFemale.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		textFieldFemale.setBounds(846, 15, 55, 20);
 		textFieldFemale.setColumns(10);
@@ -228,7 +309,7 @@ public class PatientStatisticalGui extends JFrame {
 		panel.add(textFieldFemale);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 47, 933, 469);
+		scrollPane.setBounds(10, 47, 933, 387);
 		panel.add(scrollPane);
 
 		table = new JTable();
@@ -272,6 +353,130 @@ public class PatientStatisticalGui extends JFrame {
 
 
 			}
+			
 		});
+	    table.setModel(showDataToTable1());
+	    
+	    JButton btnfirst = new JButton("<<");
+	    btnfirst.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+	    btnfirst.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent arg0) {
+	    		Patient s= paging(1,SystemConstant.LIMIT);
+				decorPaging(s);
+			    table.setModel(showDataToTable2(s.getList()));
+	    	}
+	    });
+	    btnfirst.setOpaque(false);
+	    btnfirst.setBackground(SystemColor.activeCaption);
+	    btnfirst.setForeground(new Color(0, 51, 204));
+	    btnfirst.setFont(new Font("Tahoma", Font.BOLD, 10));
+	    btnfirst.setBounds(323, 464, 60, 21);
+	    panel.add(btnfirst);
+	    
+	    JButton btnbefore = new JButton("<");
+	    btnbefore.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+	    btnbefore.setBackground(SystemColor.activeCaption);
+	    btnbefore.setOpaque(false);
+	    btnbefore.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent arg0) {
+	    		int currentPage = Integer.parseInt(lbpage.getText());
+				if (currentPage>1) {
+				String page = String.valueOf(--currentPage);
+				Patient s= paging(currentPage,SystemConstant.LIMIT);
+				lbpage.setText(page);
+				lbtotalpage.setText(s.getPage()+"/"+s.getTotalPage());
+			    table.setModel(showDataToTable2(s.getList()));
+				} else 
+				{
+					Patient s= paging(currentPage,SystemConstant.LIMIT);
+				    table.setModel(showDataToTable2(s.getList()));
+
+				}
+	    	}
+	    });
+	    btnbefore.setForeground(new Color(0, 51, 204));
+	    btnbefore.setFont(new Font("Tahoma", Font.BOLD, 10));
+	    btnbefore.setBounds(393, 464, 55, 21);
+	    panel.add(btnbefore);
+	    
+	    lbpage = new JLabel("");
+	    lbpage.setHorizontalAlignment(SwingConstants.CENTER);
+	    lbpage.setBounds(446, 468, 45, 13);
+	    panel.add(lbpage);
+	    
+	    lbtotalpage = new JLabel("");
+	    lbtotalpage.setHorizontalAlignment(SwingConstants.CENTER);
+	    lbtotalpage.setBounds(489, 468, 45, 13);
+	    panel.add(lbtotalpage);
+	    
+	    JButton lbafter = new JButton(">");
+	    lbafter.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+	    lbafter.setBackground(SystemColor.activeCaption);
+	    lbafter.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent arg0) {
+	    		int currentPage = Integer.parseInt(lbpage.getText());
+				if (currentPage<totalPages) {
+				String page = String.valueOf(++currentPage);
+				Patient s= paging(currentPage,SystemConstant.LIMIT);
+				lbpage.setText(page);
+				lbtotalpage.setText(s.getPage()+"/"+s.getTotalPage());
+			    table.setModel(showDataToTable2(s.getList()));
+				} else 
+				{
+					Patient s= paging(currentPage,SystemConstant.LIMIT);
+				    table.setModel(showDataToTable2(s.getList()));
+
+				}
+				
+	    	}
+	    });
+	    lbafter.setOpaque(false);
+	    lbafter.setForeground(new Color(0, 51, 204));
+	    lbafter.setFont(new Font("Tahoma", Font.BOLD, 10));
+	    lbafter.setBounds(543, 464, 55, 21);
+	    panel.add(lbafter);
+	    
+	    JButton lblast = new JButton(">>");
+	    lblast.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+	    lblast.setBackground(SystemColor.activeCaption);
+	    lblast.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent arg0) {
+	    		Patient s= paging(totalPages,SystemConstant.LIMIT);
+				decorPaging(s);
+			    table.setModel(showDataToTable2(s.getList()));
+
+	    	}
+	    });
+	    lblast.setOpaque(false);
+	    lblast.setForeground(new Color(0, 51, 204));
+	    lblast.setFont(new Font("Tahoma", Font.BOLD, 10));
+	    lblast.setBounds(608, 464, 60, 21);
+	    panel.add(lblast);
+	    showDataToTable1();
+	    Patient p = paging(1,SystemConstant.LIMIT);
+	    table.setModel(showDataToTable2(p.getList()));
+		decorPaging(p);
+
+	}
+	public Patient paging(int page,int limit){
+		Patient s= new Patient();
+		List<Patient> list = patient.findAll();
+		int totalItem = list.size();
+		int totalPage = (int) Math.ceil(((double) totalItem)/limit);
+		Pageble pageable =  new PageRequest(page, limit);
+		List<Patient> listPaging = patient.findAllPaging(pageable);
+		s.setTotalItem(totalItem);
+		s.setTotalPage(totalPage);
+		s.setPage(page);
+		s.setLimit(limit);
+		s.setList(listPaging);
+		totalPages = s.getTotalPage();
+		return s;
+	}
+	
+	public void decorPaging(Patient p) {
+		lbpage.setText(String.valueOf(p.getPage()));
+		lbtotalpage.setText(p.getPage()+"/"+p.getTotalPage());
+
 	}
 }

@@ -11,6 +11,7 @@ import DTO.Invoice;
 import DTO.MedicalForm;
 import DTO.Prescription;
 import DTO.Staff;
+import PAGING.Pageble;
 
 public class StaffBUS implements IStaffBUS{
 	
@@ -88,6 +89,11 @@ public class StaffBUS implements IStaffBUS{
 	@Override
 	public List<Staff> searchByIDOrName(int id, String name) {
 		return staff.searchByIDOrName(id, name);
+	}
+
+	@Override
+	public List<Staff> findStaffWithPage(Pageble pageble) {
+		return staff.findStaffWithPage(pageble);
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import BUS.IPatientBUS;
 import DAL.implement.PatientDAL;
 import DTO.Patient;
+import PAGING.Pageble;
 
 public class PatientBUS implements IPatientBUS{
 	
@@ -65,6 +66,11 @@ public class PatientBUS implements IPatientBUS{
 	@Override
 	public List<Patient> findAllByDate() {
 		return patient.findAllByDate();
+	}
+
+	@Override
+	public List<Patient> findAllPaging(Pageble pageble) {
+		return patient.findAllPage(pageble);
 	}
 
 }

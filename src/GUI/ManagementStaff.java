@@ -10,6 +10,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.print.Pageable;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -44,6 +45,9 @@ import Checked.DataChecked;
 import Constant.SystemConstant;
 import DTO.Role;
 import DTO.Staff;
+import PAGING.PageRequest;
+import PAGING.Pageble;
+
 import javax.swing.SwingConstants;
 
 public class ManagementStaff extends JFrame {
@@ -79,12 +83,13 @@ public class ManagementStaff extends JFrame {
 	DefaultTableModel defaultTable = new DefaultTableModel();
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	StaffBUS staff = new StaffBUS();
-	private JLabel lblNewLabel_11;
-	private JLabel lblNewLabel_12;
-	private JButton btnNewButton_1;
-	private JButton btnNewButton_2;
-	private JButton btnNewButton_3;
-	private JButton btnNewButton_4;
+	private JLabel lbpage;
+	private JLabel lbtotalpage;
+	private JButton btnbefore;
+	private JButton btnfirst;
+	private JButton lbafter;
+	private JButton lblast;
+	private static int totalPages;
 	
 
 	
@@ -103,7 +108,8 @@ public class ManagementStaff extends JFrame {
 
 	
 	public ManagementStaff() {
-		showTable(staff.findAll());
+		
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1116, 607);
 		contentPane = new JPanel();
@@ -175,7 +181,11 @@ public class ManagementStaff extends JFrame {
 		Search.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				 List<Staff> list = new ArrayList<Staff>();
-				String ch = txtChar.getText();
+				 if (txtChar.getText().length()==0) {
+					  lbNote.setText("Please enter value in Char's field ");
+				 } 
+				 else {
+				 String ch = txtChar.getText();
 				  if (ID_Staff.isSelected()) {
 					  boolean check = true;
 					  for (int i=0;i<ch.length();i++) {
@@ -209,6 +219,8 @@ public class ManagementStaff extends JFrame {
 
 				  }
 					  
+			}
+				
 			}
 		});
 		Search.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
@@ -473,7 +485,7 @@ public class ManagementStaff extends JFrame {
 		panel_2.setLayout(null);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(20, 18, 1049, 145);
+		scrollPane.setBounds(20, 41, 1049, 122);
 		panel_2.add(scrollPane);
 		
 		table = new JTable(defaultTable);
@@ -485,53 +497,99 @@ public class ManagementStaff extends JFrame {
 		lbNote.setForeground(Color.RED);
 		lbNote.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
-		lblNewLabel_11 = new JLabel("1");
-		lblNewLabel_11.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblNewLabel_11.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_11.setBounds(518, 177, 45, 13);
-		panel_2.add(lblNewLabel_11);
+		lbpage = new JLabel("1");
+		lbpage.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lbpage.setHorizontalAlignment(SwingConstants.CENTER);
+		lbpage.setBounds(498, 177, 45, 13);
+		panel_2.add(lbpage);
 		
-		lblNewLabel_12 = new JLabel("1/5\r\n");
-		lblNewLabel_12.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblNewLabel_12.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_12.setBounds(573, 177, 45, 13);
-		panel_2.add(lblNewLabel_12);
+		lbtotalpage = new JLabel("1/5\r\n");
+		lbtotalpage.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lbtotalpage.setHorizontalAlignment(SwingConstants.CENTER);
+		lbtotalpage.setBounds(553, 177, 45, 13);
+		panel_2.add(lbtotalpage);
 		
-		btnNewButton_1 = new JButton("<");
-		btnNewButton_1.setOpaque(false);
-		btnNewButton_1.setForeground(new Color(0, 51, 204));
-		btnNewButton_1.setBackground(SystemColor.activeCaption);
-		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnNewButton_1.setBounds(411, 173, 55, 21);
-		panel_2.add(btnNewButton_1);
-		
-		btnNewButton_2 = new JButton("<<");
-		btnNewButton_2.setOpaque(false);
-		btnNewButton_2.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnNewButton_2.setForeground(new Color(0, 51, 204));
-		btnNewButton_2.setBackground(SystemColor.activeCaption);
-		btnNewButton_2.addActionListener(new ActionListener() {
+		btnbefore = new JButton("<");
+		btnbefore.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				int currentPage = Integer.parseInt(lbpage.getText());
+				if (currentPage>1) {
+				String page = String.valueOf(--currentPage);
+				Staff s= paging(currentPage,SystemConstant.LIMIT);
+				lbpage.setText(page);
+				lbtotalpage.setText(s.getPage()+"/"+s.getTotalPage());
+				showTable(s.getList());
+				} else 
+				{
+					Staff s= paging(currentPage,SystemConstant.LIMIT);
+					showTable(s.getList());
+
+				}
 			}
 		});
-		btnNewButton_2.setBounds(316, 173, 60, 21);
-		panel_2.add(btnNewButton_2);
+		btnbefore.setOpaque(false);
+		btnbefore.setForeground(new Color(0, 51, 204));
+		btnbefore.setBackground(SystemColor.activeCaption);
+		btnbefore.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnbefore.setBounds(444, 173, 55, 21);
+		panel_2.add(btnbefore);
 		
-		btnNewButton_3 = new JButton(">");
-		btnNewButton_3.setOpaque(false);
-		btnNewButton_3.setBackground(SystemColor.activeCaption);
-		btnNewButton_3.setForeground(new Color(0, 51, 204));
-		btnNewButton_3.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnNewButton_3.setBounds(628, 173, 55, 21);
-		panel_2.add(btnNewButton_3);
+		btnfirst = new JButton("<<");
+		btnfirst.setOpaque(false);
+		btnfirst.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnfirst.setForeground(new Color(0, 51, 204));
+		btnfirst.setBackground(SystemColor.activeCaption);
+		btnfirst.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Staff s= paging(1,SystemConstant.LIMIT);
+				decorPaging(s);
+				showTable(s.getList());
+			}
+		});
+		btnfirst.setBounds(374, 173, 60, 21);
+		panel_2.add(btnfirst);
 		
-		btnNewButton_4 = new JButton(">>");
-		btnNewButton_4.setOpaque(false);
-		btnNewButton_4.setForeground(new Color(0, 51, 204));
-		btnNewButton_4.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnNewButton_4.setBackground(SystemColor.activeCaption);
-		btnNewButton_4.setBounds(724, 173, 60, 21);
-		panel_2.add(btnNewButton_4);
+		lbafter = new JButton(">");
+		lbafter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				int currentPage = Integer.parseInt(lbpage.getText());
+				if (currentPage<totalPages) {
+				String page = String.valueOf(++currentPage);
+				Staff s= paging(currentPage,SystemConstant.LIMIT);
+				lbpage.setText(page);
+				lbtotalpage.setText(s.getPage()+"/"+s.getTotalPage());
+				showTable(s.getList());
+				} else 
+				{
+					Staff s= paging(currentPage,SystemConstant.LIMIT);
+					showTable(s.getList());
+
+				}
+				
+			}
+		});
+		lbafter.setOpaque(false);
+		lbafter.setBackground(SystemColor.activeCaption);
+		lbafter.setForeground(new Color(0, 51, 204));
+		lbafter.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lbafter.setBounds(597, 173, 55, 21);
+		panel_2.add(lbafter);
+		
+		lblast = new JButton(">>");
+		lblast.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Staff s= paging(totalPages,SystemConstant.LIMIT);
+				decorPaging(s);
+				showTable(s.getList());
+			}
+		});
+		lblast.setOpaque(false);
+		lblast.setForeground(new Color(0, 51, 204));
+		lblast.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblast.setBackground(SystemColor.activeCaption);
+		lblast.setBounds(662, 173, 60, 21);
+		panel_2.add(lblast);
 		
 		table.addMouseListener(new MouseAdapter() {
 
@@ -557,6 +615,9 @@ public class ManagementStaff extends JFrame {
 			}
 			
 		});
+		Staff staff1 = paging(1,SystemConstant.LIMIT);
+		showTable(staff1.getList());
+		decorPaging(staff1);
 	}
 	
 	public void showTable(List<Staff> list) {
@@ -630,6 +691,9 @@ public class ManagementStaff extends JFrame {
 			
 		dateOfBirth.setDate(new Timestamp(System.currentTimeMillis()));
 		dateOfWork.setDate(new Timestamp(System.currentTimeMillis()));
+		Staff staff1 = paging(1,SystemConstant.LIMIT);
+		showTable(staff1.getList());
+		decorPaging(staff1);
 	}
 	
 	public boolean checkData(Staff s) {
@@ -692,4 +756,26 @@ public class ManagementStaff extends JFrame {
 		return false;
 		}
 	} 
+	
+	public Staff paging(int page,int limit){
+		Staff s= new Staff();
+		List<Staff> list = staff.findAll();
+		int totalItem = list.size();
+		int totalPage = (int) Math.ceil(((double) totalItem)/limit);
+		Pageble pageable =  new PageRequest(page, limit);
+		List<Staff> listPaging = staff.findStaffWithPage(pageable);
+		s.setTotalItem(totalItem);
+		s.setTotalPage(totalPage);
+		s.setPage(page);
+		s.setLimit(limit);
+		s.setList(listPaging);
+		totalPages = s.getTotalPage();
+		return s;
+	}
+	
+	public void decorPaging(Staff staff) {
+		lbpage.setText(String.valueOf(staff.getPage()));
+		lbtotalpage.setText(staff.getPage()+"/"+staff.getTotalPage());
+
+	}
 }

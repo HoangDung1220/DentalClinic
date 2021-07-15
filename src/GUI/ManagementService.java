@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.SystemColor;
@@ -42,6 +43,7 @@ public class ManagementService extends JFrame {
 	DefaultTableModel defaultTable = new DefaultTableModel();
 	DentalServiceBUS service = new DentalServiceBUS();
 	private JTextField txtSearchName;
+	private JLabel lberror ;
 
 	
 	public static void main(String[] args) {
@@ -113,26 +115,60 @@ public class ManagementService extends JFrame {
 		txtID.setColumns(10);
 		
 		txtName = new JTextField();
+		txtName.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lberror.setText("");
+			}
+		});
 		txtName.setBounds(113, 91, 146, 19);
 		panel.add(txtName);
 		txtName.setColumns(10);
 		
 		txtUnit = new JTextField();
+		txtUnit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lberror.setText("");
+
+			}
+		});
 		txtUnit.setBounds(113, 144, 146, 19);
 		panel.add(txtUnit);
 		txtUnit.setColumns(10);
 		
 		txtQuantity = new JTextField();
+		txtQuantity.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lberror.setText("");
+
+			}
+		});
 		txtQuantity.setBounds(442, 34, 150, 19);
 		panel.add(txtQuantity);
 		txtQuantity.setColumns(10);
 		
 		txtPrice = new JTextField();
+		txtPrice.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lberror.setText("");
+
+			}
+		});
 		txtPrice.setBounds(442, 91, 150, 19);
 		panel.add(txtPrice);
 		txtPrice.setColumns(10);
 		
 		txtWarranty = new JTextField();
+		txtWarranty.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lberror.setText("");
+
+			}
+		});
 		txtWarranty.setBounds(442, 144, 150, 19);
 		panel.add(txtWarranty);
 		txtWarranty.setColumns(10);
@@ -140,13 +176,24 @@ public class ManagementService extends JFrame {
 		JButton Save = new JButton("");
 		Save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				if (txtPrice.getText().length()>0 && txtQuantity.getText().length()>0) {
+					if (checkData(txtPrice.getText(),txtQuantity.getText())) {
 				DentalService d = getDataByGui();
 				txtID.setText(String.valueOf(service.insert(d)));
 				JOptionPane.showMessageDialog(null, "You save data successful");
 				showTable(service.findAll());
 				refresh();
-			}
+					} else
+						lberror.setText("Data is error!");
+					    lberror.setForeground(Color.red);
+							
+					} else 
+					{
+						lberror.setText("Please fill data to fields !");
+					    lberror.setForeground(Color.red);
+					}
+					}
+			
 		});
 		Save.setFont(new Font("Tahoma", Font.BOLD, 14));
 		Save.setBounds(52, 202, 40, 35);
@@ -160,7 +207,8 @@ public class ManagementService extends JFrame {
 				int index = table.getSelectedRow();
 				int id = Integer.parseInt(table.getValueAt(index, 0).toString());
 				
-
+				if (txtPrice.getText().length()>0 && txtQuantity.getText().length()>0) {
+					if (checkData(txtPrice.getText(),txtQuantity.getText())) {
 				DentalService  mData = getDataByGui();
 				DentalService  m = new DentalService();
 				m.setId(id);
@@ -174,6 +222,21 @@ public class ManagementService extends JFrame {
 				JOptionPane.showMessageDialog(null, "You update data successful");
 				showTable(service.findAll());
 				refresh();
+			}
+					else
+					{
+						JOptionPane.showMessageDialog(null, txtPrice.getText());
+				lberror.setText("Data is error!");
+			    lberror.setForeground(Color.red);
+					
+			}
+					} else 
+			{
+				lberror.setText("Please fill data to fields !");
+			    lberror.setForeground(Color.red);
+			}
+			
+
 			}
 		});
 		Edit.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -223,6 +286,10 @@ public class ManagementService extends JFrame {
 		Exit.setToolTipText("Exit data");
 		panel.add(Exit);
 		
+		lberror = new JLabel("");
+		lberror.setBounds(357, 224, 250, 13);
+		panel.add(lberror);
+		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(SystemColor.activeCaption);
 		panel_1.setBorder(new TitledBorder(null, "T\u00ECm ki\u1EBFm d\u1ECBch v\u1EE5", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -249,6 +316,13 @@ public class ManagementService extends JFrame {
 		panel_1.add(SearchButton);
 		
 		txtSearchName = new JTextField();
+		txtSearchName.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lberror.setText("");
+
+			}
+		});
 		txtSearchName.setBounds(145, 134, 109, 19);
 		panel_1.add(txtSearchName);
 		txtSearchName.setColumns(10);
@@ -344,5 +418,21 @@ public class ManagementService extends JFrame {
 		txtUnit.setText("");
 		txtWarranty.setText("");;
 		
+	}
+	public boolean checkData(String quantity,String price) {
+		boolean check =true;
+			for (int i=0;i<quantity.length();i++) {
+				if ((quantity.charAt(i)<'0' || quantity.charAt(i)>'9') && quantity.charAt(i)!='.') {
+					check=false;
+				}
+			}
+			
+			for (int i=0;i<price.length();i++) {
+				if ((price.charAt(i)<'0' || price.charAt(i)>'9') && quantity.charAt(i)!='.') {
+					check=false;
+				}
+			}
+		
+		return check;
 	}
 }

@@ -16,6 +16,7 @@ import GUI.PanelDanhMuc;
 import GUI.PanelNghiepVu;
 
 public class SystemConstant {
+	public static final int LIMIT =3;
 	public static final String[] listConstant = {"viên","ống","vỉ","hộp"};
 	public static final String[] listConstantService = {"răng","hàm"};
 	public static Staff staff;

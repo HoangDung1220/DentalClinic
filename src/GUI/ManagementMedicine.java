@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -36,6 +37,7 @@ import java.awt.Font;
 
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import java.awt.event.KeyAdapter;
 
 public class ManagementMedicine extends JFrame {
 
@@ -53,6 +55,8 @@ public class ManagementMedicine extends JFrame {
 	private DefaultTableModel defaultTable = new DefaultTableModel();
     private IMedicineBUS medicine = new MedicineBUS();
     private ITypeMedicineBUS typeMedicine = new TypeMedicineBUS();
+    private JLabel lberror;
+
     
 	
 	public static void main(String[] args) {
@@ -153,6 +157,12 @@ public class ManagementMedicine extends JFrame {
 		panel_1.add(lblNewLabel_3);
 		
 		txtName = new JTextField();
+		txtName.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lberror.setText("");
+			}
+		});
 		txtName.setBounds(154, 100, 160, 19);
 		panel_1.add(txtName);
 		txtName.setColumns(10);
@@ -163,6 +173,12 @@ public class ManagementMedicine extends JFrame {
 		panel_1.add(lblNewLabel_4);
 		
 		txtPrice = new JTextField();
+		txtPrice.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lberror.setText("");
+			}
+		});
 		txtPrice.setBounds(154, 156, 160, 19);
 		panel_1.add(txtPrice);
 		txtPrice.setColumns(10);
@@ -173,6 +189,12 @@ public class ManagementMedicine extends JFrame {
 		panel_1.add(lblNewLabel_5);
 		
 		txtQuantity = new JTextField();
+		txtQuantity.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lberror.setText("");
+			}
+		});
 		txtQuantity.setBounds(424, 39, 160, 19);
 		panel_1.add(txtQuantity);
 		txtQuantity.setColumns(10);
@@ -186,14 +208,22 @@ public class ManagementMedicine extends JFrame {
 		Save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-			
+			if (txtPrice.getText().length()>0 && txtQuantity.getText().length()>0) {
+			if (checkData(txtPrice.getText(),txtQuantity.getText())) {
 					Medicine i = getDataByGui();
 					txtID.setText(String.valueOf(medicine.insert(i)));
 					JOptionPane.showMessageDialog(null, "You save data successful");
 					showTable(medicine.findAll());
-					refresh();   
+					refresh();  
+			} else
+				lberror.setText("Data is error!");
+			    lberror.setForeground(Color.red);
 					
-			
+			} else 
+			{
+				lberror.setText("Please fill data to fields !");
+			    lberror.setForeground(Color.red);
+			}
 			}
 		});
 		Save.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -207,7 +237,8 @@ public class ManagementMedicine extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				int index = table.getSelectedRow();
 				int id = Integer.parseInt(table.getValueAt(index, 0).toString());
-				
+				if (txtPrice.getText().length()>0 && txtQuantity.getText().length()>0) {
+					if (checkData(txtPrice.getText(),txtQuantity.getText())) {
 
 				Medicine mData = getDataByGui();
 				Medicine m = new Medicine();
@@ -223,8 +254,18 @@ public class ManagementMedicine extends JFrame {
 				JOptionPane.showMessageDialog(null, "You update data successful");
 				showTable(medicine.findAll());
 				refresh();
-				
-			}
+					} else
+					{
+						lberror.setText("Data is error!");
+					    lberror.setForeground(Color.red);
+							
+					}} else 
+					{
+						lberror.setText("Please fill data to fields !");
+					    lberror.setForeground(Color.red);
+					}
+					}
+			
 		});
 		Edit.setBounds(656, 100, 40, 35);
 		Edit.setIcon(new ImageIcon(SystemConstant.img_edit1));
@@ -273,6 +314,12 @@ public class ManagementMedicine extends JFrame {
 		lblNewLabel_7.setFont(new Font("Times New Roman", Font.BOLD, 13));
 		lblNewLabel_7.setBounds(324, 157, 109, 19);
 		panel_1.add(lblNewLabel_7);
+		comboType.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lberror.setText("");
+			}
+		});
 		
 		comboType.setBounds(427, 155, 157, 21);
 		
@@ -280,6 +327,12 @@ public class ManagementMedicine extends JFrame {
 		for (TypeMedicine i : listType)
 		comboType.addItem(i);
 		panel_1.add(comboType);
+		comboUnit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lberror.setText("");
+			}
+		});
 		
 		comboUnit.setBounds(424, 99, 160, 21);
 		for (String i : SystemConstant.listConstant) {
@@ -293,9 +346,20 @@ public class ManagementMedicine extends JFrame {
 		panel_1.add(lblNewLabel_8);
 		
 		txtCode = new JTextField();
+		txtCode.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lberror.setText("");
+			}
+		});
+		
 		txtCode.setBounds(154, 209, 160, 19);
 		panel_1.add(txtCode);
 		txtCode.setColumns(10);
+		
+		lberror = new JLabel("");
+		lberror.setBounds(10, 253, 304, 25);
+		panel_1.add(lberror);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(null, "Danh s\u00E1ch thu\u1ED1c", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -400,5 +464,20 @@ public class ManagementMedicine extends JFrame {
 		
 	}
 	
-	
+	public boolean checkData(String quantity,String price) {
+		boolean check =true;
+			for (int i=0;i<quantity.length();i++) {
+				if ((quantity.charAt(i)<'0' || quantity.charAt(i)>'9') && quantity.charAt(i)!='.') {
+					check=false;
+				}
+			}
+			
+			for (int i=0;i<price.length();i++) {
+				if ((quantity.charAt(i)<'0' || quantity.charAt(i)>'9') && quantity.charAt(i)!='.') {
+					check=false;
+				}
+			}
+		
+		return check;
+	}
 }

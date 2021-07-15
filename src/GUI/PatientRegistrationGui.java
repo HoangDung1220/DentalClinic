@@ -151,25 +151,13 @@ public class PatientRegistrationGui extends JFrame{
         
             DefaultTableModel model = (DefaultTableModel)table_1.getModel();
             Date date=(Date) p.getBirthday();
-          //  System.out.println(date);
             dateChooser.setDate(date);
         
         
-		// System.out.print(SelectedRowIndex);
 	}
-// 
 	public static void getData(Patient p)
 	{   
-		/*
-			
-			if (textFieldFullName.getText().equals("") || textFieldICard.getText().equals("") 
-                    || textFieldAddress.getText().equals("")  )
 	
-	   {
-		 JOptionPane.showMessageDialog(null, "Please complete all information !");
-	   }*/
-		/*if ( textFieldFullName.getText() !=null && textFieldICard.getText() !=null 
-				&& textFieldAddress.getText()!=null   )*/
 		{  
 		
 			
@@ -194,8 +182,7 @@ public class PatientRegistrationGui extends JFrame{
 		    p.setiCard(textFieldICard.getText());
 		    p.setCreatedBy(SystemConstant.staff.getFullname());
 		    p.setCreatedDate(new Timestamp(System.currentTimeMillis()));
-		 //   p.setModifiedBy("HBB");
-		  //  p.setModifiedDate(new Timestamp(System.currentTimeMillis()));
+		
 		}
 	}
 	public PatientRegistrationGui() {
@@ -242,7 +229,6 @@ public class PatientRegistrationGui extends JFrame{
 		btnNewButtonSearch.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, SystemColor.textInactiveText, null, null, null));
 		btnNewButtonSearch.setFont(new Font("Sitka Small", Font.BOLD, 14));
 		btnNewButtonSearch.setBounds(398, 58, 108, 31);
-	//	btnNewButtonSearch.addActionListener(this);
 		panel.add(btnNewButtonSearch);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -406,7 +392,7 @@ public class PatientRegistrationGui extends JFrame{
 		panel_2.setLayout(null);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(10, 21, 1068, 243);
+		scrollPane_1.setBounds(10, 21, 1056, 223);
 		panel_2.add(scrollPane_1);
 		
 		table_1 = new JTable();
@@ -488,6 +474,8 @@ public class PatientRegistrationGui extends JFrame{
 				list= patient.findAll();     // find all patient
 				Patient p=(Patient)list.get(index);
 				getData(p);
+				p.setModifiedDate(new Timestamp(System.currentTimeMillis()));
+				p.setModifiedBy(SystemConstant.staff.getFullname());
 			    patient.update(p);
 				JOptionPane.showMessageDialog(null, "Data updated successfully");
 

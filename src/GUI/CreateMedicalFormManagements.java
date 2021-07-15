@@ -34,6 +34,7 @@ import DTO.DetailService;
 import DTO.MedicalForm;
 import DTO.Prescription;
 import DTO.Staff;
+import javax.swing.UIManager;
 
 public class CreateMedicalFormManagements extends JFrame {
 
@@ -110,13 +111,13 @@ public class CreateMedicalFormManagements extends JFrame {
 		panel_1.add(lblNewLabel_7);
 		
 		txtbefore = new JTextArea();
-		txtbefore.setForeground(Color.WHITE);
+		txtbefore.setForeground(new Color(0, 51, 204));
 		txtbefore.setEditable(false);
 		txtbefore.setOpaque(false);
 		txtbefore.setBorder(null);
-		txtbefore.setFont(new Font("Tahoma", Font.BOLD, 13));
-		txtbefore.setBackground(SystemColor.scrollbar);
-		txtbefore.setBounds(163, 109, 269, 30);
+		txtbefore.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		txtbefore.setBackground(new Color(255, 255, 255));
+		txtbefore.setBounds(163, 121, 269, 24);
 		panel_1.add(txtbefore);
 		
 		JLabel lblNewLabel_6 = new JLabel("Content_Cure :");
@@ -125,24 +126,24 @@ public class CreateMedicalFormManagements extends JFrame {
 		panel_1.add(lblNewLabel_6);
 		
 		txtContent_cure = new JTextArea();
-		txtContent_cure.setForeground(Color.WHITE);
+		txtContent_cure.setForeground(new Color(0, 51, 204));
 		txtContent_cure.setEditable(false);
 		txtContent_cure.setOpaque(false);
 		txtContent_cure.setBorder(null);
 		txtContent_cure.setBackground(new Color(245, 245, 245));
-		txtContent_cure.setFont(new Font("Tahoma", Font.BOLD, 13));
-		txtContent_cure.setBounds(591, 72, 379, 53);
+		txtContent_cure.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		txtContent_cure.setBounds(591, 79, 379, 46);
 		panel_1.add(txtContent_cure);
 		
 		txtIDPatient = new JLabel("");
-		txtIDPatient.setForeground(Color.WHITE);
-		txtIDPatient.setFont(new Font("Tahoma", Font.BOLD, 12));
+		txtIDPatient.setForeground(new Color(0, 51, 204));
+		txtIDPatient.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txtIDPatient.setBounds(164, 26, 252, 24);
 		panel_1.add(txtIDPatient);
 		
 		txtNamePatient = new JLabel("");
-		txtNamePatient.setForeground(Color.WHITE);
-		txtNamePatient.setFont(new Font("Tahoma", Font.BOLD, 13));
+		txtNamePatient.setForeground(new Color(0, 51, 204));
+		txtNamePatient.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txtNamePatient.setBounds(163, 72, 257, 24);
 		panel_1.add(txtNamePatient);
 		
@@ -152,14 +153,14 @@ public class CreateMedicalFormManagements extends JFrame {
 		lblNewLabel_9.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		
 		txtAfter = new JTextArea();
-		txtAfter.setForeground(Color.WHITE);
+		txtAfter.setForeground(new Color(0, 51, 204));
 		txtAfter.setBounds(591, 20, 360, 30);
 		panel_1.add(txtAfter);
 		txtAfter.setEnabled(false);
 		txtAfter.setEditable(false);
-		txtAfter.setFont(new Font("Tahoma", Font.BOLD, 13));
+		txtAfter.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txtAfter.setOpaque(false);
-		txtAfter.setBackground(new Color(211, 211, 211));
+		txtAfter.setBackground(SystemColor.activeCaption);
 		txtAfter.setBorder(null);
 		
 		JPanel panel_4 = new JPanel();
@@ -184,16 +185,17 @@ public class CreateMedicalFormManagements extends JFrame {
 		lblNewLabel_5.setBounds(559, 14, 88, 24);
 		panel_4.add(lblNewLabel_5);
 		lblNewLabel_5.setFont(new Font("Segoe UI Black", Font.BOLD, 13));
+		txtDate.setBackground(SystemColor.activeCaption);
 		txtDate.setEnabled(false);
-		txtDate.setFont(new Font("Tahoma", Font.BOLD, 13));
-		txtDate.setForeground(Color.WHITE);
+		txtDate.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		txtDate.setForeground(new Color(0, 51, 204));
 		
 		txtDate.setBounds(669, 14, 145, 22);
 		panel_4.add(txtDate);
 		
 		txtNameDentist = new JLabel("");
-		txtNameDentist.setFont(new Font("Tahoma", Font.BOLD, 13));
-		txtNameDentist.setForeground(Color.WHITE);
+		txtNameDentist.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		txtNameDentist.setForeground(new Color(0, 51, 204));
 		txtNameDentist.setBounds(334, 14, 221, 22);
 		
 		panel_4.add(txtNameDentist);
@@ -218,8 +220,8 @@ public class CreateMedicalFormManagements extends JFrame {
 		btnNewButton_5.setIcon(new ImageIcon(SystemConstant.img_exit3));
 		
 		txtForm = new JLabel("");
-		txtForm.setForeground(Color.WHITE);
-		txtForm.setFont(new Font("Tahoma", Font.BOLD, 13));
+		txtForm.setForeground(new Color(0, 51, 204));
+		txtForm.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txtForm.setBounds(91, 14, 96, 24);
 		panel_4.add(txtForm);
 
