@@ -5,10 +5,13 @@ import java.util.List;
 import BUS.IInvoiceBUS;
 import DAL.implement.InvoiceDAL;
 import DTO.Invoice;
+import DTO.MedicalForm;
 
 public class InvoiceBUS implements IInvoiceBUS {
 	
 	private InvoiceDAL invoice = new InvoiceDAL();
+	private MedicalFormBUS medicalForm = new MedicalFormBUS();
+	
 	@Override
 	public List<Invoice> findAll() {
 		// TODO Auto-generated method stub
@@ -44,6 +47,25 @@ public class InvoiceBUS implements IInvoiceBUS {
 	@Override
 	public Invoice findOneByIdMedical(int id) {
 		return invoice.fidOneByIdMedical(id);
+	}
+
+	@Override
+	public List<Invoice> findAllOderByDate() {
+		return invoice.findAllOderByDate();
+	}
+
+	@Override
+	public int count(int idPatient) {
+		int cout =1;
+		List<Invoice> invoices = invoice.findAll();
+		for (Invoice in : invoices) {
+			MedicalForm form = new MedicalForm();
+			form = medicalForm.findOne(in.getIdMedicalForm());
+			if (form.getIdPatient()==idPatient) {
+				cout++;
+			}
+		}
+		return cout;
 	}
 
 	

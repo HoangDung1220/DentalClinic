@@ -1,26 +1,27 @@
 package GUI;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
+import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.SwingConstants;
-
-import BUS.implement.StaffBUS;
-import Constant.SystemConstant;
-import DTO.Staff;
-
-import java.awt.Color;
-import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.SoftBevelBorder;
+
+import BUS.implement.StaffBUS;
+import Checked.DataChecked;
+import Constant.SystemConstant;
+import DTO.Staff;
 
 public class PanelChangeAccount extends JPanel {
 	private JTextField txtNewUser;
@@ -57,6 +58,7 @@ public class PanelChangeAccount extends JPanel {
 		add(lblNewLabel_1);
 		
 		JLabel lbName = new JLabel("");
+		lbName.setForeground(new Color(0, 51, 153));
 		lbName.setBounds(328, 83, 318, 25);
 		lbName.setText(SystemConstant.staff.getFullname());
 		add(lbName);
@@ -67,6 +69,7 @@ public class PanelChangeAccount extends JPanel {
 		add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("");
+		lblNewLabel_3.setForeground(new Color(0, 51, 153));
 		lblNewLabel_3.setBounds(328, 131, 321, 25);
 		lblNewLabel_3.setText(SystemConstant.staff.getUsername());
 		add(lblNewLabel_3);
@@ -74,7 +77,8 @@ public class PanelChangeAccount extends JPanel {
 		
 		
 		JButton btnNewButton_1 = new JButton("");
-		btnNewButton_1.setBounds(690, 131, 50, 25);
+		btnNewButton_1.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		btnNewButton_1.setBounds(690, 131, 40, 25);
 		btnNewButton_1.setIcon(new ImageIcon(SystemConstant.img_edit2));
 		btnNewButton_1.setVisible(false);
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
@@ -92,6 +96,7 @@ public class PanelChangeAccount extends JPanel {
 		add(btnNewButton_1);
 		
 		txtNewUser = new JTextField();
+		txtNewUser.setForeground(new Color(0, 51, 102));
 		txtNewUser.setBounds(328, 171, 310, 25);
 		add(txtNewUser);
 		txtNewUser.setEnabled(false);
@@ -108,7 +113,7 @@ public class PanelChangeAccount extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnNewButton.setBounds(690, 131, 50, 25);
+		btnNewButton.setBounds(690, 131, 40, 25);
 		btnNewButton.setIcon(new ImageIcon(SystemConstant.img_edit2));
 		btnNewButton.addMouseListener(new MouseAdapter() {
 
@@ -143,7 +148,7 @@ public class PanelChangeAccount extends JPanel {
 			}
 			}
 		});
-		btnNewButton_2.setBounds(690, 211, 50, 25);
+		btnNewButton_2.setBounds(690, 211, 40, 25);
 		btnNewButton_2.setIcon(new ImageIcon(SystemConstant.img_edit2));
 		add(btnNewButton_2);
 		
@@ -172,10 +177,23 @@ public class PanelChangeAccount extends JPanel {
 					
 					Staff s = SystemConstant.staff;
 					s.setPassword(txtConfirmPass.getText());
-					if (txtNewUser.getText().length()>1) s.setUsername(txtNewUser.getText());
+					if (txtNewUser.getText().length()>1)
+					{
+						String st = txtNewUser.getText();
+						if (DataChecked.checkUsername(st))
+						{
+					s.setUsername(st);
 					staffBus.update(s);
+					lbNotice.setText("");
 					JOptionPane.showMessageDialog(null, "You update account sucessful. Please enter system again");
-				} else 
+				
+						
+						} else{
+							lbNotice.setText("Username is existed. Please enter new username");
+
+						}
+						}} else
+				
 				{
 					lbNotice.setText("NewPassword is not compatible ConfirmPassword. Please check again!");
 				}
@@ -188,6 +206,7 @@ public class PanelChangeAccount extends JPanel {
 		add(btnNewButton_3);
 		
 		txtPass = new JPasswordField();
+		txtPass.setForeground(new Color(0, 51, 102));
 		txtPass.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -198,6 +217,7 @@ public class PanelChangeAccount extends JPanel {
 		add(txtPass);
 		
 		txtNewPass = new JPasswordField();
+		txtNewPass.setForeground(new Color(0, 51, 102));
 		txtNewPass.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -209,6 +229,7 @@ public class PanelChangeAccount extends JPanel {
 		add(txtNewPass);
 		
 		txtConfirmPass = new JPasswordField();
+		txtConfirmPass.setForeground(new Color(0, 51, 102));
 		txtConfirmPass.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -220,7 +241,7 @@ public class PanelChangeAccount extends JPanel {
 		add(txtConfirmPass);
 		
 		JButton btnNewButton_2_1 = new JButton("");
-		btnNewButton_2_1.setBounds(690, 211, 50, 25);
+		btnNewButton_2_1.setBounds(690, 211, 40, 25);
 		btnNewButton_2_1.setIcon(new ImageIcon(SystemConstant.img_edit2));
 		btnNewButton_2_1.addMouseListener(new MouseAdapter() {
 
@@ -247,4 +268,6 @@ public class PanelChangeAccount extends JPanel {
 		btnNewButton_4.setIcon(new ImageIcon(SystemConstant.img_exit3));
 		add(btnNewButton_4);
 	}
+	
+	
 }

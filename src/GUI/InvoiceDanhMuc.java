@@ -121,17 +121,19 @@ public class InvoiceDanhMuc extends JFrame{
 		JPanel panel = new JPanel();
 		panel.setToolTipText("");
 		panel.setBackground(SystemColor.activeCaption);
-		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "T\u00CCM KI\u1EBEM TH\u00D4NG TIN", TitledBorder.LEADING, TitledBorder.TOP, null, SystemColor.windowBorder));
+		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Information", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(100, 100, 100)));
 		panel.setBounds(10, 10, 944, 208);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("ID_MedicalForm");
+		lblNewLabel.setForeground(new Color(0, 51, 153));
 		lblNewLabel.setFont(new Font("Sitka Small", Font.BOLD, 13));
 		lblNewLabel.setBounds(10, 95, 129, 25);
 		panel.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("ID_Staff");
+		lblNewLabel_1.setForeground(new Color(0, 51, 153));
 		lblNewLabel_1.setFont(new Font("Sitka Small", Font.BOLD, 13));
 		lblNewLabel_1.setBounds(10, 34, 68, 31);
 		panel.add(lblNewLabel_1);
@@ -162,23 +164,26 @@ public class InvoiceDanhMuc extends JFrame{
 		panel.add(txtIDStaff);
 		txtIDStaff.setColumns(10);
 		
-		 btnNewButtonSearch = new JButton("SEARCH");
+		 btnNewButtonSearch = new JButton("");
 		btnNewButtonSearch.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, SystemColor.textInactiveText, null, null, null));
 		btnNewButtonSearch.setFont(new Font("Sitka Small", Font.BOLD, 14));
-		btnNewButtonSearch.setBounds(131, 147, 108, 31);
+		btnNewButtonSearch.setBounds(184, 152, 40, 35);
 		panel.add(btnNewButtonSearch);
 		
 		JLabel lblNewLabel_2 = new JLabel("ID_Invoice");
+		lblNewLabel_2.setForeground(new Color(0, 51, 153));
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_2.setBounds(399, 41, 101, 13);
 		panel.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("Name_Patient");
+		lblNewLabel_3.setForeground(new Color(0, 51, 153));
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_3.setBounds(399, 99, 101, 13);
 		panel.add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel("Name_Staff");
+		lblNewLabel_4.setForeground(new Color(0, 51, 153));
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_4.setBounds(399, 153, 101, 13);
 		panel.add(lblNewLabel_4);
@@ -202,6 +207,7 @@ public class InvoiceDanhMuc extends JFrame{
 		panel.add(lbNameStaff);
 		
 		JLabel lblNewLabel_8 = new JLabel("Total_Price");
+		lblNewLabel_8.setForeground(new Color(0, 51, 153));
 		lblNewLabel_8.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_8.setBounds(679, 41, 87, 13);
 		panel.add(lblNewLabel_8);
@@ -214,7 +220,7 @@ public class InvoiceDanhMuc extends JFrame{
 		ButtonGroup bg=new ButtonGroup();
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "DANH S\u00C1CH H\u00D3A \u0110\u01A0N", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(109, 109, 109)));
+		panel_2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "List of invoices", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(109, 109, 109)));
 		panel_2.setBackground(SystemColor.activeCaption);
 		panel_2.setBounds(10, 226, 944, 312);
 		contentPane.add(panel_2);
@@ -254,7 +260,7 @@ public class InvoiceDanhMuc extends JFrame{
 		btnDetail.setEnabled(false);
 		panel_2.add(btnDetail);
 		
-	
+		btnNewButtonSearch.setIcon(new ImageIcon(SystemConstant.img_search1));
 		btnNewButtonSearch.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

@@ -7,7 +7,6 @@ import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +21,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.border.SoftBevelBorder;
 import javax.swing.table.DefaultTableModel;
 
 import com.toedter.calendar.JDateChooser;
@@ -32,14 +34,8 @@ import BUS.IPatientBUS;
 import BUS.implement.PatientBUS;
 import Constant.SystemConstant;
 import DTO.Patient;
-import DTO.Staff;
 import PAGING.PageRequest;
 import PAGING.Pageble;
-
-import javax.swing.border.BevelBorder;
-import javax.swing.SwingConstants;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.SoftBevelBorder;
 
 public class PatientStatisticalGui extends JFrame {
 
@@ -224,19 +220,23 @@ public class PatientStatisticalGui extends JFrame {
 		contentPane.setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("From day:");
+		lblNewLabel.setForeground(new Color(0, 51, 153));
 		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblNewLabel.setBackground(Color.GRAY);
 		lblNewLabel.setBounds(105, 43, 85, 14);
 		contentPane.add(lblNewLabel);
 
-		JLabel lblThngKBnh = new JLabel("TH\u1ED0NG K\u00CA B\u1EC6NH NH\u00C2N");
+		JLabel lblThngKBnh = new JLabel("Patient Statistics");
+		lblThngKBnh.setHorizontalAlignment(SwingConstants.CENTER);
+		lblThngKBnh.setForeground(new Color(0, 51, 153));
 		lblThngKBnh.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblThngKBnh.setFont(new Font("Times New Roman", Font.BOLD, 17));
+		lblThngKBnh.setFont(new Font("Sitka Text", Font.BOLD, 19));
 		lblThngKBnh.setBackground(Color.GRAY);
-		lblThngKBnh.setBounds(379, 11, 404, 23);
+		lblThngKBnh.setBounds(243, 11, 540, 23);
 		contentPane.add(lblThngKBnh);
 
 		JLabel lblnNgy = new JLabel("To day:");
+		lblnNgy.setForeground(new Color(0, 51, 153));
 		lblnNgy.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblnNgy.setBackground(Color.GRAY);
 		lblnNgy.setBounds(576, 43, 85, 14);
@@ -247,7 +247,7 @@ public class PatientStatisticalGui extends JFrame {
 		contentPane.add(dateChooserFrom);
 
 	    dateChooserTo = new JDateChooser();
-		dateChooserTo.setBounds(671, 43, 112, 20);
+		dateChooserTo.setBounds(647, 43, 112, 20);
 		contentPane.add(dateChooserTo);
 
 		btnNewButtonListPatient = new JButton("");
@@ -264,6 +264,7 @@ public class PatientStatisticalGui extends JFrame {
 		panel.setLayout(null);
 
 		JLabel lblSLng = new JLabel("Total:");
+		lblSLng.setForeground(new Color(0, 51, 153));
 		lblSLng.setBounds(88, 11, 66, 25);
 		panel.add(lblSLng);
 		lblSLng.setFont(new Font("Times New Roman", Font.BOLD, 14));
@@ -279,12 +280,14 @@ public class PatientStatisticalGui extends JFrame {
 		textFieldSL.setColumns(10);
 
 		JLabel lblNam = new JLabel("Male:");
+		lblNam.setForeground(new Color(0, 51, 153));
 		lblNam.setBounds(478, 11, 44, 25);
 		lblNam.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblNam.setBackground(Color.GRAY);
 		panel.add(lblNam);
 
 		JLabel lblN = new JLabel("Female:");
+		lblN.setForeground(new Color(0, 51, 153));
 		lblN.setBounds(726, 11, 110, 25);
 		lblN.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblN.setBackground(Color.GRAY);
@@ -361,7 +364,7 @@ public class PatientStatisticalGui extends JFrame {
 	    btnfirst.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 	    btnfirst.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent arg0) {
-	    		Patient s= paging(1,SystemConstant.LIMIT);
+	    		Patient s= paging(1,SystemConstant.LIMITStatic);
 				decorPaging(s);
 			    table.setModel(showDataToTable2(s.getList()));
 	    	}
@@ -382,13 +385,13 @@ public class PatientStatisticalGui extends JFrame {
 	    		int currentPage = Integer.parseInt(lbpage.getText());
 				if (currentPage>1) {
 				String page = String.valueOf(--currentPage);
-				Patient s= paging(currentPage,SystemConstant.LIMIT);
+				Patient s= paging(currentPage,SystemConstant.LIMITStatic);
 				lbpage.setText(page);
 				lbtotalpage.setText(s.getPage()+"/"+s.getTotalPage());
 			    table.setModel(showDataToTable2(s.getList()));
 				} else 
 				{
-					Patient s= paging(currentPage,SystemConstant.LIMIT);
+					Patient s= paging(currentPage,SystemConstant.LIMITStatic);
 				    table.setModel(showDataToTable2(s.getList()));
 
 				}
@@ -417,13 +420,13 @@ public class PatientStatisticalGui extends JFrame {
 	    		int currentPage = Integer.parseInt(lbpage.getText());
 				if (currentPage<totalPages) {
 				String page = String.valueOf(++currentPage);
-				Patient s= paging(currentPage,SystemConstant.LIMIT);
+				Patient s= paging(currentPage,SystemConstant.LIMITStatic);
 				lbpage.setText(page);
 				lbtotalpage.setText(s.getPage()+"/"+s.getTotalPage());
 			    table.setModel(showDataToTable2(s.getList()));
 				} else 
 				{
-					Patient s= paging(currentPage,SystemConstant.LIMIT);
+					Patient s= paging(currentPage,SystemConstant.LIMITStatic);
 				    table.setModel(showDataToTable2(s.getList()));
 
 				}
@@ -441,7 +444,7 @@ public class PatientStatisticalGui extends JFrame {
 	    lblast.setBackground(SystemColor.activeCaption);
 	    lblast.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent arg0) {
-	    		Patient s= paging(totalPages,SystemConstant.LIMIT);
+	    		Patient s= paging(totalPages,SystemConstant.LIMITStatic);
 				decorPaging(s);
 			    table.setModel(showDataToTable2(s.getList()));
 
@@ -453,7 +456,7 @@ public class PatientStatisticalGui extends JFrame {
 	    lblast.setBounds(608, 464, 60, 21);
 	    panel.add(lblast);
 	    showDataToTable1();
-	    Patient p = paging(1,SystemConstant.LIMIT);
+	    Patient p = paging(1,SystemConstant.LIMITStatic);
 	    table.setModel(showDataToTable2(p.getList()));
 		decorPaging(p);
 

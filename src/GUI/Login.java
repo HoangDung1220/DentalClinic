@@ -190,10 +190,33 @@ public class Login extends JFrame {
 		Staff s = staff.searchByUserNameAndPassword(user, pass);
 		SystemConstant.staff = s;
 		if (s!=null) {
-		MainSystem frame = new MainSystem(SystemConstant.staff);
-		frame.setVisible(true);
-		dispose();
-		} else 
+			if (s.getRole().getCode().equalsIgnoreCase(SystemConstant.MANAGER)) {
+				MainManager frame = new MainManager(SystemConstant.staff);
+				frame.setVisible(true);
+				dispose();
+			} else 
+			if (s.getRole().getCode().equalsIgnoreCase(SystemConstant.ADMIN)) 
+			{
+			MainSystem frame = new MainSystem(SystemConstant.staff);
+			frame.setVisible(true);
+			dispose();
+			} else 
+			
+			if (s.getRole().getCode().equalsIgnoreCase(SystemConstant.DOCTOR)) 
+			{
+			DoctorMain frame = new DoctorMain(SystemConstant.staff);
+			frame.setVisible(true);
+			dispose();
+			}
+			else 
+			{
+				StaffMain frame = new StaffMain(SystemConstant.staff);
+				frame.setVisible(true);
+				dispose();
+			}
+			
+		    }
+		else 
 		{
 			lbnotice.setText("Account don't exits. Please enter account again!!");
 			txtPassword.setText("");

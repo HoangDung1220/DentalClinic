@@ -5,6 +5,8 @@ import java.util.List;
 import DAL.IDentalServiceDAL;
 import DTO.DentalService;
 import Mapper.DentalServiceMapper;
+import Mapper.StaffMapper;
+import PAGING.Pageble;
 
 public class DentalServiceDAL extends AbstractDAL<DentalService> implements IDentalServiceDAL {
 
@@ -43,6 +45,38 @@ public class DentalServiceDAL extends AbstractDAL<DentalService> implements IDen
 	public List<DentalService> searchByName(String name) {
 		String st ="select *from dental_service where name_service like '%"+name+"%' ";
 		return query(st,new DentalServiceMapper());
+	}
+
+	@Override
+	public List<DentalService> findAllWithPage(Pageble pageble) {
+		StringBuilder querry = new StringBuilder();
+		querry.append("select *from dental_service ");
+		if ((Integer) pageble.getOffset()!=null && (Integer) pageble.getLimit()!=null) {
+			querry.append("limit "+pageble.getOffset()+","+pageble.getLimit()+"");
+			return query(querry.toString(),new DentalServiceMapper());
+		}
+		else 	
+		{		
+			return query(querry.toString(),new DentalServiceMapper());
+		}
+		
+	
+
+	}
+
+	@Override
+	public List<DentalService> searchByName(String name, Pageble pageble) {
+		StringBuilder querry = new StringBuilder();
+		querry.append("select *from dental_service where name_service like '%"+name+"%' ");
+		if ((Integer) pageble.getOffset()!=null && (Integer) pageble.getLimit()!=null) {
+			querry.append("limit "+pageble.getOffset()+","+pageble.getLimit()+"");
+			return query(querry.toString(),new DentalServiceMapper());
+		}
+		else 	
+		{		
+			return query(querry.toString(),new DentalServiceMapper());
+		}
+		
 	}
 
 }

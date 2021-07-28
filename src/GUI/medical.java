@@ -27,6 +27,7 @@ import Constant.SystemConstant;
 import DTO.DetailService;
 import DTO.MedicalForm;
 import DTO.Prescription;
+import javax.swing.border.EtchedBorder;
 
 public class medical extends JFrame {
 
@@ -78,23 +79,26 @@ public class medical extends JFrame {
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "Th\u00F4ng tin h\u00F3a \u0111\u01A1n", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Information", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel.setBackground(SystemColor.activeCaption);
 		panel.setBounds(10, 10, 633, 181);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("ID_Invoice");
+		lblNewLabel.setForeground(new Color(0, 51, 153));
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel.setBounds(10, 33, 114, 13);
 		panel.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Date_Created");
+		lblNewLabel_1.setForeground(new Color(0, 51, 153));
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_1.setBounds(10, 94, 102, 13);
 		panel.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Staff");
+		lblNewLabel_2.setForeground(new Color(0, 51, 153));
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_2.setBounds(10, 146, 45, 13);
 		panel.add(lblNewLabel_2);
@@ -114,16 +118,19 @@ public class medical extends JFrame {
 		panel.add(lbStaff);
 		
 		JLabel lblNewLabel_3 = new JLabel("Name_Patient");
+		lblNewLabel_3.setForeground(new Color(0, 51, 153));
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_3.setBounds(328, 34, 108, 13);
 		panel.add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel("Address");
+		lblNewLabel_4.setForeground(new Color(0, 51, 153));
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_4.setBounds(328, 94, 96, 13);
 		panel.add(lblNewLabel_4);
 		
 		JLabel lblNewLabel_5 = new JLabel("Phonenumber");
+		lblNewLabel_5.setForeground(new Color(0, 51, 153));
 		lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_5.setBounds(328, 147, 114, 13);
 		panel.add(lblNewLabel_5);
@@ -145,7 +152,7 @@ public class medical extends JFrame {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(SystemColor.activeCaption);
-		panel_1.setBorder(new TitledBorder(null, "Th\u00F4ng tin d\u1ECBch v\u1EE5 v\u00E0 thu\u1ED1c", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "List of dental service and prescription", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_1.setBounds(10, 201, 633, 212);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
@@ -166,12 +173,13 @@ public class medical extends JFrame {
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(SystemColor.activeCaption);
-		panel_3.setBorder(new TitledBorder(null, "S\u1EF1 ki\u1EC7n c\u1EE7a h\u00F3a \u0111\u01A1n", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_3.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Event of invoice", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_3.setBounds(10, 423, 633, 130);
 		contentPane.add(panel_3);
 		panel_3.setLayout(null);
 		
 		JLabel lblNewLabel_9 = new JLabel("Total_Price_Medicine");
+		lblNewLabel_9.setForeground(new Color(0, 51, 153));
 		lblNewLabel_9.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_9.setBounds(10, 32, 176, 13);
 		panel_3.add(lblNewLabel_9);
@@ -181,6 +189,7 @@ public class medical extends JFrame {
 		panel_3.add(lbTotalMedicine);
 		
 		JLabel lblNewLabel_11 = new JLabel("Total_Price_Service");
+		lblNewLabel_11.setForeground(new Color(0, 51, 153));
 		lblNewLabel_11.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_11.setBounds(10, 64, 155, 13);
 		panel_3.add(lblNewLabel_11);
@@ -190,6 +199,7 @@ public class medical extends JFrame {
 		panel_3.add(lbTotalService);
 		
 		JLabel lblNewLabel_13 = new JLabel("Total_Price");
+		lblNewLabel_13.setForeground(new Color(0, 51, 153));
 		lblNewLabel_13.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_13.setBounds(365, 33, 85, 13);
 		panel_3.add(lblNewLabel_13);

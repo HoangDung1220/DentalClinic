@@ -33,6 +33,8 @@ import Constant.SystemConstant;
 import DTO.DentalService;
 import DTO.DetailService;
 import DTO.MedicalForm;
+import javax.swing.border.EtchedBorder;
+import java.awt.Color;
 
 public class ServiceDetail extends JFrame {
 
@@ -79,7 +81,7 @@ public class ServiceDetail extends JFrame {
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "T\u00ECm ki\u1EBFm d\u1ECBch v\u1EE5 ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Search", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel.setBackground(SystemColor.activeCaption);
 		panel.setBounds(10, 10, 1082, 58);
 		contentPane.add(panel);
@@ -91,6 +93,7 @@ public class ServiceDetail extends JFrame {
 		txtNameSearch.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Name_Service");
+		lblNewLabel.setForeground(new Color(0, 51, 153));
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel.setBounds(68, 32, 106, 13);
 		panel.add(lblNewLabel);
@@ -136,13 +139,20 @@ public class ServiceDetail extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if (txtQuantity.getText().isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Please enter field Quatity");
-				} else 
+				} 
+				else 
 				{
+					if (checkData(txtQuantity.getText()) ) {
 				DetailService de = getDataByGui();
 				detailService.insert(de);
 				txtPrice.setText(String.valueOf(de.getPrice()));
 				showTable1();
 				refresh();
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, "Field Quantity is not right ");
+				}
 				}
 			}
 		});
@@ -155,14 +165,28 @@ public class ServiceDetail extends JFrame {
 		panel.add(Edit);
 		Edit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				DetailService de = getDataByGui();
-				int index = table_1.getSelectedRow();
-				int id = Integer.parseInt(table_1.getValueAt(index, 0).toString());
-				de.setId(id);
-				detailService.update(de);
-				txtPrice.setText(String.valueOf(de.getPrice()));
-				showTable1();
-				refresh();
+				if (txtQuantity.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Please enter field Quatity");
+				} 
+				else 
+				{
+					if (checkData(txtQuantity.getText()) ) {
+						DetailService de = getDataByGui();
+						int index = table_1.getSelectedRow();
+						int id = Integer.parseInt(table_1.getValueAt(index, 0).toString());
+						de.setId(id);
+						detailService.update(de);
+						txtPrice.setText(String.valueOf(de.getPrice()));
+						showTable1();
+						refresh();
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, "Field Quantity is not right ");
+				}
+				}
+			
+				
 			}
 		});
 		Edit.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -179,16 +203,25 @@ public class ServiceDetail extends JFrame {
 				for (int i: indexs) {
 					list.add(Integer.parseInt(table_1.getValueAt(i, 0).toString()));
 				}
-				detailService.delete(list);
-				showTable1();
-				refresh();
+				
+				int res=JOptionPane.showConfirmDialog(null, "You are sure delete databases","confirm", JOptionPane.YES_NO_OPTION);
+				if (res!= JOptionPane.YES_OPTION) {
+					return ;
+				} else 
+				{
+					
+					detailService.delete(list);
+					showTable1();
+					refresh();
+				}
+				
 			}
 		});
 		Delete.setFont(new Font("Tahoma", Font.BOLD, 14));
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(SystemColor.activeCaption);
-		panel_1.setBorder(new TitledBorder(null, "Danh s\u00E1ch d\u1ECBch v\u1EE5", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "List of service", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_1.setBounds(10, 78, 688, 199);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
@@ -202,6 +235,7 @@ public class ServiceDetail extends JFrame {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				refresh();
 				int index = table.getSelectedRow();
 				int id = Integer.parseInt(table.getValueAt(index, 0).toString());
 				setDataToGui(id);
@@ -216,6 +250,7 @@ public class ServiceDetail extends JFrame {
 					int row = table.getSelectedRow();
 					int id = Integer.parseInt(table.getValueAt(row, 0).toString());
 					setDataToGui(id);
+					
 				}
 				
 			}
@@ -231,21 +266,25 @@ public class ServiceDetail extends JFrame {
 		panel_2.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("ID_Service");
+		lblNewLabel_1.setForeground(new Color(0, 51, 153));
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_1.setBounds(29, 21, 86, 13);
 		panel_2.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Unit\r\n");
+		lblNewLabel_2.setForeground(new Color(0, 51, 153));
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_2.setBounds(29, 73, 45, 13);
 		panel_2.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("Quantity");
+		lblNewLabel_3.setForeground(new Color(0, 51, 153));
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_3.setBounds(29, 118, 72, 16);
 		panel_2.add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel("Price");
+		lblNewLabel_4.setForeground(new Color(0, 51, 153));
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_4.setBounds(29, 176, 45, 13);
 		panel_2.add(lblNewLabel_4);
@@ -275,7 +314,7 @@ public class ServiceDetail extends JFrame {
 		panel_2.add(comboUnit);
 		
 		JPanel panel_3 = new JPanel();
-		panel_3.setBorder(new TitledBorder(null, "Danh s\u00E1ch s\u1EED d\u1EE5ng d\u1ECBch v\u1EE5", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_3.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "List of Dental Service", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_3.setBackground(SystemColor.activeCaption);
 		panel_3.setBounds(10, 309, 1082, 253);
 		contentPane.add(panel_3);
@@ -377,6 +416,18 @@ public class ServiceDetail extends JFrame {
 		txtQuantity.setText("");
 		txtPrice.setText("");
 		
+	}
+	
+	public boolean checkData(String quantity) {
+		boolean check = true;
+		for (int i=0;i<quantity.length();i++) {
+			if (quantity.charAt(i)<'0' || quantity.charAt(i)>'9') {
+				check = false;
+			}
+			
+		}
+		
+		return check;
 	}
 	
 }

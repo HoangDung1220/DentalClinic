@@ -2,11 +2,30 @@ package GUI;
 
 import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -17,27 +36,8 @@ import BUS.implement.TypeMedicineBUS;
 import Constant.SystemConstant;
 import DTO.Medicine;
 import DTO.TypeMedicine;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.awt.event.ActionEvent;
-import java.awt.Font;
-
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
-import java.awt.event.KeyAdapter;
+import PAGING.PageRequest;
+import PAGING.Pageble;
 
 public class ManagementMedicine extends JFrame {
 
@@ -56,9 +56,15 @@ public class ManagementMedicine extends JFrame {
     private IMedicineBUS medicine = new MedicineBUS();
     private ITypeMedicineBUS typeMedicine = new TypeMedicineBUS();
     private JLabel lberror;
+    private	JLabel lbpage;
+    private JLabel lbtotalpage;
+	private static List<Medicine> list = new ArrayList<Medicine>();
+	private static String name="";
+	private static int idType=0;
+	private static int totalPages;
+	private JComboBox<TypeMedicine> comboSearchType;
 
-    
-	
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -75,6 +81,7 @@ public class ManagementMedicine extends JFrame {
 	public ManagementMedicine() {
 		List<TypeMedicine> listType = new ArrayList<TypeMedicine>();
 		listType = typeMedicine.findAll();
+		list = medicine.findAll();
 		setBackground(SystemColor.text);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1120, 635);
@@ -85,18 +92,19 @@ public class ManagementMedicine extends JFrame {
 		contentPane.setLayout(null);
 		showTable(medicine.findAll());
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "T\u00ECm ki\u1EBFm thu\u1ED1c", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Search", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel.setBackground(SystemColor.activeCaption);
 		panel.setBounds(10, 10, 321, 288);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Type_Medicine");
+		lblNewLabel.setForeground(new Color(0, 51, 153));
 		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 13));
 		lblNewLabel.setBounds(10, 49, 115, 13);
 		panel.add(lblNewLabel);
 		
-		JComboBox<TypeMedicine> comboSearchType = new JComboBox<TypeMedicine>();
+		comboSearchType = new JComboBox<TypeMedicine>();
 		comboSearchType.setBounds(119, 46, 167, 21);
 		comboSearchType.addItem(new TypeMedicine(0,"all","All"));
 		for (TypeMedicine i : listType)
@@ -109,6 +117,7 @@ public class ManagementMedicine extends JFrame {
 		txtSearchName.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("Name_Medicine");
+		lblNewLabel_1.setForeground(new Color(0, 51, 153));
 		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 13));
 		lblNewLabel_1.setBounds(10, 125, 115, 13);
 		panel.add(lblNewLabel_1);
@@ -116,12 +125,13 @@ public class ManagementMedicine extends JFrame {
 		JButton Search = new JButton("SEARCH");
 		Search.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int idType = ((TypeMedicine)comboSearchType.getSelectedItem()).getId();
-				String chara = txtSearchName.getText();
+				idType = ((TypeMedicine)comboSearchType.getSelectedItem()).getId();
+				name = txtSearchName.getText();
 				defaultTable.setRowCount(0);
-				List<Medicine> list = new ArrayList<Medicine>();
-				list = medicine.searchByNameAndIDType(chara, idType);
-				showTable(list);
+				list = medicine.searchByNameAndIDType(name, idType);
+				Medicine med = paging(1,SystemConstant.LIMIT,list,name,idType);
+				showTable(med.getList());
+				decorPaging(med);
 				
 				
 				
@@ -132,13 +142,14 @@ public class ManagementMedicine extends JFrame {
 		panel.add(Search);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(null, "Th\u00F4ng tin thu\u1ED1c", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Information", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_1.setBackground(SystemColor.activeCaption);
 		panel_1.setBounds(340, 10, 756, 288);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
 		JLabel lblNewLabel_2 = new JLabel("ID_Medicine");
+		lblNewLabel_2.setForeground(new Color(0, 51, 153));
 		lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD, 13));
 		lblNewLabel_2.setBounds(31, 42, 97, 13);
 		panel_1.add(lblNewLabel_2);
@@ -152,6 +163,7 @@ public class ManagementMedicine extends JFrame {
 		txtID.setColumns(10);
 		
 		JLabel lblNewLabel_3 = new JLabel("Name_medicine");
+		lblNewLabel_3.setForeground(new Color(0, 51, 153));
 		lblNewLabel_3.setFont(new Font("Times New Roman", Font.BOLD, 13));
 		lblNewLabel_3.setBounds(31, 102, 140, 13);
 		panel_1.add(lblNewLabel_3);
@@ -168,6 +180,7 @@ public class ManagementMedicine extends JFrame {
 		txtName.setColumns(10);
 		
 		JLabel lblNewLabel_4 = new JLabel("Price\r\n");
+		lblNewLabel_4.setForeground(new Color(0, 51, 153));
 		lblNewLabel_4.setFont(new Font("Times New Roman", Font.BOLD, 13));
 		lblNewLabel_4.setBounds(31, 158, 45, 13);
 		panel_1.add(lblNewLabel_4);
@@ -184,6 +197,7 @@ public class ManagementMedicine extends JFrame {
 		txtPrice.setColumns(10);
 		
 		JLabel lblNewLabel_5 = new JLabel("Quantity");
+		lblNewLabel_5.setForeground(new Color(0, 51, 153));
 		lblNewLabel_5.setFont(new Font("Times New Roman", Font.BOLD, 13));
 		lblNewLabel_5.setBounds(324, 42, 90, 13);
 		panel_1.add(lblNewLabel_5);
@@ -200,6 +214,7 @@ public class ManagementMedicine extends JFrame {
 		txtQuantity.setColumns(10);
 		
 		JLabel lblNewLabel_6 = new JLabel("Unit");
+		lblNewLabel_6.setForeground(new Color(0, 51, 153));
 		lblNewLabel_6.setFont(new Font("Times New Roman", Font.BOLD, 13));
 		lblNewLabel_6.setBounds(324, 102, 45, 13);
 		panel_1.add(lblNewLabel_6);
@@ -207,24 +222,28 @@ public class ManagementMedicine extends JFrame {
 		JButton Save = new JButton("");
 		Save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+			
 			if (txtPrice.getText().length()>0 && txtQuantity.getText().length()>0) {
 			if (checkData(txtPrice.getText(),txtQuantity.getText())) {
 					Medicine i = getDataByGui();
 					txtID.setText(String.valueOf(medicine.insert(i)));
 					JOptionPane.showMessageDialog(null, "You save data successful");
-					showTable(medicine.findAll());
 					refresh();  
 			} else
+			{
 				lberror.setText("Data is error!");
 			    lberror.setForeground(Color.red);
-					
-			} else 
+			}
+			}
+		
+			
+				else 
 			{
 				lberror.setText("Please fill data to fields !");
 			    lberror.setForeground(Color.red);
 			}
 			}
+			
 		});
 		Save.setFont(new Font("Tahoma", Font.BOLD, 14));
 		Save.setBounds(656, 36, 40, 35);
@@ -252,7 +271,6 @@ public class ManagementMedicine extends JFrame {
 				
 				medicine.update(m);
 				JOptionPane.showMessageDialog(null, "You update data successful");
-				showTable(medicine.findAll());
 				refresh();
 					} else
 					{
@@ -299,7 +317,7 @@ public class ManagementMedicine extends JFrame {
 		JButton Exit = new JButton("");
 		Exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int res=JOptionPane.showConfirmDialog(null, "Are you sure you want to exit ","confirm", JOptionPane.YES_NO_OPTION);
+				int res=JOptionPane.showConfirmDialog(null, "Are you sure you want to exit ? ","confirm", JOptionPane.YES_NO_OPTION);
 				if (res== JOptionPane.YES_OPTION) {
 					dispose();
 				} 
@@ -311,6 +329,7 @@ public class ManagementMedicine extends JFrame {
 		panel_1.add(Exit);
 		
 		JLabel lblNewLabel_7 = new JLabel("Type_Medicine");
+		lblNewLabel_7.setForeground(new Color(0, 51, 153));
 		lblNewLabel_7.setFont(new Font("Times New Roman", Font.BOLD, 13));
 		lblNewLabel_7.setBounds(324, 157, 109, 19);
 		panel_1.add(lblNewLabel_7);
@@ -341,6 +360,7 @@ public class ManagementMedicine extends JFrame {
 		panel_1.add(comboUnit);
 		
 		JLabel lblNewLabel_8 = new JLabel("Code");
+		lblNewLabel_8.setForeground(new Color(0, 51, 153));
 		lblNewLabel_8.setFont(new Font("Times New Roman", Font.BOLD, 13));
 		lblNewLabel_8.setBounds(31, 212, 45, 13);
 		panel_1.add(lblNewLabel_8);
@@ -362,13 +382,13 @@ public class ManagementMedicine extends JFrame {
 		panel_1.add(lberror);
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBorder(new TitledBorder(null, "Danh s\u00E1ch thu\u1ED1c", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "List of medicines", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_2.setBackground(SystemColor.activeCaption);
-		panel_2.setBounds(10, 322, 1086, 243);
+		panel_2.setBounds(10, 322, 1086, 176);
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 		
-		scrollPane.setBounds(10, 22, 1066, 211);
+		scrollPane.setBounds(10, 22, 1066, 131);
 		panel_2.add(scrollPane);
 		table = new JTable(defaultTable);
 		table.addMouseListener(new MouseAdapter() {
@@ -407,6 +427,96 @@ public class ManagementMedicine extends JFrame {
 			}
 		});
 		scrollPane.setViewportView(table);
+		
+		JButton btnfirst = new JButton("<<");
+		btnfirst.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Medicine s= paging(1,SystemConstant.LIMIT,list,name,idType);
+				decorPaging(s);
+				showTable(s.getList());
+			}
+		});
+		btnfirst.setForeground(new Color(0, 51, 153));
+		btnfirst.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnfirst.setBounds(362, 547, 60, 21);
+		contentPane.add(btnfirst);
+		
+		JButton btnbefor = new JButton("<");
+		btnbefor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int currentPage = Integer.parseInt(lbpage.getText());
+				if (currentPage>1) {
+				String page = String.valueOf(--currentPage);
+				Medicine s= paging(currentPage,SystemConstant.LIMIT,list,name,idType);
+				lbpage.setText(page);
+				lbtotalpage.setText(s.getPage()+"/"+s.getTotalPage());
+				showTable(s.getList());
+				} else 
+				{
+					Medicine s= paging(currentPage,SystemConstant.LIMIT,list,name,idType);
+					showTable(s.getList());
+
+				}
+				
+			}
+		});
+		btnbefor.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnbefor.setForeground(new Color(0, 51, 153));
+		btnbefor.setBounds(432, 547, 60, 21);
+		contentPane.add(btnbefor);
+		
+		lbpage = new JLabel("");
+		lbpage.setHorizontalAlignment(SwingConstants.CENTER);
+		lbpage.setForeground(new Color(0, 51, 153));
+		lbpage.setBounds(502, 551, 45, 13);
+		contentPane.add(lbpage);
+		
+		lbtotalpage = new JLabel("");
+		lbtotalpage.setHorizontalAlignment(SwingConstants.CENTER);
+		lbtotalpage.setForeground(new Color(0, 51, 153));
+		lbtotalpage.setBounds(557, 551, 45, 13);
+		contentPane.add(lbtotalpage);
+		
+		JButton lbafter = new JButton(">");
+		lbafter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int currentPage = Integer.parseInt(lbpage.getText());
+				if (currentPage<totalPages) {
+				String page = String.valueOf(++currentPage);
+				Medicine s= paging(currentPage,SystemConstant.LIMIT,list,name,idType);
+				lbpage.setText(page);
+				lbtotalpage.setText(s.getPage()+"/"+s.getTotalPage());
+				showTable(s.getList());
+				} else 
+				{
+					Medicine s= paging(currentPage,SystemConstant.LIMIT,list,name,idType);
+					showTable(s.getList());
+
+				}
+			}
+		});
+		lbafter.setForeground(new Color(0, 51, 153));
+		lbafter.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lbafter.setBounds(612, 547, 60, 21);
+		contentPane.add(lbafter);
+		
+		JButton lblast = new JButton(">>");
+		lblast.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Medicine s= paging(totalPages,SystemConstant.LIMIT,list,name,idType);
+				decorPaging(s);
+				showTable(s.getList());
+			}
+		});
+		lblast.setForeground(new Color(0, 51, 153));
+		lblast.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblast.setBounds(682, 547, 60, 21);
+		contentPane.add(lblast);
+		
+		Medicine dental = paging(1,SystemConstant.LIMIT,list,name,idType);
+		showTable(dental.getList());
+		decorPaging(dental);
+		
 		
 
 	}
@@ -449,6 +559,14 @@ public class ManagementMedicine extends JFrame {
 		txtQuantity.setText("");
 		comboUnit.setSelectedIndex(0);
 		comboType.setSelectedIndex(0);
+		idType = ((TypeMedicine)comboSearchType.getSelectedItem()).getId();
+		name = txtSearchName.getText();
+		defaultTable.setRowCount(0);
+		list = medicine.searchByNameAndIDType(name, idType);
+		Medicine dental = paging(1,SystemConstant.LIMIT,list,name,idType);
+		showTable(dental.getList());
+		decorPaging(dental);
+		
 		
 	}
 	
@@ -468,16 +586,39 @@ public class ManagementMedicine extends JFrame {
 		boolean check =true;
 			for (int i=0;i<quantity.length();i++) {
 				if ((quantity.charAt(i)<'0' || quantity.charAt(i)>'9') && quantity.charAt(i)!='.') {
-					check=false;
+					check= false;
 				}
 			}
 			
 			for (int i=0;i<price.length();i++) {
-				if ((quantity.charAt(i)<'0' || quantity.charAt(i)>'9') && quantity.charAt(i)!='.') {
-					check=false;
+				if ((price.charAt(i)<'0' || price.charAt(i)>'9') && price.charAt(i)!='.') {
+					check= false;
 				}
 			}
 		
 		return check;
+	}
+	
+	
+	public Medicine paging(int page,int limit,List<Medicine> list,String name, int idtype){
+		Medicine s= new Medicine();
+		List<Medicine> listPaging = null;
+		int totalItem = list.size();
+		int totalPage = (int) Math.ceil(((double) totalItem)/limit);
+		Pageble pageable =  new PageRequest(page, limit);
+		listPaging = medicine.searchByNameAndIDType(name, idtype, pageable);
+		s.setTotalItem(totalItem);
+		s.setTotalPage(totalPage);
+		s.setPage(page);
+		s.setLimit(limit);
+		s.setList(listPaging);
+		totalPages = s.getTotalPage();
+		return s;
+	}
+	
+	public void decorPaging(Medicine dental) {
+		lbpage.setText(String.valueOf(dental.getPage()));
+		lbtotalpage.setText(dental.getPage()+"/"+dental.getTotalPage());
+
 	}
 }

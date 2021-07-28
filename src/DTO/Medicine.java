@@ -1,6 +1,6 @@
 package DTO;
 
-public class Medicine {
+public class Medicine extends AbstractPaging<Medicine> {
 	private int id;
 	private String nameMedicine;
 	private String codeMedicine;

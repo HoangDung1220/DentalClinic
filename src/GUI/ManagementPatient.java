@@ -431,7 +431,5 @@ import DTO.Patient;
 
 		}
 		
-		public void showTable() {
-			
-		}
+		
 }

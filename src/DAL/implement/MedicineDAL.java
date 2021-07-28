@@ -4,7 +4,9 @@ import java.util.List;
 
 import DAL.IMedicineDAL;
 import DTO.Medicine;
+import Mapper.DentalServiceMapper;
 import Mapper.MedicineMapper;
+import PAGING.Pageble;
 
 public class MedicineDAL extends AbstractDAL<Medicine> implements IMedicineDAL{
 
@@ -53,6 +55,40 @@ public class MedicineDAL extends AbstractDAL<Medicine> implements IMedicineDAL{
 		st.append(" where medicine.name_medicine like '%"+name+"%'");
 		List<Medicine> list = query(st.toString(),new MedicineMapper());
 		return list;
+	}
+
+	@Override
+	public List<Medicine> findAll(Pageble pageable) {
+		StringBuilder querry = new StringBuilder();
+		querry.append("select *from medicine inner join type_medicine where medicine.id_typemedicine = type_medicine.id ");
+		if ((Integer) pageable.getOffset()!=null && (Integer) pageable.getLimit()!=null) {
+			querry.append("limit "+pageable.getOffset()+","+pageable.getLimit()+"");
+			return query(querry.toString(),new MedicineMapper());
+		}
+		else 	
+		{		
+			return query(querry.toString(),new MedicineMapper());
+		}
+	}
+
+	@Override
+	public List<Medicine> searchByNameAndIDType(String name, int idType, Pageble pageable) {
+		StringBuilder querry = new StringBuilder();
+		querry.append("select *from medicine inner join type_medicine on medicine.id_typemedicine = type_medicine.id ");
+		if (idType != 0) {
+			querry.append(" where type_medicine.id = '"+idType+"' ");
+			querry.append("and medicine.name_medicine like '%"+name+"%' ");
+
+		} else 
+			querry.append(" where medicine.name_medicine like '%"+name+"%' ");
+		if ((Integer) pageable.getOffset()!=null && (Integer) pageable.getLimit()!=null) {
+			querry.append("limit "+pageable.getOffset()+","+pageable.getLimit()+"");
+			return query(querry.toString(),new MedicineMapper());
+		}
+		else 	
+		{		
+			return query(querry.toString(),new MedicineMapper());
+		}
 	}
 
 }

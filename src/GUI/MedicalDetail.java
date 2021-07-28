@@ -96,7 +96,7 @@ public class MedicalDetail extends JFrame {
 		contentPane.add(scrollPane);
 		
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "Danh s\u00E1ch thu\u1ED1c", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "List of medicine", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel.setBackground(SystemColor.activeCaption);
 		scrollPane.setViewportView(panel);
 		panel.setLayout(null);
@@ -111,6 +111,7 @@ public class MedicalDetail extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 			
+				refresh();
 				int index = table.getSelectedRow();
 				int id = Integer.parseInt(table.getValueAt(index, 0).toString());
 				setDataToGui(id);
@@ -145,6 +146,7 @@ public class MedicalDetail extends JFrame {
 		panel_1.setLayout(null);
 		
 		JLabel lblNewLabel_2 = new JLabel("ID_Medicine");
+		lblNewLabel_2.setForeground(new Color(0, 51, 153));
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_2.setBounds(37, 27, 96, 13);
 		panel_1.add(lblNewLabel_2);
@@ -156,11 +158,13 @@ public class MedicalDetail extends JFrame {
 		txtID.setColumns(10);
 		
 		JLabel lblNewLabel_3 = new JLabel("Unit");
+		lblNewLabel_3.setForeground(new Color(0, 51, 153));
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_3.setBounds(37, 65, 45, 13);
 		panel_1.add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel("Quantity ");
+		lblNewLabel_4.setForeground(new Color(0, 51, 153));
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_4.setBounds(37, 108, 112, 13);
 		panel_1.add(lblNewLabel_4);
@@ -177,6 +181,7 @@ public class MedicalDetail extends JFrame {
 		panel_1.add(comboUnit);
 		
 		JLabel lblNewLabel_5 = new JLabel("Price");
+		lblNewLabel_5.setForeground(new Color(0, 51, 153));
 		lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_5.setBounds(37, 139, 45, 21);
 		panel_1.add(lblNewLabel_5);
@@ -195,6 +200,7 @@ public class MedicalDetail extends JFrame {
 				JOptionPane.showMessageDialog(null, "Please enter field Quatity");
 			} else 
 			{
+				if (checkData(txtQuantity.getText())) {
 				Prescription p = getDataByGui();
 				Medicine medicine1 = medicine.findOne(p.getIdMedicine());
 				if (medicine1.getQuantity()<Integer.parseInt(txtQuantity.getText())) {
@@ -209,7 +215,12 @@ public class MedicalDetail extends JFrame {
 				refreshData();
 				refresh();
 				}
-			}	
+			} else 
+			{
+				JOptionPane.showMessageDialog(null, "Field Quatity is not right");
+
+			}
+			}
 			}
 		});
 		Save.setIcon(new ImageIcon(SystemConstant.img_save1));
@@ -221,21 +232,34 @@ public class MedicalDetail extends JFrame {
 		Edit.setToolTipText("Ch\u1EC9nh s\u1EEDa d\u1EEF li\u1EC7u");
 		Edit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int index = table_1.getSelectedRow();
-				int id = Integer.parseInt(table_1.getValueAt(index, 0).toString());
+				if (txtQuantity.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Please enter field Quatity");
+				} else 
+				{
+					if (checkData(txtQuantity.getText())) {
+						int index = table_1.getSelectedRow();
+						int id = Integer.parseInt(table_1.getValueAt(index, 0).toString());
+						
+						int quanIni = prescription.findOne(id).getQuantity();
+						Prescription pre = getDataByGui();
+						pre.setId(id);
+						prescription.update(pre);
+						txtPrice.setText(String.valueOf(pre.getPrice()));
+						showTable1();
+						
+						Medicine m = medicine.findOne(pre.getIdMedicine());
+						m.setQuantity(m.getQuantity()+quanIni-pre.getQuantity());
+						medicine.update(m);
+						refreshData();
+						refresh();
+					}
+				 else 
+				{
+					JOptionPane.showMessageDialog(null, "Field Quatity is not right");
+
+				}
+				}
 				
-				int quanIni = prescription.findOne(id).getQuantity();
-				Prescription pre = getDataByGui();
-				pre.setId(id);
-				prescription.update(pre);
-				txtPrice.setText(String.valueOf(pre.getPrice()));
-				showTable1();
-				
-				Medicine m = medicine.findOne(pre.getIdMedicine());
-				m.setQuantity(m.getQuantity()+quanIni-pre.getQuantity());
-				medicine.update(m);
-				refreshData();
-				refresh();
 			}
 		});
 		Edit.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -255,10 +279,19 @@ public class MedicalDetail extends JFrame {
 					Medicine m = getDataMedicine(prescription.findOne(id),false);
 					medicine.update(m);
 				}
-				prescription.delete(list);
-				showTable1();
-				refreshData();
-				refresh();
+				
+				int res=JOptionPane.showConfirmDialog(null, "You are sure delete databases","confirm", JOptionPane.YES_NO_OPTION);
+				if (res!= JOptionPane.YES_OPTION) {
+					return ;
+				} else 
+				{
+					
+					prescription.delete(list);
+					showTable1();
+					refreshData();
+					refresh();
+				}
+				
 				
 			}
 		});
@@ -268,6 +301,7 @@ public class MedicalDetail extends JFrame {
 		panel_1.add(Delete);
 		
 		JLabel lblNewLabel_6 = new JLabel("Usage");
+		lblNewLabel_6.setForeground(new Color(0, 51, 153));
 		lblNewLabel_6.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_6.setBounds(37, 179, 45, 19);
 		panel_1.add(lblNewLabel_6);
@@ -277,6 +311,7 @@ public class MedicalDetail extends JFrame {
 		panel_1.add(txtUsage);
 		
 		JLabel lblNewLabel_7 = new JLabel("Note");
+		lblNewLabel_7.setForeground(new Color(0, 51, 153));
 		lblNewLabel_7.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_7.setBounds(37, 220, 45, 13);
 		panel_1.add(lblNewLabel_7);
@@ -286,7 +321,7 @@ public class MedicalDetail extends JFrame {
 		panel_1.add(txtNote);
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBorder(new TitledBorder(null, "Danh s\u00E1ch thu\u1ED1c trong b\u1EC7nh \u00E1n", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "List of prescription", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_2.setBackground(SystemColor.activeCaption);
 		panel_2.setBounds(20, 327, 1036, 232);
 		contentPane.add(panel_2);
@@ -328,13 +363,14 @@ public class MedicalDetail extends JFrame {
 		scrollPane_2.setViewportView(table_1);
 		
 		JPanel panel_3 = new JPanel();
-		panel_3.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "T\u00ECm ki\u1EBFm thu\u1ED1c", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_3.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Search", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_3.setBackground(SystemColor.activeCaption);
 		panel_3.setBounds(20, 10, 1036, 54);
 		contentPane.add(panel_3);
 		panel_3.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("Type_Medicine");
+		lblNewLabel_1.setForeground(new Color(0, 51, 153));
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_1.setBounds(22, 22, 114, 19);
 		panel_3.add(lblNewLabel_1);
@@ -348,17 +384,19 @@ public class MedicalDetail extends JFrame {
 		}
 		panel_3.add(comboTypeSearch);
 		
-		JButton Search = new JButton("SEARCH");
+		JButton Search = new JButton("");
+		Search.setIcon(new ImageIcon(SystemConstant.img_search1));
 		Search.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				refreshData();
 			}
 		});
 		Search.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Search.setBounds(874, 22, 119, 21);
+		Search.setBounds(962, 10, 40, 35);
 		panel_3.add(Search);
 		
 		JLabel lblNewLabel = new JLabel("Name_Medicine");
+		lblNewLabel.setForeground(new Color(0, 51, 153));
 		lblNewLabel.setBounds(410, 21, 119, 24);
 		panel_3.add(lblNewLabel);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -368,13 +406,14 @@ public class MedicalDetail extends JFrame {
 		panel_3.add(txtNameSearch);
 		txtNameSearch.setColumns(10);
 		
-		JButton btnNewButton_4 = new JButton("EXIT ");
+		JButton btnNewButton_4 = new JButton("");
+		btnNewButton_4.setIcon(new ImageIcon(SystemConstant.img_exit2));
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
 		btnNewButton_4.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnNewButton_4.setBounds(922, 569, 85, 21);
+		btnNewButton_4.setBounds(970, 569, 40, 35);
 		btnNewButton_4.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -471,6 +510,17 @@ public class MedicalDetail extends JFrame {
 		txtPrice.setText("");
 		txtUsage.setText("");
 		txtNote.setText("");
+	}
+	public boolean checkData(String quantity) {
+		boolean check = true;
+		for (int i=0;i<quantity.length();i++) {
+			if (quantity.charAt(i)<'0' || quantity.charAt(i)>'9') {
+				check = false;
+			}
+			
+		}
+		
+		return check;
 	}
 		
 }

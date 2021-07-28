@@ -31,7 +31,7 @@ public class StaffMapper implements RowMapper<Staff>{
 			
 			try {
 				Role r = new Role();
-				r.setId(rs.getInt("id"));
+				r.setId(rs.getInt("id_role"));
 				r.setCode(rs.getString("code"));
 				r.setName(rs.getString("name"));
 				s.setRole(r);

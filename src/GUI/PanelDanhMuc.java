@@ -99,7 +99,7 @@ public class PanelDanhMuc extends JPanel {
 		panel_3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ManagementMedicalForm frame = new ManagementMedicalForm();
+				ManagementMedicalForms frame = new ManagementMedicalForms();
 				frame.setVisible(true);
 			}
 		});

@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -27,10 +28,13 @@ import BUS.implement.DetailServiceBUS;
 import BUS.implement.MedicalFormBUS;
 import BUS.implement.PatientBUS;
 import BUS.implement.PrescriptionBUS;
+import Constant.SystemConstant;
 import DTO.DetailService;
 import DTO.MedicalForm;
 import DTO.Patient;
 import DTO.Prescription;
+import javax.swing.border.EtchedBorder;
+import java.awt.Color;
 
 public class HistoryRecord extends JFrame {
 
@@ -82,33 +86,38 @@ public class HistoryRecord extends JFrame {
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "Th\u00F4ng tin b\u1EC7nh nh\u00E2n", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Patient Information", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel.setBackground(SystemColor.activeCaption);
 		panel.setBounds(10, 34, 393, 262);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Fullname");
+		lblNewLabel.setForeground(new Color(0, 51, 153));
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel.setBounds(10, 39, 59, 13);
 		panel.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Address");
+		lblNewLabel_1.setForeground(new Color(0, 51, 153));
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_1.setBounds(10, 82, 59, 13);
 		panel.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Birthday");
+		lblNewLabel_2.setForeground(new Color(0, 51, 153));
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_2.setBounds(10, 126, 59, 13);
 		panel.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("Identified Card");
+		lblNewLabel_3.setForeground(new Color(0, 51, 153));
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_3.setBounds(10, 174, 98, 13);
 		panel.add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel("Gender");
+		lblNewLabel_4.setForeground(new Color(0, 51, 153));
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_4.setBounds(10, 216, 74, 13);
 		panel.add(lblNewLabel_4);
@@ -146,6 +155,7 @@ public class HistoryRecord extends JFrame {
 		txtICard.setColumns(10);
 		
 		Male = new JRadioButton("Male");
+		Male.setForeground(new Color(0, 51, 153));
 		Male.setOpaque(false);
 		Male.setFont(new Font("Tahoma", Font.BOLD, 12));
 		Male.setBackground(SystemColor.activeCaption);
@@ -153,6 +163,7 @@ public class HistoryRecord extends JFrame {
 		panel.add(Male);
 		
 		Female = new JRadioButton("Female");
+		Female.setForeground(new Color(0, 51, 153));
 		Female.setOpaque(false);
 		Female.setBackground(SystemColor.activeCaption);
 		Female.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -160,7 +171,7 @@ public class HistoryRecord extends JFrame {
 		panel.add(Female);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(null, "Danh s\u00E1ch l\u1ECBch s\u1EED b\u1EC7nh \u00E1n", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "List of record", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_1.setBackground(SystemColor.activeCaption);
 		panel_1.setBounds(428, 34, 563, 262);
 		contentPane.add(panel_1);
@@ -186,7 +197,7 @@ public class HistoryRecord extends JFrame {
 		scrollPane.setViewportView(table);
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBorder(new TitledBorder(null, "Chi ti\u1EBFt s\u1EED d\u1EE5ng d\u1ECBch v\u1EE5", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Dental Service Details", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_2.setBackground(SystemColor.activeCaption);
 		panel_2.setBounds(10, 349, 496, 221);
 		contentPane.add(panel_2);
@@ -201,7 +212,7 @@ public class HistoryRecord extends JFrame {
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(SystemColor.activeCaption);
-		panel_3.setBorder(new TitledBorder(null, "Chi ti\u1EBFt s\u1EED d\u1EE5ng thu\u1ED1c", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_3.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Prescription Details", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_3.setBounds(526, 349, 465, 221);
 		contentPane.add(panel_3);
 		panel_3.setLayout(null);
@@ -213,14 +224,15 @@ public class HistoryRecord extends JFrame {
 		table_2 = new JTable(defaultTable1);
 		scrollPane_2.setViewportView(table_2);
 		
-		JButton btnNewButton = new JButton("Exit");
+		JButton btnNewButton = new JButton("");
+		btnNewButton.setIcon(new ImageIcon(SystemConstant.img_exit2));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
 			}
 		});
 		btnNewButton.setFont(new Font("Berlin Sans FB Demi", Font.PLAIN, 16));
-		btnNewButton.setBounds(822, 599, 85, 21);
+		btnNewButton.setBounds(920, 602, 40, 35);
 		contentPane.add(btnNewButton);
 		getInit();
 	}

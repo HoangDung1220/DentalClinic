@@ -1,10 +1,16 @@
 package Checked;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import BUS.implement.StaffBUS;
+import DTO.Staff;
+
 
 public class DataChecked {
+	
+	private static StaffBUS staff = new StaffBUS();
 
 	public static boolean checkSDT(String st) {
 		String regex = "^\\d{10}$";
@@ -28,6 +34,8 @@ public class DataChecked {
 		
 	}
 	
+	
+	
 	public static boolean checkICard(String st) {
 		String regex = "^\\d{9}$";
 		Pattern pattern = Pattern.compile(regex);
@@ -39,5 +47,15 @@ public class DataChecked {
 		
 	}
 	
+	public static boolean checkUsername(String st) {
+		List<Staff> list =staff.findAll();
+		boolean check=true;
+		for (Staff sta:list) {
+			if (sta.getUsername().equalsIgnoreCase(st))
+				check=false;
+		}
+		
+		return check;
+	}
 	
 }

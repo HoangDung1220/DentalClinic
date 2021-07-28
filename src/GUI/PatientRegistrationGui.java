@@ -198,17 +198,19 @@ public class PatientRegistrationGui extends JFrame{
 		JPanel panel = new JPanel();
 		panel.setToolTipText("");
 		panel.setBackground(SystemColor.activeCaption);
-		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "T\u00CCM KI\u1EBEM TH\u00D4NG TIN", TitledBorder.LEADING, TitledBorder.TOP, null, SystemColor.windowBorder));
+		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Search", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(100, 100, 100)));
 		panel.setBounds(21, 25, 528, 381);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("FullName");
+		lblNewLabel.setForeground(new Color(0, 51, 153));
 		lblNewLabel.setFont(new Font("Sitka Small", Font.BOLD, 13));
 		lblNewLabel.setBounds(27, 40, 68, 21);
 		panel.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("ICard ");
+		lblNewLabel_1.setForeground(new Color(0, 51, 153));
 		lblNewLabel_1.setFont(new Font("Sitka Small", Font.BOLD, 13));
 		lblNewLabel_1.setBounds(27, 91, 68, 31);
 		panel.add(lblNewLabel_1);
@@ -225,10 +227,10 @@ public class PatientRegistrationGui extends JFrame{
 		panel.add(textFieldSearchICard);
 		textFieldSearchICard.setColumns(10);
 		
-		 btnNewButtonSearch = new JButton("SEARCH");
+		 btnNewButtonSearch = new JButton("");
 		btnNewButtonSearch.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, SystemColor.textInactiveText, null, null, null));
 		btnNewButtonSearch.setFont(new Font("Sitka Small", Font.BOLD, 14));
-		btnNewButtonSearch.setBounds(398, 58, 108, 31);
+		btnNewButtonSearch.setBounds(398, 58, 40, 35);
 		panel.add(btnNewButtonSearch);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -252,12 +254,13 @@ public class PatientRegistrationGui extends JFrame{
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(SystemColor.activeCaption);
-		panel_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "TH\u00D4NG TIN B\u1EC6NH NH\u00C2N", TitledBorder.LEADING, TitledBorder.TOP, null, SystemColor.controlDkShadow));
+		panel_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Information", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(105, 105, 105)));
 		panel_1.setBounds(562, 28, 548, 378);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
 		JLabel lblNewLabel_2 = new JLabel("IDPatient");
+		lblNewLabel_2.setForeground(new Color(0, 51, 153));
 		lblNewLabel_2.setFont(new Font("Sitka Small", Font.BOLD, 13));
 		lblNewLabel_2.setBounds(10, 29, 74, 22);
 		panel_1.add(lblNewLabel_2);
@@ -271,6 +274,7 @@ public class PatientRegistrationGui extends JFrame{
 		textFieldID.setColumns(10);
 		
 		JLabel lblNewLabel_3 = new JLabel("FullName");
+		lblNewLabel_3.setForeground(new Color(0, 51, 153));
 		lblNewLabel_3.setFont(new Font("Sitka Small", Font.BOLD, 13));
 		lblNewLabel_3.setBounds(10, 81, 74, 22);
 		panel_1.add(lblNewLabel_3);
@@ -282,6 +286,7 @@ public class PatientRegistrationGui extends JFrame{
 		textFieldFullName.setColumns(10);
 		
 		JLabel lblNewLabel_4 = new JLabel("ICard ");
+		lblNewLabel_4.setForeground(new Color(0, 51, 153));
 		lblNewLabel_4.setFont(new Font("Sitka Small", Font.BOLD, 13));
 		lblNewLabel_4.setBounds(10, 134, 74, 16);
 		panel_1.add(lblNewLabel_4);
@@ -293,6 +298,7 @@ public class PatientRegistrationGui extends JFrame{
 		textFieldICard.setColumns(10);
 		
 		JLabel lblNewLabel_5 = new JLabel("Address");
+		lblNewLabel_5.setForeground(new Color(0, 51, 153));
 		lblNewLabel_5.setFont(new Font("Sitka Small", Font.BOLD, 13));
 		lblNewLabel_5.setBounds(10, 185, 74, 22);
 		panel_1.add(lblNewLabel_5);
@@ -304,6 +310,7 @@ public class PatientRegistrationGui extends JFrame{
 		textFieldAddress.setColumns(10);
 		
 		JLabel lblNewLabel_6 = new JLabel("Phonenumber");
+		lblNewLabel_6.setForeground(new Color(0, 51, 153));
 		lblNewLabel_6.setFont(new Font("Sitka Small", Font.BOLD, 13));
 		lblNewLabel_6.setBounds(271, 32, 103, 19);
 		panel_1.add(lblNewLabel_6);
@@ -315,18 +322,21 @@ public class PatientRegistrationGui extends JFrame{
 		textFieldPhone.setColumns(10);
 		
 		JLabel lblNewLabel_7 = new JLabel("DateOfBirth ");
+		lblNewLabel_7.setForeground(new Color(0, 51, 153));
 		lblNewLabel_7.setFont(new Font("Sitka Small", Font.BOLD, 13));
 		lblNewLabel_7.setBounds(271, 81, 103, 25);
 		panel_1.add(lblNewLabel_7);
 		
 		
 		JLabel lblNewLabel_8 = new JLabel("Gender");
+		lblNewLabel_8.setForeground(new Color(0, 51, 153));
 		lblNewLabel_8.setFont(new Font("Sitka Small", Font.BOLD, 13));
 		lblNewLabel_8.setBounds(271, 134, 70, 17);
 		panel_1.add(lblNewLabel_8);
 		
 		
 		 rdbtnNewRadioButtonMale = new JRadioButton("Male");
+		 rdbtnNewRadioButtonMale.setForeground(new Color(0, 51, 153));
 		rdbtnNewRadioButtonMale.setFont(new Font("Sitka Small", Font.PLAIN, 13));
 		rdbtnNewRadioButtonMale.setBackground(SystemColor.activeCaption);
 		rdbtnNewRadioButtonMale.setBounds(281, 158, 70, 21);
@@ -335,6 +345,7 @@ public class PatientRegistrationGui extends JFrame{
 		
 		
 		 rdbtnNewRadioButtonFemale = new JRadioButton("Female");
+		 rdbtnNewRadioButtonFemale.setForeground(new Color(0, 51, 153));
 		rdbtnNewRadioButtonFemale.setBackground(SystemColor.activeCaption);
 		rdbtnNewRadioButtonFemale.setFont(new Font("Sitka Small", Font.PLAIN, 13));
 		rdbtnNewRadioButtonFemale.setBounds(417, 158, 81, 21);
@@ -385,7 +396,7 @@ public class PatientRegistrationGui extends JFrame{
 		panel_1.add(exit);
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "DANH S\u00C1CH B\u1EC6NH NH\u00C2N ", TitledBorder.LEADING, TitledBorder.TOP, null, SystemColor.textInactiveText));
+		panel_2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "List of patients", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(109, 109, 109)));
 		panel_2.setBackground(SystemColor.inactiveCaption);
 		panel_2.setBounds(31, 421, 1076, 254);
 		contentPane.add(panel_2);
@@ -412,7 +423,8 @@ public class PatientRegistrationGui extends JFrame{
 		
 		scrollPane_1.setViewportView(table_1);
 		
-//Search		
+//Search	
+		btnNewButtonSearch.setIcon(new ImageIcon(SystemConstant.img_search1));
 		btnNewButtonSearch.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -443,15 +455,24 @@ public class PatientRegistrationGui extends JFrame{
 		btnNewButtonDelete.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				
 				int[] list = table_1.getSelectedRows();
 				List<Integer> listId = new ArrayList<Integer>(); 
 				for (int i:list) {
 					listId.add(Integer.parseInt(table_1.getValueAt(i, 0).toString()));
 				}
-				patientExecute.delete(listId);
+				int res=JOptionPane.showConfirmDialog(null, "You are sure delete databases","confirm", JOptionPane.YES_NO_OPTION);
+				if (res!= JOptionPane.YES_OPTION) {
+					return ;
+				} else 
+				{
+					patientExecute.delete(listId);
+					
+					JOptionPane.showMessageDialog(null, "Data deleted Succesfully");							
+					table_1.setModel(showDataToTable("",""));
+				}
 				
-				JOptionPane.showMessageDialog(null, "Data deleted Succesfully");							
-				table_1.setModel(showDataToTable("",""));
 			}
 	    });
 //loadData from Row Selected to panel_1

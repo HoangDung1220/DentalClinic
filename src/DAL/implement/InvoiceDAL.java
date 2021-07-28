@@ -80,6 +80,13 @@ public class InvoiceDAL extends AbstractDAL<Invoice> implements IInvoiceDAL {
 		return list.isEmpty()?null:list.get(0);
 	}
 
+	@Override
+	public List<Invoice> findAllOderByDate() {
+		StringBuilder st = new StringBuilder("SELECT *FROM invoice inner join staff ON invoice.id_staff = staff.id order by invoice.pay_date asc");
+		return query(st.toString(),new InvoiceMapper());
+	}
+
+	
 	
 
 

@@ -1,8 +1,6 @@
 package DTO;
 
-import java.sql.Timestamp;
-
-public class DentalService {
+public class DentalService extends AbstractPaging<DentalService> {
 	private int id;
 	private String nameService;
 	private String unit;

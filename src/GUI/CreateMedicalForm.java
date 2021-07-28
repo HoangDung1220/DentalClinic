@@ -38,6 +38,7 @@ import DTO.Patient;
 import DTO.Prescription;
 import DTO.Staff;
 import javax.swing.UIManager;
+import javax.swing.SwingConstants;
 
 public class CreateMedicalForm extends JFrame {
 
@@ -99,21 +100,23 @@ public class CreateMedicalForm extends JFrame {
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "T\u00ECm b\u1EC7nh nh\u00E2n", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Search", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel.setBackground(SystemColor.activeCaption);
 		panel.setBounds(21, 10, 325, 104);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("IDPatient");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setForeground(new Color(0, 51, 153));
 		lblNewLabel.setFont(new Font("Segoe UI Black", Font.BOLD, 13));
-		lblNewLabel.setBounds(46, 15, 76, 16);
+		lblNewLabel.setBounds(10, 15, 112, 23);
 		panel.add(lblNewLabel);
 		
 		txtIDSearch = new JTextField();
 		txtIDSearch.setOpaque(false);
 		txtIDSearch.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		txtIDSearch.setBounds(155, 15, 154, 23);
+		txtIDSearch.setBounds(115, 15, 194, 23);
 		panel.add(txtIDSearch);
 		txtIDSearch.setColumns(10);
 		
@@ -133,6 +136,7 @@ public class CreateMedicalForm extends JFrame {
 					@SuppressWarnings("deprecation")
 					int age = date.getYear()-pa.getBirthday().getYear();
 					txtAge.setText(String.valueOf(age));
+					History_record.setVisible(true);
 				}
 			}
 		});
@@ -148,22 +152,25 @@ public class CreateMedicalForm extends JFrame {
 		panel_1.setLayout(null);
 		
 		JLabel lblNewLabel_3 = new JLabel("IDPatient :");
+		lblNewLabel_3.setForeground(new Color(0, 51, 153));
 		lblNewLabel_3.setFont(new Font("Segoe UI Black", Font.BOLD, 12));
 		lblNewLabel_3.setBounds(25, 20, 71, 13);
 		panel_1.add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel("Name_Patient :");
+		lblNewLabel_4.setForeground(new Color(0, 51, 153));
 		lblNewLabel_4.setFont(new Font("Segoe UI Black", Font.BOLD, 13));
 		lblNewLabel_4.setBounds(25, 54, 114, 13);
 		panel_1.add(lblNewLabel_4);
 		
 		JLabel lblNewLabel_7 = new JLabel("StatusBeforeCure :");
+		lblNewLabel_7.setForeground(new Color(0, 51, 153));
 		lblNewLabel_7.setFont(new Font("Segoe UI Black", Font.BOLD, 13));
 		lblNewLabel_7.setBounds(25, 93, 137, 13);
 		panel_1.add(lblNewLabel_7);
 		
 		txtbefore = new JTextArea();
-		txtbefore.setForeground(new Color(0, 51, 204));
+		txtbefore.setForeground(new Color(255, 255, 255));
 		txtbefore.setOpaque(false);
 		txtbefore.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		txtbefore.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -172,12 +179,13 @@ public class CreateMedicalForm extends JFrame {
 		panel_1.add(txtbefore);
 		
 		JLabel lblNewLabel_6 = new JLabel("Content_Cure :");
+		lblNewLabel_6.setForeground(new Color(0, 51, 153));
 		lblNewLabel_6.setFont(new Font("Segoe UI Black", Font.BOLD, 13));
 		lblNewLabel_6.setBounds(458, 57, 102, 13);
 		panel_1.add(lblNewLabel_6);
 		
 		txtContent_cure = new JTextArea();
-		txtContent_cure.setForeground(new Color(0, 51, 204));
+		txtContent_cure.setForeground(new Color(255, 255, 255));
 		txtContent_cure.setOpaque(false);
 		txtContent_cure.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		txtContent_cure.setBackground(new Color(245, 245, 245));
@@ -186,6 +194,7 @@ public class CreateMedicalForm extends JFrame {
 		panel_1.add(txtContent_cure);
 		
 		JLabel lblNewLabel_8 = new JLabel("Age :");
+		lblNewLabel_8.setForeground(new Color(0, 51, 153));
 		lblNewLabel_8.setFont(new Font("Segoe UI Black", Font.BOLD, 13));
 		lblNewLabel_8.setBounds(458, 20, 45, 17);
 		panel_1.add(lblNewLabel_8);
@@ -211,19 +220,19 @@ public class CreateMedicalForm extends JFrame {
 		Create.setFont(new Font("Tahoma", Font.BOLD, 13));
 		
 		txtIDPatient = new JLabel("");
-		txtIDPatient.setForeground(new Color(0, 51, 204));
+		txtIDPatient.setForeground(new Color(255, 255, 255));
 		txtIDPatient.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtIDPatient.setBounds(164, 16, 252, 23);
 		panel_1.add(txtIDPatient);
 		
 		txtNamePatient = new JLabel("");
-		txtNamePatient.setForeground(new Color(0, 51, 204));
+		txtNamePatient.setForeground(new Color(255, 255, 255));
 		txtNamePatient.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtNamePatient.setBounds(163, 49, 257, 20);
 		panel_1.add(txtNamePatient);
 		
 	    txtAge = new JLabel("");
-		txtAge.setForeground(new Color(0, 51, 204));
+		txtAge.setForeground(new Color(255, 255, 255));
 		txtAge.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtAge.setBounds(590, 21, 147, 13);
 		panel_1.add(txtAge);
@@ -236,28 +245,31 @@ public class CreateMedicalForm extends JFrame {
 		panel_4.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("IDForm :");
+		lblNewLabel_1.setForeground(new Color(0, 51, 153));
 		lblNewLabel_1.setFont(new Font("Segoe UI Black", Font.BOLD, 13));
 		lblNewLabel_1.setBounds(20, 14, 61, 22);
 		panel_4.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Dentist :");
+		lblNewLabel_2.setForeground(new Color(0, 51, 153));
 		lblNewLabel_2.setFont(new Font("Segoe UI Black", Font.BOLD, 13));
 		lblNewLabel_2.setBounds(282, 17, 74, 16);
 		panel_4.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_5 = new JLabel("Date-Cure :");
+		lblNewLabel_5.setForeground(new Color(0, 51, 153));
 		lblNewLabel_5.setBounds(18, 61, 88, 13);
 		panel_4.add(lblNewLabel_5);
 		lblNewLabel_5.setFont(new Font("Segoe UI Black", Font.BOLD, 13));
 		txtDate.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txtDate.setForeground(new Color(0, 51, 204));
+		txtDate.setForeground(new Color(255, 255, 255));
 		
 		txtDate.setBounds(105, 57, 145, 22);
 		panel_4.add(txtDate);
 		
 		txtNameDentist = new JLabel("");
 		txtNameDentist.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txtNameDentist.setForeground(new Color(0, 51, 204));
+		txtNameDentist.setForeground(new Color(255, 255, 255));
 		txtNameDentist.setBounds(366, 14, 221, 22);
 		panel_4.add(txtNameDentist);
 		
@@ -269,7 +281,7 @@ public class CreateMedicalForm extends JFrame {
 
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Danh s\u00E1ch s\u1EED d\u1EE5ng d\u1ECBch v\u1EE5", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Dental Service Details", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_2.setBackground(SystemColor.activeCaption);
 		panel_2.setBounds(20, 306, 980, 130);
 		contentPane.add(panel_2);
@@ -284,7 +296,7 @@ public class CreateMedicalForm extends JFrame {
 		scrollPane.setViewportView(table);
 		
 		JPanel panel_3 = new JPanel();
-		panel_3.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Danh s\u00E1ch s\u1EED d\u1EE5ng thu\u1ED1c", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_3.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Prescription Details", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_3.setBackground(SystemColor.activeCaption);
 		panel_3.setBounds(21, 446, 980, 135);
 		contentPane.add(panel_3);
@@ -305,12 +317,13 @@ public class CreateMedicalForm extends JFrame {
 		panel_5.setLayout(null);
 		
 		JLabel lblNewLabel_9 = new JLabel("Status_After_Cure");
+		lblNewLabel_9.setForeground(new Color(0, 51, 153));
 		lblNewLabel_9.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		lblNewLabel_9.setBounds(10, 10, 127, 13);
 		panel_5.add(lblNewLabel_9);
 		
 		txtAfter = new JTextArea();
-		txtAfter.setForeground(new Color(0, 51, 204));
+		txtAfter.setForeground(new Color(255, 255, 255));
 		txtAfter.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtAfter.setOpaque(false);
 		txtAfter.setBackground(new Color(211, 211, 211));
@@ -319,12 +332,13 @@ public class CreateMedicalForm extends JFrame {
 		panel_5.add(txtAfter);
 		
 		JLabel lblNewLabel_10 = new JLabel("Note_Of_Dentist");
+		lblNewLabel_10.setForeground(new Color(0, 51, 153));
 		lblNewLabel_10.setFont(new Font("Segoe UI Black", Font.PLAIN, 13));
 		lblNewLabel_10.setBounds(10, 42, 139, 13);
 		panel_5.add(lblNewLabel_10);
 		
 		JTextArea txtNote = new JTextArea();
-		txtNote.setForeground(new Color(0, 51, 204));
+		txtNote.setForeground(new Color(255, 255, 255));
 		txtNote.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtNote.setOpaque(false);
 		txtNote.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -407,11 +421,12 @@ public class CreateMedicalForm extends JFrame {
 		
 		History_record = new JButton("");
 		History_record.setBounds(698, 8, 74, 37);
+		History_record.setVisible(false);
 		panel_5.add(History_record);
 		History_record.setIcon(new ImageIcon(SystemConstant.img_history));
 		History_record.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				HistoryRecord frame4 = new HistoryRecord(Integer.parseInt(txtIDSearch.getText()));
+				HistoryRecord frame4 = new HistoryRecord(Integer.parseInt(txtIDPatient.getText()));
 				frame4.setVisible(true);
 				
 			}
@@ -420,6 +435,9 @@ public class CreateMedicalForm extends JFrame {
 		History_record.setToolTipText("Lịch sử bệnh án bệnh nhân ");
 		getInit();///
 		GuiInit();
+		if (txtIDPatient.getText().length()>0){
+			History_record.setVisible(true);
+		}
 
 	}
 	

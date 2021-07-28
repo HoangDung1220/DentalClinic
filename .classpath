@@ -32,5 +32,6 @@
 	<classpathentry kind="lib" path="ResourceJasper/joda-time-2.9.9.jar"/>
 	<classpathentry kind="lib" path="ResourceJasper/jstl-1.2.jar"/>
 	<classpathentry kind="lib" path="ResourceJasper/poi-4.1.2.jar"/>
+	<classpathentry kind="lib" path="miglayout15-swing.jar" sourcepath="miglayout-src.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

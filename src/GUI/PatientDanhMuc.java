@@ -33,6 +33,7 @@ import BUS.IPatientBUS;
 import BUS.implement.PatientBUS;
 import Constant.SystemConstant;
 import DTO.Patient;
+import javax.swing.border.EtchedBorder;
 
 public class PatientDanhMuc extends JFrame {
 
@@ -81,7 +82,7 @@ public class PatientDanhMuc extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "Thao t\u00E1c", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Manipulate", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel.setBackground(SystemColor.activeCaption);
 		panel.setBounds(10, 97, 829, 84);
 		contentPane.add(panel);
@@ -143,7 +144,7 @@ public class PatientDanhMuc extends JFrame {
 		});
 		btnNewButton.setBackground(new Color(135, 206, 235));
 		btnNewButton.setFont(new Font("Sitka Small", Font.BOLD, 14));
-		btnNewButton.setBounds(557, 24, 40, 35);
+		btnNewButton.setBounds(667, 24, 40, 35);
 		panel.add(btnNewButton);
 		
 		JButton btnReset = new JButton("");
@@ -156,13 +157,13 @@ public class PatientDanhMuc extends JFrame {
 		});
 		btnReset.setFont(new Font("Sitka Small", Font.BOLD, 14));
 		btnReset.setBackground(new Color(135, 206, 235));
-		btnReset.setBounds(625, 24, 40, 35);
+		btnReset.setBounds(717, 24, 40, 35);
 		panel.add(btnReset);
 		
 		JButton btnNewButton_1 = new JButton("");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int res=JOptionPane.showConfirmDialog(null, "Are you sure you want to exit ","confirm", JOptionPane.YES_NO_OPTION);
+				int res=JOptionPane.showConfirmDialog(null, "Are you sure you want to exit? ","confirm", JOptionPane.YES_NO_OPTION);
 				if (res== JOptionPane.YES_OPTION) {
 					dispose();
 				} 
@@ -170,7 +171,7 @@ public class PatientDanhMuc extends JFrame {
 			}
 		});
 		btnNewButton_1.setToolTipText("Exit");
-		btnNewButton_1.setBounds(688, 24, 40, 35);
+		btnNewButton_1.setBounds(767, 24, 40, 35);
 		btnNewButton_1.setIcon(new ImageIcon(SystemConstant.img_exit3));
 		panel.add(btnNewButton_1);
 		

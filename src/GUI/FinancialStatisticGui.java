@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.Choice;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.SystemColor;
@@ -22,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -84,41 +86,99 @@ public class FinancialStatisticGui extends JFrame {
 	
 	// get data to DefaultTableModel
 public static DefaultTableModel showDataToTable_Day(Date d1, Date d2)  
+{  
+	    double total=0;
+		double totalDays=0;
+	    final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+		DefaultTableModel model =new DefaultTableModel();
+		Vector<String> column =new Vector<String>();
+		setColumn_Day(column);
+	    model.setColumnIdentifiers(column);
+	    IInvoiceBUS invoice = new InvoiceBUS();
+	    List<Invoice> list =new ArrayList<Invoice>();
+	    list= invoice.findAllOderByDate();   // find all invoice			
+	    List<Invoice> invoices = new ArrayList<Invoice>();
+	    
+	    if (d1.compareTo(d2)<=0)			
+		{
+	    	for (int i=0;i<list.size();i++)			
+				{
+	    		  Invoice p=(Invoice)list.get(i);		
+				  @SuppressWarnings("deprecation")
+				  Date date =new Date(p.getPayDate().getYear(), p.getPayDate().getMonth(),p.getPayDate().getDate());
+				  
+				  if (date.compareTo(d1)>=0 && date.compareTo(d2)<=0 )
+					{ 
+					  invoices.add(p);
+					}
+				}
+				       for (int k=0;k<invoices.size();k++) {
+				    	   		Invoice pi = (Invoice)invoices.get(k);
+								Date dateini =new Date(pi.getPayDate().getYear(), pi.getPayDate().getMonth(),pi.getPayDate().getDate());
+								Vector<Object> row =new Vector<Object>();
+			    				getDataToRow_Day(row,pi);				
+			    				model.addRow(row);	
+			    				total+=pi.getTotalPriceMedicine()+pi.getTotalPriceService();
+			    				if (k==0) {
+			    					 totalDays = pi.getTotalPrice();
+			    				}
+			    				if (k>0) {
+			    	    		 Invoice p1=(Invoice)invoices.get(k-1);
+			    				 Date date1 =new Date(p1.getPayDate().getYear(), p1.getPayDate().getMonth(),p1.getPayDate().getDate());
+			    				 if (date1.compareTo(dateini)==0) {
+			    					 totalDays += pi.getTotalPrice();
+			    				 } else 
+			    				 {
+					    			 dataset.addValue(totalDays, "Doanh thu", ""+date1);
+			    					 totalDays = pi.getTotalPrice();
+			    				 }
+			    				 if (k==invoices.size()-1) {
+					    			 dataset.addValue(totalDays, "Doanh thu", ""+dateini);
+
+			    				 }
+
+			    				}
+							}
+
+
+			    }
+		
+		else JOptionPane.showMessageDialog(null, "Please select the start date before the end date !");
+		// get data to chart			
+	    JFreeChart barChart = ChartFactory.createBarChart(			 
+					            "Invoice Manager Statistics",
+					            "Time", "Revenue",
+					            dataset, PlotOrientation.VERTICAL, false, false, false);
+		chartPanel = new ChartPanel(barChart);
+		txtTotal.setText(""+total);
+
+		return model;
+								
+}
+
+public static DefaultTableModel showDataToTable()  
 {   double total=0;
-    final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 	DefaultTableModel model =new DefaultTableModel();
 	Vector<String> column =new Vector<String>();
 	setColumn_Day(column);
     model.setColumnIdentifiers(column);
     IInvoiceBUS invoice = new InvoiceBUS();
     List<Invoice> list =new ArrayList<Invoice>();
-    list= invoice.findAll();     // find all invoice			
+    list= invoice.findAllOderByDate();   // find all invoice			
 
-    if (d1.compareTo(d2)<=0)			
-	{
+  
     	for (int i=0;i<list.size();i++)			
 			{
     		  Invoice p=(Invoice)list.get(i);		
-			  @SuppressWarnings("deprecation")
-			Date date =new Date(p.getPayDate().getYear(), p.getPayDate().getMonth(),p.getPayDate().getDate());
-						if (date.compareTo(d1)>=0 && date.compareTo(d2)<=0 )
-						{   
 							Vector<Object> row =new Vector<Object>();
 		    				getDataToRow_Day(row,p);				
 		    				model.addRow(row);	
 		    				total+=p.getTotalPriceMedicine()+p.getTotalPriceService();
-		    				dataset.addValue(p.getTotalPriceMedicine()+p.getTotalPriceService(), "Doanh thu", ""+date);
 						}
 
-		    }
-	}
-	else JOptionPane.showMessageDialog(null, "Please select the start date before the end date !");
-	// get data to chart			
-    JFreeChart barChart = ChartFactory.createBarChart(			 
-				            "BIỂU ĐỒ DOANH THU ĐỊNH KÌ THEO NGÀY",
-				            "Thời gian", "Doanh thu",
-				            dataset, PlotOrientation.VERTICAL, false, false, false);
-	chartPanel = new ChartPanel(barChart);
+		    
+	
+	
 	txtTotal.setText(""+total);
 
 	return model;
@@ -152,7 +212,7 @@ public static DefaultTableModel showDataToTable_Month(Date d1, Date d2)
     
     IInvoiceBUS invoice = new InvoiceBUS();
 	List<Invoice> list =new ArrayList<Invoice>();
-	list= invoice.findAll();     // find all invoice
+	list= invoice.findAllOderByDate();    // find all invoice
 	int[] month =new int[13];
 	double[] total_medicine =new double[13];
 	double[] total_service = new double[13];
@@ -190,8 +250,8 @@ public static DefaultTableModel showDataToTable_Month(Date d1, Date d2)
 	else JOptionPane.showMessageDialog(null, "Please select the start date before the end date !");
 	
 	 JFreeChart barChart = ChartFactory.createBarChart(
-	            "BIỂU ĐỒ DOANH THU ĐỊNH KÌ THEO THÁNG",
-	            "Thời gian", "Doanh thu",
+	            "Invoice Manager Statistics ",
+	            "Time", "Revenue",
 	            dataset, PlotOrientation.VERTICAL, false, false, false);
 	 chartPanel = new ChartPanel(barChart);
 	
@@ -200,6 +260,7 @@ public static DefaultTableModel showDataToTable_Month(Date d1, Date d2)
 	return model;
 					
 }
+
 
 	public FinancialStatisticGui() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -210,19 +271,25 @@ public static DefaultTableModel showDataToTable_Month(Date d1, Date d2)
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("TH\u1ED0NG K\u00CA DOANH THU");
-		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 17));
-		lblNewLabel.setBounds(503, 11, 222, 36);
+		JLabel lblNewLabel = new JLabel("Statistics and Revenues");
+		lblNewLabel.setForeground(new Color(0, 51, 153));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("Sitka Small", Font.BOLD, 19));
+		lblNewLabel.setBounds(369, 11, 526, 36);
 		contentPane.add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("T\u1EEB ng\u00E0y:");
+		JLabel lblNewLabel_1 = new JLabel("From :");
+		lblNewLabel_1.setForeground(new Color(0, 51, 153));
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblNewLabel_1.setBounds(418, 55, 110, 17);
 		contentPane.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("\u0110\u1EBFn ng\u00E0y:");
+		JLabel lblNewLabel_1_1 = new JLabel("To :");
+		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_1.setForeground(new Color(0, 51, 153));
 		lblNewLabel_1_1.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		lblNewLabel_1_1.setBounds(712, 57, 67, 17);
+		lblNewLabel_1_1.setBounds(712, 57, 93, 17);
 		contentPane.add(lblNewLabel_1_1);
 		
 		dateChooserFrom = new JDateChooser();
@@ -231,7 +298,7 @@ public static DefaultTableModel showDataToTable_Month(Date d1, Date d2)
 		contentPane.add(dateChooserFrom);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 101, 380, 419);
+		scrollPane.setBounds(10, 101, 390, 419);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
@@ -248,7 +315,9 @@ public static DefaultTableModel showDataToTable_Month(Date d1, Date d2)
 		btnNewButtonTK.setIcon(new ImageIcon(SystemConstant.img_search1));
 		contentPane.add(btnNewButtonTK);
 		
-		JLabel lblNewLabel_1_1_1 = new JLabel("T\u1ED4NG :");
+		JLabel lblNewLabel_1_1_1 = new JLabel("Total :");
+		lblNewLabel_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_1_1.setForeground(new Color(0, 51, 153));
 		lblNewLabel_1_1_1.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblNewLabel_1_1_1.setBounds(20, 531, 67, 17);
 		contentPane.add(lblNewLabel_1_1_1);
@@ -267,16 +336,20 @@ public static DefaultTableModel showDataToTable_Month(Date d1, Date d2)
 	    chartPanel = new ChartPanel((JFreeChart) null);
 		scrollPane_1.setViewportView(chartPanel);
 		
-		JLabel lblNewLabel_1_2 = new JLabel("Loại thời gian");
+		JLabel lblNewLabel_1_2 = new JLabel("Types of time");
+		lblNewLabel_1_2.setForeground(new Color(0, 51, 153));
 		lblNewLabel_1_2.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblNewLabel_1_2.setBounds(33, 57, 96, 17);
 		contentPane.add(lblNewLabel_1_2);
 		
 		choice = new Choice();
 		choice.setBounds(135, 54, 241, 18);
-		choice.addItem("Thong kê theo ngày");
-		choice.addItem("Thong kê theo tháng");
+		choice.addItem("All");
+		choice.addItem("Statistics Day");
+		choice.addItem("Statistics Month");
 		contentPane.add(choice);
+		
+		table.setModel(showDataToTable());
 		
 		btnNewButton = new JButton("");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -309,7 +382,14 @@ public static DefaultTableModel showDataToTable_Month(Date d1, Date d2)
 		    
 		        @SuppressWarnings("deprecation")
 				Date date2 = new Date(Integer.parseInt(y1)-1900, Integer.parseInt(m1)-1, Integer.parseInt(d1));
-                    if (choice.getSelectedItem().toString()=="Thong kê theo ngày")
+		        if (choice.getSelectedItem().toString().equalsIgnoreCase("All")) {
+				    table.setModel(showDataToTable());
+				    scrollPane_1.setViewportView(null);
+		        } 
+		        	
+		        else 
+		        {
+                    if (choice.getSelectedItem().toString()=="Statistics Day")
                     {
   
     				    table.setModel(showDataToTable_Day(date1, date2));
@@ -317,12 +397,13 @@ public static DefaultTableModel showDataToTable_Month(Date d1, Date d2)
     					
                     }
            
-                    else 
+                    else if (choice.getSelectedItem().toString()=="Statistics Month")
                     {
                     	table.setModel(showDataToTable_Month(date1, date2));
                     }
                     scrollPane_1.setViewportView(chartPanel);
 
+			}
 			}
 			
 		});

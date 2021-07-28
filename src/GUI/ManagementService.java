@@ -22,13 +22,17 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import BUS.implement.DentalServiceBUS;
 import Constant.SystemConstant;
 import DTO.DentalService;
+import PAGING.PageRequest;
+import PAGING.Pageble;
 
 public class ManagementService extends JFrame {
 
@@ -44,6 +48,15 @@ public class ManagementService extends JFrame {
 	DentalServiceBUS service = new DentalServiceBUS();
 	private JTextField txtSearchName;
 	private JLabel lberror ;
+	private	JLabel lbpage;
+	private JLabel lbtotalpage;
+	private static List<DentalService> list = new ArrayList<DentalService>();
+	private static String name="";
+	private static int totalPages;
+
+
+
+	
 
 	
 	public static void main(String[] args) {
@@ -61,7 +74,7 @@ public class ManagementService extends JFrame {
 
 	
 	public ManagementService() {
-		showTable(service.findAll());
+		list = service.findAll();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1021, 498);
 		contentPane = new JPanel();
@@ -72,37 +85,43 @@ public class ManagementService extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(SystemColor.activeCaption);
-		panel.setBorder(new TitledBorder(null, "Th\u00F4ng tin d\u1ECBch v\u1EE5", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Information", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel.setBounds(10, 10, 637, 248);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("ID_Service");
+		lblNewLabel.setForeground(new Color(0, 51, 153));
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel.setBounds(10, 36, 79, 13);
 		panel.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Name_Service");
+		lblNewLabel_1.setForeground(new Color(0, 51, 153));
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_1.setBounds(10, 93, 93, 13);
 		panel.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Unit");
+		lblNewLabel_2.setForeground(new Color(0, 51, 153));
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_2.setBounds(10, 146, 45, 13);
 		panel.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("Quantity");
+		lblNewLabel_3.setForeground(new Color(0, 51, 153));
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_3.setBounds(331, 36, 71, 13);
 		panel.add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel("Price\r\n");
+		lblNewLabel_4.setForeground(new Color(0, 51, 153));
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_4.setBounds(331, 93, 45, 13);
 		panel.add(lblNewLabel_4);
 		
 		JLabel lblNewLabel_5 = new JLabel("Warranty");
+		lblNewLabel_5.setForeground(new Color(0, 51, 153));
 		lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_5.setBounds(331, 146, 71, 13);
 		panel.add(lblNewLabel_5);
@@ -115,6 +134,7 @@ public class ManagementService extends JFrame {
 		txtID.setColumns(10);
 		
 		txtName = new JTextField();
+		txtName.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		txtName.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -181,7 +201,7 @@ public class ManagementService extends JFrame {
 				DentalService d = getDataByGui();
 				txtID.setText(String.valueOf(service.insert(d)));
 				JOptionPane.showMessageDialog(null, "You save data successful");
-				showTable(service.findAll());
+			//	showTable(service.findAll());
 				refresh();
 					} else
 						lberror.setText("Data is error!");
@@ -220,12 +240,10 @@ public class ManagementService extends JFrame {
 				
 				service.update(m);
 				JOptionPane.showMessageDialog(null, "You update data successful");
-				showTable(service.findAll());
 				refresh();
 			}
 					else
 					{
-						JOptionPane.showMessageDialog(null, txtPrice.getText());
 				lberror.setText("Data is error!");
 			    lberror.setForeground(Color.red);
 					
@@ -260,7 +278,6 @@ public class ManagementService extends JFrame {
 				{
 					
 					service.delete(listId);
-					showTable(service.findAll());
 					refresh();
 				}
 				}
@@ -274,7 +291,7 @@ public class ManagementService extends JFrame {
 		JButton Exit = new JButton("");
 		Exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int res=JOptionPane.showConfirmDialog(null, "Are you sure you want to exit ","confirm", JOptionPane.YES_NO_OPTION);
+				int res=JOptionPane.showConfirmDialog(null, "Are you sure you want to exit? ","confirm", JOptionPane.YES_NO_OPTION);
 				if (res== JOptionPane.YES_OPTION) {
 					dispose();
 				} 
@@ -292,25 +309,29 @@ public class ManagementService extends JFrame {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(SystemColor.activeCaption);
-		panel_1.setBorder(new TitledBorder(null, "T\u00ECm ki\u1EBFm d\u1ECBch v\u1EE5", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(657, 10, 287, 248);
+		panel_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Search", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_1.setBounds(657, 10, 340, 248);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
 		JLabel lblNewLabel_6 = new JLabel("Name_Service");
+		lblNewLabel_6.setForeground(new Color(0, 51, 153));
 		lblNewLabel_6.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblNewLabel_6.setBounds(10, 136, 109, 13);
+		lblNewLabel_6.setBounds(28, 136, 109, 13);
 		panel_1.add(lblNewLabel_6);
 		
 		JButton SearchButton = new JButton("");
 		SearchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String chara = txtSearchName.getText();
-				showTable(service.searchByName(chara));
+				name = txtSearchName.getText();
+				list = service.searchByName(name);
+				DentalService dental = paging(1,SystemConstant.LIMIT,list,name);
+				showTable(dental.getList());
+				decorPaging(dental);
 			}
 		});
 		SearchButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		SearchButton.setBounds(102, 201, 35, 35);
+		SearchButton.setBounds(164, 203, 35, 35);
 		SearchButton.setIcon(new ImageIcon(SystemConstant.img_search1));
 		SearchButton.setToolTipText("Search data");
 		panel_1.add(SearchButton);
@@ -323,28 +344,123 @@ public class ManagementService extends JFrame {
 
 			}
 		});
-		txtSearchName.setBounds(145, 134, 109, 19);
+		txtSearchName.setBounds(134, 134, 168, 19);
 		panel_1.add(txtSearchName);
 		txtSearchName.setColumns(10);
 		
 		JLabel lblNewLabel_7 = new JLabel("");
-		lblNewLabel_7.setBounds(109, 49, 102, 60);
+		lblNewLabel_7.setBounds(146, 48, 102, 60);
 		lblNewLabel_7.setIcon(new ImageIcon(SystemConstant.img_dental1));
 		panel_1.add(lblNewLabel_7);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(SystemColor.activeCaption);
-		panel_2.setBorder(new TitledBorder(null, "Danh s\u00E1ch d\u1ECBch v\u1EE5", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_2.setBounds(10, 268, 932, 165);
+		panel_2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "List of services", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_2.setBounds(10, 268, 987, 183);
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 21, 912, 134);
+		scrollPane.setBounds(10, 21, 967, 121);
 		panel_2.add(scrollPane);
 		
 		table = new JTable(defaultTable);
 		scrollPane.setViewportView(table);
+		
+		JButton btnfirst = new JButton("<<");
+		btnfirst.setBackground(SystemColor.activeCaption);
+		btnfirst.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				DentalService s= paging(1,SystemConstant.LIMIT,list,name);
+				decorPaging(s);
+				showTable(s.getList());
+				//refresh();
+			}
+		});
+		btnfirst.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnfirst.setForeground(new Color(0, 51, 153));
+		btnfirst.setBounds(305, 152, 60, 21);
+		panel_2.add(btnfirst);
+		
+		JButton btnbefor = new JButton("<");
+		btnbefor.setBackground(SystemColor.activeCaption);
+		btnbefor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				int currentPage = Integer.parseInt(lbpage.getText());
+				if (currentPage>1) {
+				String page = String.valueOf(--currentPage);
+				DentalService s= paging(currentPage,SystemConstant.LIMIT,list,name);
+				lbpage.setText(page);
+				lbtotalpage.setText(s.getPage()+"/"+s.getTotalPage());
+				showTable(s.getList());
+				} else 
+				{
+					DentalService s= paging(currentPage,SystemConstant.LIMIT,list,name);
+					showTable(s.getList());
+
+				}
+			//	refresh();
+			}
+		});
+		btnbefor.setForeground(new Color(0, 51, 153));
+		btnbefor.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnbefor.setBounds(375, 152, 60, 21);
+		panel_2.add(btnbefor);
+		
+		lbpage = new JLabel("");
+		lbpage.setForeground(new Color(0, 51, 153));
+		lbpage.setHorizontalAlignment(SwingConstants.CENTER);
+		lbpage.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lbpage.setBounds(445, 156, 45, 13);
+		panel_2.add(lbpage);
+		
+		lbtotalpage = new JLabel("");
+		lbtotalpage.setForeground(new Color(0, 51, 153));
+		lbtotalpage.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lbtotalpage.setHorizontalAlignment(SwingConstants.CENTER);
+		lbtotalpage.setBounds(500, 156, 45, 13);
+		panel_2.add(lbtotalpage);
+		
+		JButton lbafter = new JButton(">");
+		lbafter.setBackground(SystemColor.activeCaption);
+		lbafter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int currentPage = Integer.parseInt(lbpage.getText());
+				if (currentPage<totalPages) {
+				String page = String.valueOf(++currentPage);
+				DentalService s= paging(currentPage,SystemConstant.LIMIT,list,name);
+				lbpage.setText(page);
+				lbtotalpage.setText(s.getPage()+"/"+s.getTotalPage());
+				showTable(s.getList());
+				} else 
+				{
+					DentalService s= paging(currentPage,SystemConstant.LIMIT,list,name);
+					showTable(s.getList());
+
+				}
+				//refresh();
+			}
+		});
+		lbafter.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lbafter.setForeground(new Color(0, 51, 153));
+		lbafter.setBounds(555, 152, 60, 21);
+		panel_2.add(lbafter);
+		
+		JButton lblast = new JButton(">>");
+		lblast.setBackground(SystemColor.activeCaption);
+		lblast.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				DentalService s= paging(totalPages,SystemConstant.LIMIT,list,name);
+				decorPaging(s);
+				showTable(s.getList());
+			//	refresh();
+			}
+		});
+		lblast.setForeground(new Color(0, 51, 153));
+		lblast.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblast.setBounds(625, 152, 60, 21);
+		panel_2.add(lblast);
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -370,6 +486,11 @@ public class ManagementService extends JFrame {
 			}
 		
 		});
+		
+		//Pageble pageable =  new PageRequest(1, SystemConstant.LIMIT);
+		DentalService dental = paging(1,SystemConstant.LIMIT,list,name);
+		showTable(dental.getList());
+		decorPaging(dental);
 		
 	}
 	
@@ -416,7 +537,15 @@ public class ManagementService extends JFrame {
 		txtPrice.setText("");
 		txtQuantity.setText("");
 		txtUnit.setText("");
-		txtWarranty.setText("");;
+		txtWarranty.setText("");
+		name = txtSearchName.getText();
+		list = service.searchByName(name);
+		DentalService dental = paging(1,SystemConstant.LIMIT,list,name);
+		showTable(dental.getList());
+		decorPaging(dental);
+		
+		
+		
 		
 	}
 	public boolean checkData(String quantity,String price) {
@@ -434,5 +563,26 @@ public class ManagementService extends JFrame {
 			}
 		
 		return check;
+	}
+	public DentalService paging(int page,int limit,List<DentalService> list,String name){
+		DentalService s= new DentalService();
+		List<DentalService> listPaging = null;
+		int totalItem = list.size();
+		int totalPage = (int) Math.ceil(((double) totalItem)/limit);
+		Pageble pageable =  new PageRequest(page, limit);
+		listPaging = service.searchByName(name, pageable);
+		s.setTotalItem(totalItem);
+		s.setTotalPage(totalPage);
+		s.setPage(page);
+		s.setLimit(limit);
+		s.setList(listPaging);
+		totalPages = s.getTotalPage();
+		return s;
+	}
+	
+	public void decorPaging(DentalService dental) {
+		lbpage.setText(String.valueOf(dental.getPage()));
+		lbtotalpage.setText(dental.getPage()+"/"+dental.getTotalPage());
+
 	}
 }

@@ -1,3 +1,4 @@
+
 package GUI;
 
 import java.awt.Color;
@@ -10,7 +11,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.print.Pageable;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -29,6 +29,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
@@ -38,7 +39,6 @@ import javax.swing.table.DefaultTableModel;
 
 import com.toedter.calendar.JDateChooser;
 
-import BUS.implement.MedicalFormBUS;
 import BUS.implement.RoleBUS;
 import BUS.implement.StaffBUS;
 import Checked.DataChecked;
@@ -47,8 +47,6 @@ import DTO.Role;
 import DTO.Staff;
 import PAGING.PageRequest;
 import PAGING.Pageble;
-
-import javax.swing.SwingConstants;
 
 public class ManagementStaff extends JFrame {
 
@@ -119,18 +117,20 @@ public class ManagementStaff extends JFrame {
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "T\u00ECm ki\u1EBFm nh\u00E2n vi\u00EAn", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Search", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel.setBackground(SystemColor.activeCaption);
 		panel.setBounds(10, 22, 316, 298);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Seeek_By");
+		lblNewLabel.setForeground(new Color(0, 51, 153));
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel.setBounds(10, 26, 108, 21);
 		panel.add(lblNewLabel);
 		
 		ID_Staff = new JRadioButton("ID_Staff",true);
+		ID_Staff.setForeground(new Color(0, 51, 153));
 		ID_Staff.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -143,6 +143,7 @@ public class ManagementStaff extends JFrame {
 		panel.add(ID_Staff);
 		
 		NameStaff = new JRadioButton("Name_Staff");
+		NameStaff.setForeground(new Color(0, 51, 153));
 		NameStaff.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -161,6 +162,7 @@ public class ManagementStaff extends JFrame {
 		
 		
 		JLabel lblNewLabel_1 = new JLabel("Char");
+		lblNewLabel_1.setForeground(new Color(0, 51, 153));
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_1.setBounds(22, 131, 45, 13);
 		panel.add(lblNewLabel_1);
@@ -230,13 +232,14 @@ public class ManagementStaff extends JFrame {
 		panel.add(Search);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(null, "Th\u00F4ng tin nh\u00E2n vi\u00EAn", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Information", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_1.setBackground(SystemColor.activeCaption);
 		panel_1.setBounds(349, 22, 743, 298);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
 		lblNewLabel_2 = new JLabel("ID_Staff");
+		lblNewLabel_2.setForeground(new Color(0, 51, 153));
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_2.setBounds(21, 32, 82, 13);
 		panel_1.add(lblNewLabel_2);
@@ -249,6 +252,7 @@ public class ManagementStaff extends JFrame {
 		txtID.setColumns(10);
 		
 		JLabel lblNewLabel_3 = new JLabel("Fullname");
+		lblNewLabel_3.setForeground(new Color(0, 51, 153));
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_3.setBounds(21, 82, 59, 13);
 		panel_1.add(lblNewLabel_3);
@@ -259,6 +263,7 @@ public class ManagementStaff extends JFrame {
 		txtName.setColumns(10);
 		
 		JLabel lblDateofbirth = new JLabel("DateOfBirth");
+		lblDateofbirth.setForeground(new Color(0, 51, 153));
 		lblDateofbirth.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblDateofbirth.setBounds(21, 139, 82, 13);
 		panel_1.add(lblDateofbirth);
@@ -269,6 +274,7 @@ public class ManagementStaff extends JFrame {
 		panel_1.add(dateOfBirth);
 		
 		JLabel lblNewLabel_4 = new JLabel("Phonenumber");
+		lblNewLabel_4.setForeground(new Color(0, 51, 153));
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_4.setBounds(21, 192, 96, 13);
 		panel_1.add(lblNewLabel_4);
@@ -285,6 +291,7 @@ public class ManagementStaff extends JFrame {
 		txtPhone.setColumns(10);
 		
 		JLabel lblNewLabel_5 = new JLabel("Email");
+		lblNewLabel_5.setForeground(new Color(0, 51, 153));
 		lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_5.setBounds(279, 32, 45, 13);
 		panel_1.add(lblNewLabel_5);
@@ -302,6 +309,7 @@ public class ManagementStaff extends JFrame {
 		txtEmail.setColumns(10);
 		
 		JLabel lblNewLabel_6 = new JLabel("I_Card ");
+		lblNewLabel_6.setForeground(new Color(0, 51, 153));
 		lblNewLabel_6.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_6.setBounds(279, 82, 72, 13);
 		panel_1.add(lblNewLabel_6);
@@ -319,16 +327,19 @@ public class ManagementStaff extends JFrame {
 		txtICard.setColumns(10);
 		
 		JLabel lblNewLabel_7 = new JLabel("DateOfWork");
+		lblNewLabel_7.setForeground(new Color(0, 51, 153));
 		lblNewLabel_7.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_7.setBounds(279, 139, 103, 13);
 		panel_1.add(lblNewLabel_7);
 		
 		JLabel lblNewLabel_8 = new JLabel("Address");
+		lblNewLabel_8.setForeground(new Color(0, 51, 153));
 		lblNewLabel_8.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_8.setBounds(279, 192, 72, 13);
 		panel_1.add(lblNewLabel_8);
 		
 	    Male = new JRadioButton("Male");
+	    Male.setForeground(new Color(0, 51, 153));
 		Male.setBackground(SystemColor.activeCaption);
 		Male.setFont(new Font("Tahoma", Font.BOLD, 13));
 		Male.setBounds(602, 28, 103, 21);
@@ -336,6 +347,7 @@ public class ManagementStaff extends JFrame {
 		panel_1.add(Male);
 		
 		Female = new JRadioButton("Female");
+		Female.setForeground(new Color(0, 51, 153));
 		Female.setFont(new Font("Tahoma", Font.BOLD, 13));
 		Female.setBackground(SystemColor.activeCaption);
 		Female.setBounds(602, 78, 103, 21);
@@ -351,11 +363,13 @@ public class ManagementStaff extends JFrame {
 		txtAddress.setColumns(10);
 		
 		JLabel lblNewLabel_9 = new JLabel("Gender");
+		lblNewLabel_9.setForeground(new Color(0, 51, 153));
 		lblNewLabel_9.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_9.setBounds(527, 32, 69, 13);
 		panel_1.add(lblNewLabel_9);
 		
 		JLabel lblNewLabel_10 = new JLabel("Role");
+		lblNewLabel_10.setForeground(new Color(0, 51, 153));
 		lblNewLabel_10.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_10.setBounds(527, 139, 45, 13);
 		panel_1.add(lblNewLabel_10);
@@ -382,7 +396,6 @@ public class ManagementStaff extends JFrame {
 				if (checkData(s))
 				{
 				txtID.setText(String.valueOf(staff.insert(s)));
-			    showTable(staff.findAll());
 				
 				Staff sta = staff.findOne(Integer.parseInt(txtID.getText()));
 				StringBuilder st = new StringBuilder("NV");
@@ -429,11 +442,20 @@ public class ManagementStaff extends JFrame {
 				for (int i:list) {
 					listId.add(Integer.parseInt(table.getValueAt(i, 0).toString()));
 				}
-				staff.delete(listId);
 				
-				JOptionPane.showMessageDialog(null, "Data deleted Succesfully");
-				showTable(staff.findAll());
-				refresh();
+				int res=JOptionPane.showConfirmDialog(null, "You are sure delete databases","confirm", JOptionPane.YES_NO_OPTION);
+				if (res!= JOptionPane.YES_OPTION) {
+					return ;
+				} else 
+				{
+					
+					staff.delete(listId);
+					JOptionPane.showMessageDialog(null, "Data deleted Succesfully");
+					showTable(staff.findAll());
+					refresh();
+				}
+				
+				
 			}
 		});
 		Delete.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -447,7 +469,7 @@ public class ManagementStaff extends JFrame {
 		Exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				int res=JOptionPane.showConfirmDialog(null, "Are you sure you want to exit ","confirm", JOptionPane.YES_NO_OPTION);
+				int res=JOptionPane.showConfirmDialog(null, "Are you sure you want to exit ? ","confirm", JOptionPane.YES_NO_OPTION);
 				if (res== JOptionPane.YES_OPTION) {
 					dispose();
 				} 
@@ -481,11 +503,11 @@ public class ManagementStaff extends JFrame {
 		panel_2.setBounds(23, 346, 1069, 203);
 		contentPane.add(panel_2);
 		panel_2.setBackground(SystemColor.activeCaption);
-		panel_2.setBorder(new TitledBorder(null, "Danh s\u00E1ch nh\u00E2n vi\u00EAn", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "List of patients", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_2.setLayout(null);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(20, 41, 1049, 122);
+		scrollPane.setBounds(20, 34, 1049, 122);
 		panel_2.add(scrollPane);
 		
 		table = new JTable(defaultTable);
@@ -668,7 +690,8 @@ public class ManagementStaff extends JFrame {
 		txtPhone.setText(s.getPhone());
 		txtICard.setText(s.getiCard());
 		txtEmail.setText(s.getEmail());
-		comboRole.setSelectedItem(s.getRole());
+		comboRole.setSelectedIndex(s.getIdRole()-1);
+
 		if (s.getGender()==true)
 		{ 
 			Male.setSelected(true);
@@ -685,7 +708,7 @@ public class ManagementStaff extends JFrame {
 		txtPhone.setText("");
 		txtICard.setText("");
 		txtEmail.setText("");
-		comboRole.setSelectedIndex(0);;
+		comboRole.setSelectedIndex(0);
 		
 			Male.setSelected(true);
 			

@@ -6,9 +6,9 @@ import java.util.List;
 import BUS.IMedicineBUS;
 import DAL.IMedicineDAL;
 import DAL.implement.MedicineDAL;
-import DTO.DetailService;
 import DTO.Medicine;
 import DTO.Prescription;
+import PAGING.Pageble;
 
 public class MedicineBUS implements IMedicineBUS{
 	
@@ -54,6 +54,16 @@ public class MedicineBUS implements IMedicineBUS{
 	@Override
 	public List<Medicine> searchByNameAndIDType(String name, int idType) {
 		return medicine.searchByNameAndIDType(name, idType);
+	}
+
+	@Override
+	public List<Medicine> findAll(Pageble pageable) {
+		return medicine.findAll(pageable);
+	}
+
+	@Override
+	public List<Medicine> searchByNameAndIDType(String name, int idType, Pageble pageable) {
+		return medicine.searchByNameAndIDType(name, idType, pageable);
 	}
 
 }

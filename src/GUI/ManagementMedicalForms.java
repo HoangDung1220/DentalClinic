@@ -72,13 +72,14 @@ public class ManagementMedicalForms extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 780, 488);
 		contentPane = new JPanel();
+		contentPane.setFont(new Font("Sitka Subheading", Font.PLAIN, 10));
 		contentPane.setBackground(SystemColor.activeCaption);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JButton Create = new JButton("Create New Medical Form");
-		Create.setBackground(Color.WHITE);
+		Create.setBackground(SystemColor.control);
 		Create.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				MedicalForm m = null;
@@ -103,11 +104,13 @@ public class ManagementMedicalForms extends JFrame {
 		Exit.setFont(new Font("Tahoma", Font.BOLD, 12));
 		
 		JLabel lblNewLabel = new JLabel("Medical Form");
+		lblNewLabel.setForeground(new Color(0, 51, 153));
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNewLabel.setBounds(10, 60, 100, 15);
 		contentPane.add(lblNewLabel);
 		
 		JCheckBox checkAll = new JCheckBox("All",true);
+		checkAll.setForeground(new Color(0, 51, 153));
 		checkAll.setToolTipText("");
 		checkAll.setBackground(SystemColor.activeCaption);
 		checkAll.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -115,12 +118,14 @@ public class ManagementMedicalForms extends JFrame {
 		contentPane.add(checkAll);
 		
 		checkName = new JCheckBox("Name_Patient");
+		checkName.setForeground(new Color(0, 51, 153));
 		checkName.setFont(new Font("Tahoma", Font.BOLD, 12));
 		checkName.setBackground(SystemColor.activeCaption);
 		checkName.setBounds(457, 57, 126, 21);
 		contentPane.add(checkName);
 		
 		checkDate = new JCheckBox("Date_Cure");
+		checkDate.setForeground(new Color(0, 51, 153));
 		checkDate.setBackground(SystemColor.activeCaption);
 		checkDate.setFont(new Font("Tahoma", Font.BOLD, 12));
 		checkDate.setBounds(640, 57, 93, 21);
@@ -128,7 +133,7 @@ public class ManagementMedicalForms extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(SystemColor.activeCaption);
-		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Danh s\u00E1ch Medical_Form", TitledBorder.LEADING, TitledBorder.TOP, null, Color.YELLOW));
+		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "List of Medical_forms", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel.setBounds(10, 147, 746, 294);
 		contentPane.add(panel);
 		panel.setLayout(null);
@@ -180,7 +185,7 @@ public class ManagementMedicalForms extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setFont(new Font("Tahoma", Font.ITALIC, 10));
 		panel_1.setBackground(SystemColor.activeCaption);
-		panel_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Nh\u1EA5n Enter \u0111\u1EC3 t\u00ECm ki\u1EBFm", TitledBorder.LEADING, TitledBorder.TOP, null, SystemColor.controlLtHighlight));
+		panel_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Press Enter To Search", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_1.setBounds(10, 80, 746, 57);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
