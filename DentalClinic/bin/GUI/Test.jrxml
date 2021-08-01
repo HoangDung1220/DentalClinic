@@ -1,0 +1,556 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test" pageWidth="700" pageHeight="595" orientation="Landscape" columnWidth="500" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10" uuid="fa6ed9c7-5297-46d1-ab53-e198d29b78dc">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="TestInvoice"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="400"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="351"/>
+	<subDataset name="Dataset1" uuid="1601b9ce-cd5d-4a4d-86f9-f7dfbe975ed5">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (4)"/>
+		<queryString language="SQL">
+			<![CDATA[select * from prescription where prescription.id_medical_form='4']]>
+		</queryString>
+		<field name="id" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.name" value="id"/>
+			<property name="com.jaspersoft.studio.field.label" value="id"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="prescription"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="id_medical_form" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.name" value="id_medical_form"/>
+			<property name="com.jaspersoft.studio.field.label" value="id_medical_form"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="prescription"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="id_medicine" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.name" value="id_medicine"/>
+			<property name="com.jaspersoft.studio.field.label" value="id_medicine"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="prescription"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="quantity" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.name" value="quantity"/>
+			<property name="com.jaspersoft.studio.field.label" value="quantity"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="prescription"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="price" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.name" value="price"/>
+			<property name="com.jaspersoft.studio.field.label" value="price"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="prescription"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="note" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="note"/>
+			<property name="com.jaspersoft.studio.field.label" value="note"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="prescription"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="usages" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="usages"/>
+			<property name="com.jaspersoft.studio.field.label" value="usages"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="prescription"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<queryString language="SQL">
+		<![CDATA[SELECT *
+FROM invoice
+	inner join staff ON 
+	 invoice.id_staff = staff.id 
+	inner join medical_form ON 
+	 invoice.id_medical_form = medical_form.id 
+	inner join patient ON 
+	 medical_form.id_patient = patient.id 
+	inner join detail_service ON 
+	 medical_form.id = detail_service.id_medical_form 
+	inner join dental_service ON 
+	 dental_service.id = detail_service.id_dental_service 
+	
+WHERE 
+	 invoice.id = 'HD142021-05-21']]>
+	</queryString>
+	<field name="id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id_medical_form" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_medical_form"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_medical_form"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total_price_medicine" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="total_price_medicine"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_price_medicine"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total_price_service" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="total_price_service"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_price_service"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id_staff" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_staff"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_staff"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pay_date" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="pay_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="pay_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total_price" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="total_price"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_price"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COLUMN_8" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="staff"/>
+	</field>
+	<field name="fullname" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fullname"/>
+		<property name="com.jaspersoft.studio.field.label" value="fullname"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="staff"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="gender" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="gender"/>
+		<property name="com.jaspersoft.studio.field.label" value="gender"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="staff"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="birthday" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="birthday"/>
+		<property name="com.jaspersoft.studio.field.label" value="birthday"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="staff"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="phone" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="phone"/>
+		<property name="com.jaspersoft.studio.field.label" value="phone"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="staff"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="address" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="address"/>
+		<property name="com.jaspersoft.studio.field.label" value="address"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="staff"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="icard" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="icard"/>
+		<property name="com.jaspersoft.studio.field.label" value="icard"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="staff"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="email" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="email"/>
+		<property name="com.jaspersoft.studio.field.label" value="email"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="staff"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="date_start_work" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="date_start_work"/>
+		<property name="com.jaspersoft.studio.field.label" value="date_start_work"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="staff"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id_role" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_role"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_role"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="staff"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="username" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="username"/>
+		<property name="com.jaspersoft.studio.field.label" value="username"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="staff"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="password" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="password"/>
+		<property name="com.jaspersoft.studio.field.label" value="password"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="staff"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="created_by" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="created_by"/>
+		<property name="com.jaspersoft.studio.field.label" value="created_by"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="staff"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="created_date" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="created_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="created_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="staff"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="modified_by" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="modified_by"/>
+		<property name="com.jaspersoft.studio.field.label" value="modified_by"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="staff"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="modified_date" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="modified_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="modified_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="staff"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COLUMN_24" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="medical_form"/>
+	</field>
+	<field name="id_patient" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_patient"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_patient"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="medical_form"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id_doctor" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_doctor"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_doctor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="medical_form"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="date_cure" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="date_cure"/>
+		<property name="com.jaspersoft.studio.field.label" value="date_cure"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="medical_form"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="status_before_cure" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="status_before_cure"/>
+		<property name="com.jaspersoft.studio.field.label" value="status_before_cure"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="medical_form"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="status_after_cure" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="status_after_cure"/>
+		<property name="com.jaspersoft.studio.field.label" value="status_after_cure"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="medical_form"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="content_cure" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="content_cure"/>
+		<property name="com.jaspersoft.studio.field.label" value="content_cure"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="medical_form"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COLUMN_31" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<field name="COLUMN_32" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fullname"/>
+		<property name="com.jaspersoft.studio.field.label" value="fullname"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<field name="COLUMN_33" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="gender"/>
+		<property name="com.jaspersoft.studio.field.label" value="gender"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<field name="COLUMN_34" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="birthday"/>
+		<property name="com.jaspersoft.studio.field.label" value="birthday"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<field name="COLUMN_35" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="phone"/>
+		<property name="com.jaspersoft.studio.field.label" value="phone"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<field name="COLUMN_36" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="address"/>
+		<property name="com.jaspersoft.studio.field.label" value="address"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<field name="COLUMN_37" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="icard"/>
+		<property name="com.jaspersoft.studio.field.label" value="icard"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<field name="COLUMN_38" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="created_by"/>
+		<property name="com.jaspersoft.studio.field.label" value="created_by"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<field name="COLUMN_39" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="created_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="created_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<field name="COLUMN_40" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="modified_by"/>
+		<property name="com.jaspersoft.studio.field.label" value="modified_by"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<field name="COLUMN_41" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="modified_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="modified_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+	</field>
+	<field name="COLUMN_42" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="detail_service"/>
+	</field>
+	<field name="COLUMN_43" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_medical_form"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_medical_form"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="detail_service"/>
+	</field>
+	<field name="id_dental_service" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_dental_service"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_dental_service"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="detail_service"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="quantity" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="quantity"/>
+		<property name="com.jaspersoft.studio.field.label" value="quantity"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="detail_service"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="price" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="price"/>
+		<property name="com.jaspersoft.studio.field.label" value="price"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="detail_service"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COLUMN_47" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dental_service"/>
+	</field>
+	<field name="name_service" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="name_service"/>
+		<property name="com.jaspersoft.studio.field.label" value="name_service"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dental_service"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="unit" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="unit"/>
+		<property name="com.jaspersoft.studio.field.label" value="unit"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dental_service"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COLUMN_50" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="quantity"/>
+		<property name="com.jaspersoft.studio.field.label" value="quantity"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dental_service"/>
+	</field>
+	<field name="warranty" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="warranty"/>
+		<property name="com.jaspersoft.studio.field.label" value="warranty"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dental_service"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COLUMN_52" class="java.lang.Float">
+		<property name="com.jaspersoft.studio.field.name" value="price"/>
+		<property name="com.jaspersoft.studio.field.label" value="price"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dental_service"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="50" splitType="Prevent">
+			<staticText>
+				<reportElement x="40" y="20" width="470" height="30" uuid="808e32ad-e569-4bb9-b3bb-2cee232c353d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Bahnschrift" size="22"/>
+				</textElement>
+				<text><![CDATA[Hóa Đơn Khám Chữa Bệnh]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="185" splitType="Stretch">
+			<staticText>
+				<reportElement x="50" y="20" width="90" height="30" uuid="dbd220b9-5208-48f8-a8ba-94b99c950aa0"/>
+				<textElement textAlignment="Left">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tên bệnh nhân: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="360" y="60" width="90" height="30" uuid="627f6613-d74d-4599-8569-fbad91ffe4e2"/>
+				<textElement textAlignment="Left">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Địa chỉ:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="360" y="20" width="90" height="30" uuid="9411deff-82b8-4d4c-8f35-f34a72c00907"/>
+				<textElement textAlignment="Left">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Số điện thoại]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="60" width="90" height="30" uuid="cd4f711b-393f-46c9-8bae-fb21a17b6a88"/>
+				<textElement textAlignment="Left">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ngày tạo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="180" y="20" width="170" height="30" uuid="e47d0762-fc88-49c9-a480-a93a81237544"/>
+				<textElement textAlignment="Left">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COLUMN_32}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="470" y="60" width="170" height="30" uuid="1135bf19-a99f-42fd-9d96-e00454cd58f7"/>
+				<textElement textAlignment="Left">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COLUMN_36}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="470" y="20" width="170" height="30" uuid="71789627-dbea-49f8-942f-67e2d22bbd50"/>
+				<textElement textAlignment="Left">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COLUMN_35}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="60" width="170" height="30" uuid="f4ef30a1-9b00-4053-9855-e4f1307918d2"/>
+				<textElement textAlignment="Left">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pay_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="110" y="150" width="100" height="30" uuid="ff892c56-a077-478e-bd1d-fc5c6ae5af4c"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tên dịch vụ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="150" width="100" height="30" uuid="5c192e09-dc64-4c30-bd84-fe3a93f68576"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Đơn vị]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="150" width="100" height="30" uuid="37d66484-c9c9-4efb-aff9-d36caca2a84c"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Số lượng]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="410" y="150" width="100" height="30" uuid="2558e435-08cf-49a4-8e3a-c78663515b5b"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Giá]]></text>
+			</staticText>
+			<line>
+				<reportElement x="110" y="180" width="401" height="1" uuid="76a9351a-1aeb-4954-855b-e6b409af8079"/>
+			</line>
+			<line>
+				<reportElement x="110" y="150" width="401" height="1" uuid="a11d4a75-76e9-4538-bda8-607d31f29879"/>
+			</line>
+			<line>
+				<reportElement x="510" y="150" width="1" height="31" uuid="954ab63e-0529-42ec-aec6-6752882b0439"/>
+			</line>
+			<line>
+				<reportElement x="110" y="150" width="1" height="31" uuid="0ba83122-1473-4c4f-b3a6-0d4036d81d3c"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="47" splitType="Stretch">
+			<textField>
+				<reportElement x="210" y="0" width="100" height="30" uuid="d0509163-fd05-4883-b880-fc0a2c6c90dc"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{unit}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="0" width="100" height="30" uuid="44fa2d7b-4566-48e5-94e7-ed941120afef"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="410" y="0" width="100" height="30" uuid="fe6ea216-b11e-493e-aa83-8799a3547c18"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{price}*$F{quantity}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="0" width="100" height="30" uuid="39b37968-9f00-47e1-a77d-528cd3c50e28"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name_service}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="510" y="-20" width="1" height="50" uuid="846de0ff-2f3c-4ef7-b56a-800380392da6"/>
+			</line>
+			<line>
+				<reportElement x="111" y="-20" width="1" height="51" uuid="fa125076-4b87-40bf-8833-f912b25387df"/>
+			</line>
+			<line>
+				<reportElement x="112" y="31" width="398" height="1" uuid="13ef633b-6b11-4839-9f74-4b241390b86c"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<summary>
+		<band height="47" splitType="Stretch">
+			<textField>
+				<reportElement x="520" y="10" width="100" height="30" uuid="cbc9e4d2-037a-4dbc-9947-36a98c462ead"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_price}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="410" y="9" width="100" height="32" uuid="0ecfcaeb-4e0e-4a88-b616-813b82f1b142"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tổng tiền]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
