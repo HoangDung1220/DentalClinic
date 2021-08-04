@@ -1,5 +1,6 @@
 package BUS.implement;
 
+import java.sql.Date;
 import java.util.List;
 
 import BUS.IPatientBUS;
@@ -71,6 +72,17 @@ public class PatientBUS implements IPatientBUS{
 	@Override
 	public List<Patient> findAllPaging(Pageble pageble) {
 		return patient.findAllPage(pageble);
+	}
+
+	@Override
+	public List<Patient> findAllPage(Pageble pageble, Date date1, Date date2) {
+		return patient.findAllPage(pageble,date1,date2);
+
+	}
+
+	@Override
+	public List<Patient> findAllPage(Date date1, Date date2) {
+		return patient.findAllPage(date1,date2);
 	}
 
 }

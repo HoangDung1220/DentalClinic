@@ -29,6 +29,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import BUS.implement.DentalServiceBUS;
+import Checked.DataChecked;
 import Constant.SystemConstant;
 import DTO.DentalService;
 import PAGING.PageRequest;
@@ -196,7 +197,7 @@ public class ManagementService extends JFrame {
 		JButton Save = new JButton("");
 		Save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (txtPrice.getText().length()>0 && txtQuantity.getText().length()>0) {
+				if (txtPrice.getText().length()>0 && txtQuantity.getText().length()>0 && txtName.getText().length()>0) {
 					if (checkData(txtPrice.getText(),txtQuantity.getText())) {
 				DentalService d = getDataByGui();
 				txtID.setText(String.valueOf(service.insert(d)));
@@ -224,10 +225,12 @@ public class ManagementService extends JFrame {
 		JButton Edit = new JButton("");
 		Edit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int index = table.getSelectedRow();
+				int index =-1;
+				 index = table.getSelectedRow();
+				 if (index!=-1) {
 				int id = Integer.parseInt(table.getValueAt(index, 0).toString());
 				
-				if (txtPrice.getText().length()>0 && txtQuantity.getText().length()>0) {
+				if (txtPrice.getText().length()>0 && txtQuantity.getText().length()>0 && txtName.getText().length()>0) {
 					if (checkData(txtPrice.getText(),txtQuantity.getText())) {
 				DentalService  mData = getDataByGui();
 				DentalService  m = new DentalService();
@@ -237,7 +240,7 @@ public class ManagementService extends JFrame {
 				m.setQuantity(mData.getQuantity());
 				m.setUnit(mData.getUnit());
 				m.setWarranty(mData.getWarranty());
-				
+				lberror.setText("");
 				service.update(m);
 				JOptionPane.showMessageDialog(null, "You update data successful");
 				refresh();
@@ -254,7 +257,7 @@ public class ManagementService extends JFrame {
 			    lberror.setForeground(Color.red);
 			}
 			
-
+				 }
 			}
 		});
 		Edit.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -267,6 +270,7 @@ public class ManagementService extends JFrame {
 		Delete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int[] listRow = table.getSelectedRows();
+				if (listRow.length>0) {
 				List<Integer> listId = new ArrayList<Integer>(); 
 				for (int i : listRow) {
 					listId.add(Integer.parseInt(table.getValueAt(i, 0).toString()));
@@ -281,6 +285,7 @@ public class ManagementService extends JFrame {
 					refresh();
 				}
 				}
+			}
 		});
 		Delete.setFont(new Font("Tahoma", Font.BOLD, 14));
 		Delete.setBounds(206, 202, 40, 35);
@@ -468,6 +473,7 @@ public class ManagementService extends JFrame {
 				int row = table.getSelectedRow();
 				int id = Integer.parseInt(table.getValueAt(row, 0).toString());
 				setDataToGui(id);
+				lberror.setText("");
 				
 				}
 			}
@@ -551,7 +557,7 @@ public class ManagementService extends JFrame {
 	public boolean checkData(String quantity,String price) {
 		boolean check =true;
 			for (int i=0;i<quantity.length();i++) {
-				if ((quantity.charAt(i)<'0' || quantity.charAt(i)>'9') && quantity.charAt(i)!='.') {
+				if (((quantity.charAt(i)<'0' || quantity.charAt(i)>'9') && quantity.charAt(i)!='.')) {
 					check=false;
 				}
 			}
@@ -561,7 +567,10 @@ public class ManagementService extends JFrame {
 					check=false;
 				}
 			}
-		
+			if (DataChecked.checkInteger(quantity)) return false;
+			
+			if (DataChecked.checkInteger(price)) return false;
+
 		return check;
 	}
 	public DentalService paging(int page,int limit,List<DentalService> list,String name){

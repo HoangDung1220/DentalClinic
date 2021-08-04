@@ -47,6 +47,18 @@ public class DataChecked {
 		
 	}
 	
+
+	public static boolean checkData(String st) {
+		String regex = "^[0-9]+$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(st);
+		 if (matcher.matches()) {
+			 return true;
+		 }
+		 return false;
+		
+	}
+	
 	public static boolean checkUsername(String st) {
 		List<Staff> list =staff.findAll();
 		boolean check=true;
@@ -56,6 +68,17 @@ public class DataChecked {
 		}
 		
 		return check;
+	}
+	
+
+	public static boolean checkInteger(String st) {
+		String regex = "[0,.]+$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(st);
+		 if (matcher.matches()) {
+			 return true;
+		 }
+		 return false;
 	}
 	
 }

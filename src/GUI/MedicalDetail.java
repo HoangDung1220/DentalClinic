@@ -50,6 +50,7 @@ public class MedicalDetail extends JFrame {
 	private JTable table_1;
 	private JTextArea txtUsage;
 	private JTextArea txtNote ;
+	private JButton Edit;
 
 	private TypeMedicineBUS typeMedicine = new TypeMedicineBUS();
 	private MedicineBUS medicine = new  MedicineBUS();
@@ -115,6 +116,8 @@ public class MedicalDetail extends JFrame {
 				int index = table.getSelectedRow();
 				int id = Integer.parseInt(table.getValueAt(index, 0).toString());
 				setDataToGui(id);
+				Edit.setEnabled(false);
+
 				
 				
 			}
@@ -130,6 +133,8 @@ public class MedicalDetail extends JFrame {
 					int row = table.getSelectedRow();
 					int id = Integer.parseInt(table.getValueAt(row, 0).toString());
 					setDataToGui(id);
+					Edit.setEnabled(false);
+
 				}
 				
 			}
@@ -228,7 +233,7 @@ public class MedicalDetail extends JFrame {
 		Save.setBounds(383, 21, 40, 35);
 		panel_1.add(Save);
 		
-		JButton Edit = new JButton("");
+		Edit = new JButton("");
 		Edit.setToolTipText("Ch\u1EC9nh s\u1EEDa d\u1EEF li\u1EC7u");
 		Edit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -341,6 +346,7 @@ public class MedicalDetail extends JFrame {
 				int index = table_1.getSelectedRow();
 				int id = Integer.parseInt(table_1.getValueAt(index, 0).toString());
 				setDataToGui1(id);
+				Edit.setEnabled(true);
 			}
 			
 		});
@@ -354,6 +360,8 @@ public class MedicalDetail extends JFrame {
 					int row = table_1.getSelectedRow();
 					int id = Integer.parseInt(table_1.getValueAt(row, 0).toString());
 					setDataToGui1(id);
+					Edit.setEnabled(true);
+
 				}
 				
 			}
@@ -513,12 +521,17 @@ public class MedicalDetail extends JFrame {
 	}
 	public boolean checkData(String quantity) {
 		boolean check = true;
+		if (quantity.equals("0")) {
+			    
+				return false;	
+				} 
 		for (int i=0;i<quantity.length();i++) {
 			if (quantity.charAt(i)<'0' || quantity.charAt(i)>'9') {
 				check = false;
 			}
 			
 		}
+		
 		
 		return check;
 	}

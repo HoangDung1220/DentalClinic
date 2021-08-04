@@ -1,5 +1,6 @@
 package DAL.implement;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -85,6 +86,30 @@ public class PatientDAL extends AbstractDAL<Patient> implements IPatientDAL{
 		{		
 			return query(querry.toString(),new PatientMapper());
 		}
+	}
+
+	@Override
+	public List<Patient> findAllPage(Pageble pageble, Date date1, Date date2) {
+		StringBuilder querry = new StringBuilder();
+		querry.append("select *from patient where created_date BETWEEN ? and ? ");
+		if ((Integer) pageble.getOffset()!=null && (Integer) pageble.getLimit()!=null) {
+			querry.append("limit "+pageble.getOffset()+","+pageble.getLimit()+"");
+			return query(querry.toString(),new PatientMapper(),date1,date2);
+		}
+		else 	
+		{		
+			return query(querry.toString(),new PatientMapper(),date1,date2);
+		}
+	}
+
+	@Override
+	public List<Patient> findAllPage(Date date1, Date date2) {
+		StringBuilder querry = new StringBuilder();
+		querry.append("select *from patient  where created_date BETWEEN ? and ? ");
+		
+			
+			return query(querry.toString(),new PatientMapper(),date1,date2);
+		
 	}
 	
 }

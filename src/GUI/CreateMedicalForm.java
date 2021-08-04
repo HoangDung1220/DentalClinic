@@ -20,6 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
@@ -31,14 +32,13 @@ import BUS.implement.MedicalFormBUS;
 import BUS.implement.PatientBUS;
 import BUS.implement.PrescriptionBUS;
 import BUS.implement.StaffBUS;
+import Checked.DataChecked;
 import Constant.SystemConstant;
 import DTO.DetailService;
 import DTO.MedicalForm;
 import DTO.Patient;
 import DTO.Prescription;
 import DTO.Staff;
-import javax.swing.UIManager;
-import javax.swing.SwingConstants;
 
 public class CreateMedicalForm extends JFrame {
 
@@ -123,6 +123,7 @@ public class CreateMedicalForm extends JFrame {
 		Search = new JButton("SEARCH");
 		Search.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if (txtIDSearch.getText().length()>0 && DataChecked.checkData(txtIDSearch.getText())) {
 				int idPatient = Integer.parseInt(txtIDSearch.getText());
 				Patient pa = new Patient();
 				pa = patient.findOne(idPatient);
@@ -138,6 +139,10 @@ public class CreateMedicalForm extends JFrame {
 					txtAge.setText(String.valueOf(age));
 					History_record.setVisible(true);
 				}
+			} else 
+			{
+				JOptionPane.showMessageDialog(null,"Please enter data!");	
+			}
 			}
 		});
 		Search.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -206,6 +211,7 @@ public class CreateMedicalForm extends JFrame {
 		panel_1.add(Create);
 		Create.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if (txtIDPatient.getText().length()>0) {
 				MedicalForm m = getDataByGui();
 				int id = medical_form.insert(m);
 				txtForm.setText(String.valueOf(id));
@@ -213,7 +219,7 @@ public class CreateMedicalForm extends JFrame {
 				Dental_service.setEnabled(true);
 				Medicine.setEnabled(true);
 				
-				
+				}
 				
 			}
 		});
@@ -349,12 +355,13 @@ public class CreateMedicalForm extends JFrame {
 		btnNewButton_4.setToolTipText("Lưu thông tin sau khi khám ");
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if (txtForm.getText().length()>0) {
 				MedicalForm m = getDataByGui();
 				m.setId(Integer.parseInt(txtForm.getText()));
 				medical_form.update(m);
 				JOptionPane.showMessageDialog(null, "You save data successful");
 				check = true;
-	
+				}
 			}
 		});
 		btnNewButton_4.setFont(new Font("Tahoma", Font.BOLD, 13));

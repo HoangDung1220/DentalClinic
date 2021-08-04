@@ -30,6 +30,7 @@ import BUS.implement.InvoiceBUS;
 import BUS.implement.MedicalFormBUS;
 import BUS.implement.PrescriptionBUS;
 import Checked.AutoID;
+import Checked.DataChecked;
 import Constant.SystemConstant;
 import DTO.DetailService;
 import DTO.Invoice;
@@ -60,6 +61,7 @@ public class ManagementInvoice extends JFrame {
 	private JButton btnNewButton_1 ;
 	private JLabel lblNewLabel_6 ;
 	private JButton btnNewButton_2;
+	private boolean checkPrint=false;
 
 
 
@@ -215,6 +217,7 @@ public class ManagementInvoice extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				btnNewButton_1.setEnabled(true);
 				if ((textIDMedical.getText()).length()>0) {
+					if (DataChecked.checkData(textIDMedical.getText())) {
 					int id_form = Integer.parseInt(textIDMedical.getText());
 					Invoice invoice = invoiceExecute.findOneByIdMedical(id_form);
 					if (invoice != null)
@@ -231,6 +234,10 @@ public class ManagementInvoice extends JFrame {
 					setGui(id_form);
 					}
 				} else 
+					{
+					lblNewLabel_6.setText("Data is errored!");
+					}}
+					else 
 				{
 					lblNewLabel_6.setText("Please fill out this field");
 
@@ -270,8 +277,11 @@ public class ManagementInvoice extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Invoice inv = getGui();
+				if (inv!=null) {
 				invoiceExecute.Save(inv);
 				JOptionPane.showMessageDialog(null, "save data successful");
+				checkPrint = true;
+				}
 				
 			}
 		});
@@ -284,7 +294,10 @@ public class ManagementInvoice extends JFrame {
 		btnNewButton_2.setIcon(new ImageIcon(SystemConstant.img_print));
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if (checkPrint) {
 				invoiceExecute.printf(lbID.getText());
+				}
+				checkPrint = false;
 			}
 		});
 		btnNewButton_2.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -427,6 +440,7 @@ public class ManagementInvoice extends JFrame {
 	}
 	
 	public Invoice getGui() {
+		if (lbID.getText().length()>0) {
 		Invoice inv = new Invoice();
 		inv.setId(lbID.getText());
 		inv.setIdMedicalForm(Integer.parseInt(textIDMedical.getText()));
@@ -437,5 +451,7 @@ public class ManagementInvoice extends JFrame {
 		inv.setTotalPriceService(Double.parseDouble(lbTotalService.getText()));
 		
 		return inv;
+		} else 
+			return null;
 	}
 }

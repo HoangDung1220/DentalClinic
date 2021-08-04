@@ -33,7 +33,6 @@ import BUS.implement.InvoiceBUS;
 import BUS.implement.MedicalFormBUS;
 import Constant.SystemConstant;
 import DTO.Invoice;
-import javax.swing.SwingConstants;
 
 public class InvoiceDanhMuc extends JFrame{
 	private static JPanel contentPane;

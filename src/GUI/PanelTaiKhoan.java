@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import BUS.implement.StaffBUS;
+import Checked.DataChecked;
 import Constant.SystemConstant;
 import DTO.Staff;
 
@@ -136,11 +137,17 @@ public class PanelTaiKhoan extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Staff s = SystemConstant.staff;
-				s.setFullname(txtname.getText());
+				
+				if (txticard.getText().length()==0 || (txticard.getText().length()>0 && DataChecked.checkICard(txticard.getText()))) {
 				s.setiCard(txticard.getText());
 				s.setAddress(txtaddress.getText());
 				staffBus.update(s);
 				lblNewLabel_5.setText("Bạn cập nhập thông tin thành công!");
+				}  else 
+					lblNewLabel_5.setText("Bạn cập nhập thông tin không thành công!");
+
+					
+				
 				
 			}
 		});
