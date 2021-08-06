@@ -214,7 +214,7 @@ public class CreateMedicalFormManagements extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				{
-					int res=JOptionPane.showConfirmDialog(null, "Are you sure you want to exit ","confirm", JOptionPane.YES_NO_OPTION);
+					int res=JOptionPane.showConfirmDialog(null, "Are you sure you want to exit? ","confirm", JOptionPane.YES_NO_OPTION);
 					if (res== JOptionPane.YES_OPTION) {
 						dispose();
 					} 

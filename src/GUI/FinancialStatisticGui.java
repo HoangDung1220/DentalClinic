@@ -109,6 +109,7 @@ public static DefaultTableModel showDataToTable_Day(Date d1, Date d2)
 				  
 				  if (date.compareTo(d1)>=0 && date.compareTo(d2)<=0 )
 					{ 
+					
 					  invoices.add(p);
 					}
 				}
@@ -143,14 +144,14 @@ public static DefaultTableModel showDataToTable_Day(Date d1, Date d2)
 
 			    }
 		
-		else JOptionPane.showMessageDialog(null, "Please select the start date before the end date !");
+		else JOptionPane.showMessageDialog(null, "Please choose the start date before the end date !");
 		// get data to chart			
 	    JFreeChart barChart = ChartFactory.createBarChart(			 
 					            "Invoice Manager Statistics",
 					            "Time", "Revenue",
 					            dataset, PlotOrientation.VERTICAL, false, false, false);
 		chartPanel = new ChartPanel(barChart);
-		txtTotal.setText(""+total);
+		txtTotal.setText(""+total/SystemConstant.unit);
 
 		return model;
 								
@@ -179,7 +180,7 @@ public static DefaultTableModel showDataToTable()
 		    
 	
 	
-	txtTotal.setText(""+total);
+	txtTotal.setText(""+total/SystemConstant.unit);
 
 	return model;
 								
@@ -247,7 +248,7 @@ public static DefaultTableModel showDataToTable_Month(Date d1, Date d2)
 		
 		
 	}
-	else JOptionPane.showMessageDialog(null, "Please select the start date before the end date !");
+	else JOptionPane.showMessageDialog(null, "Please choose the start date before the end date !");
 	
 	 JFreeChart barChart = ChartFactory.createBarChart(
 	            "Invoice Manager Statistics ",
@@ -255,7 +256,7 @@ public static DefaultTableModel showDataToTable_Month(Date d1, Date d2)
 	            dataset, PlotOrientation.VERTICAL, false, false, false);
 	 chartPanel = new ChartPanel(barChart);
 	
-	txtTotal.setText(""+total);
+	txtTotal.setText(""+total/SystemConstant.unit);
 
 	return model;
 					
@@ -315,17 +316,21 @@ public static DefaultTableModel showDataToTable_Month(Date d1, Date d2)
 		btnNewButtonTK.setIcon(new ImageIcon(SystemConstant.img_search1));
 		contentPane.add(btnNewButtonTK);
 		
-		JLabel lblNewLabel_1_1_1 = new JLabel("Total :");
+		JLabel lblNewLabel_1_1_1 = new JLabel("Total (million) :");
 		lblNewLabel_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1_1_1.setForeground(new Color(0, 51, 153));
 		lblNewLabel_1_1_1.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		lblNewLabel_1_1_1.setBounds(20, 531, 67, 17);
+		lblNewLabel_1_1_1.setBounds(20, 531, 142, 17);
 		contentPane.add(lblNewLabel_1_1_1);
 		
 		txtTotal = new JTextField();
+		txtTotal.setForeground(Color.BLUE);
+		txtTotal.setBorder(null);
+		txtTotal.setEnabled(false);
+		txtTotal.setHorizontalAlignment(SwingConstants.RIGHT);
 		txtTotal.setBackground(SystemColor.activeCaption);
 		txtTotal.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 15));
-		txtTotal.setBounds(219, 530, 171, 17);
+		txtTotal.setBounds(183, 530, 171, 17);
 		contentPane.add(txtTotal);
 		txtTotal.setColumns(10);
 		

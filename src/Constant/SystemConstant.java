@@ -21,6 +21,7 @@ public class SystemConstant {
 	public static final String MANAGER ="manager";
 	public static final String ADMIN ="admin";
 	public static final String DOCTOR ="doctor";
+	public static final double unit =1000000L;
 
 	
 	

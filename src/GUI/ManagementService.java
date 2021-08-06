@@ -205,7 +205,7 @@ public class ManagementService extends JFrame {
 			//	showTable(service.findAll());
 				refresh();
 					} else
-						lberror.setText("Data is error!");
+						lberror.setText("This data is errored!");
 					    lberror.setForeground(Color.red);
 							
 					} else 
@@ -247,7 +247,7 @@ public class ManagementService extends JFrame {
 			}
 					else
 					{
-				lberror.setText("Data is error!");
+				lberror.setText("This data is errored!");
 			    lberror.setForeground(Color.red);
 					
 			}

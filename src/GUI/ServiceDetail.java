@@ -29,6 +29,7 @@ import javax.swing.table.DefaultTableModel;
 import BUS.implement.DentalServiceBUS;
 import BUS.implement.DetailServiceBUS;
 import BUS.implement.MedicalFormBUS;
+import Checked.DataChecked;
 import Constant.SystemConstant;
 import DTO.DentalService;
 import DTO.DetailService;
@@ -436,6 +437,9 @@ public class ServiceDetail extends JFrame {
 			}
 			
 		}
+		if (DataChecked.checkInteger(quantity)) return false;
+		
+		
 		
 		return check;
 	}

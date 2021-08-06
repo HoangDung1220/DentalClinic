@@ -33,6 +33,7 @@ import BUS.implement.MedicalFormBUS;
 import BUS.implement.MedicineBUS;
 import BUS.implement.PrescriptionBUS;
 import BUS.implement.TypeMedicineBUS;
+import Checked.DataChecked;
 import Constant.SystemConstant;
 import DTO.MedicalForm;
 import DTO.Medicine;
@@ -531,6 +532,8 @@ public class MedicalDetail extends JFrame {
 			}
 			
 		}
+		if (DataChecked.checkInteger(quantity)) return false;
+
 		
 		
 		return check;

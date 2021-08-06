@@ -142,9 +142,9 @@ public class PanelTaiKhoan extends JPanel {
 				s.setiCard(txticard.getText());
 				s.setAddress(txtaddress.getText());
 				staffBus.update(s);
-				lblNewLabel_5.setText("Bạn cập nhập thông tin thành công!");
+				lblNewLabel_5.setText("You have updated your account successfully. Please enter system again");
 				}  else 
-					lblNewLabel_5.setText("Bạn cập nhập thông tin không thành công!");
+					lblNewLabel_5.setText("You have updated your account unsuccessfully");
 
 					
 				

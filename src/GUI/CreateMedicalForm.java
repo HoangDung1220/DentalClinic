@@ -128,7 +128,7 @@ public class CreateMedicalForm extends JFrame {
 				Patient pa = new Patient();
 				pa = patient.findOne(idPatient);
 				if (pa==null) {
-					JOptionPane.showMessageDialog(null,"Not have data. Please check again");
+					JOptionPane.showMessageDialog(null,"This patient isn't available! Please try again!");
 				} else
 				{
 					txtIDPatient.setText(String.valueOf(pa.getId()));
@@ -141,7 +141,7 @@ public class CreateMedicalForm extends JFrame {
 				}
 			} else 
 			{
-				JOptionPane.showMessageDialog(null,"Please enter data!");	
+				JOptionPane.showMessageDialog(null,"This patient isn't available! Please try again!");	
 			}
 			}
 		});
@@ -207,7 +207,7 @@ public class CreateMedicalForm extends JFrame {
 		JButton Create = new JButton("");
 		Create.setBounds(908, 130, 35, 30);
 		Create.setIcon(new ImageIcon(SystemConstant.img_create));
-		Create.setToolTipText("Tạo bệnh án");
+		Create.setToolTipText("Create medical forms");
 		panel_1.add(Create);
 		Create.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -215,7 +215,7 @@ public class CreateMedicalForm extends JFrame {
 				MedicalForm m = getDataByGui();
 				int id = medical_form.insert(m);
 				txtForm.setText(String.valueOf(id));
-				JOptionPane.showMessageDialog(null, "You create medical_form successful");
+				JOptionPane.showMessageDialog(null, "This medical_form is created successfully");
 				Dental_service.setEnabled(true);
 				Medicine.setEnabled(true);
 				
@@ -352,14 +352,14 @@ public class CreateMedicalForm extends JFrame {
 		panel_5.add(txtNote);
 		
 		btnNewButton_4 = new JButton("");
-		btnNewButton_4.setToolTipText("Lưu thông tin sau khi khám ");
+		btnNewButton_4.setToolTipText("Save information after curing ");
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (txtForm.getText().length()>0) {
 				MedicalForm m = getDataByGui();
 				m.setId(Integer.parseInt(txtForm.getText()));
 				medical_form.update(m);
-				JOptionPane.showMessageDialog(null, "You save data successful");
+				JOptionPane.showMessageDialog(null, "This data is saved successfully");
 				check = true;
 				}
 			}
@@ -373,7 +373,7 @@ public class CreateMedicalForm extends JFrame {
 		btnNewButton_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (check) {
-					int res=JOptionPane.showConfirmDialog(null, "You are sure you want to exit","confirm", JOptionPane.YES_NO_OPTION);
+					int res=JOptionPane.showConfirmDialog(null, "You are sure you want to exit?","confirm", JOptionPane.YES_NO_OPTION);
 					if (res!= JOptionPane.YES_OPTION) {
 						return ;
 					
@@ -381,7 +381,7 @@ public class CreateMedicalForm extends JFrame {
 					
 				} else 
 				{
-					int res=JOptionPane.showConfirmDialog(null, "Data is not saved, you still exit ","confirm", JOptionPane.YES_NO_OPTION);
+					int res=JOptionPane.showConfirmDialog(null, "Data is not saved, you still want to exit ","confirm", JOptionPane.YES_NO_OPTION);
 					if (res!= JOptionPane.YES_OPTION) {
 						return ;
 					} else dispose(); 
@@ -389,14 +389,14 @@ public class CreateMedicalForm extends JFrame {
 				}
 			
 		});
-		btnNewButton_5.setToolTipText("Thoát");
+		btnNewButton_5.setToolTipText("Exit");
 		btnNewButton_5.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnNewButton_5.setBounds(930, 10, 40, 35);
 		btnNewButton_5.setIcon(new ImageIcon(SystemConstant.img_exit3));
 		panel_5.add(btnNewButton_5);
 		
 		Medicine = new JButton("");
-		Medicine.setToolTipText("Thuốc sử dụng");
+		Medicine.setToolTipText("Prescription");
 		Medicine.setBounds(831, 10, 40, 35);
 		panel_5.add(Medicine);
 		Medicine.addActionListener(new ActionListener() {
@@ -411,7 +411,7 @@ public class CreateMedicalForm extends JFrame {
 		Medicine.setFont(new Font("Tahoma", Font.BOLD, 13));
 		
 		Dental_service = new JButton("");
-		Dental_service.setToolTipText("Dịch vụ khám ");
+		Dental_service.setToolTipText("Dental Service");
 		Dental_service.setBounds(781, 10, 40, 35);
 		panel_5.add(Dental_service);
 		Dental_service.addActionListener(new ActionListener() {
@@ -439,7 +439,7 @@ public class CreateMedicalForm extends JFrame {
 			}
 		});
 		History_record.setFont(new Font("Tahoma", Font.BOLD, 13));
-		History_record.setToolTipText("Lịch sử bệnh án bệnh nhân ");
+		History_record.setToolTipText("Medical History");
 		getInit();///
 		GuiInit();
 		if (txtIDPatient.getText().length()>0){

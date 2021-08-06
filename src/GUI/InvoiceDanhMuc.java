@@ -166,7 +166,7 @@ public class InvoiceDanhMuc extends JFrame{
 		 btnNewButtonSearch = new JButton("");
 		btnNewButtonSearch.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, SystemColor.textInactiveText, null, null, null));
 		btnNewButtonSearch.setFont(new Font("Sitka Small", Font.BOLD, 14));
-		btnNewButtonSearch.setBounds(184, 152, 40, 35);
+		btnNewButtonSearch.setBounds(202, 163, 40, 35);
 		panel.add(btnNewButtonSearch);
 		
 		JLabel lblNewLabel_2 = new JLabel("ID_Invoice");

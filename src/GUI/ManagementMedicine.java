@@ -232,7 +232,7 @@ public class ManagementMedicine extends JFrame {
 					refresh();  
 			} else
 			{
-				lberror.setText("Data is error!");
+				lberror.setText("This data is errored!!");
 			    lberror.setForeground(Color.red);
 			}
 			}
@@ -277,7 +277,7 @@ public class ManagementMedicine extends JFrame {
 				refresh();
 					} else
 					{
-						lberror.setText("Data is error!");
+						lberror.setText("This data is errored!!");
 					    lberror.setForeground(Color.red);
 							
 					}} else 

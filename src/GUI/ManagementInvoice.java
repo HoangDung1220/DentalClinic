@@ -235,7 +235,7 @@ public class ManagementInvoice extends JFrame {
 					}
 				} else 
 					{
-					lblNewLabel_6.setText("Data is errored!");
+					lblNewLabel_6.setText("This data is errored!");
 					}}
 					else 
 				{
@@ -245,13 +245,13 @@ public class ManagementInvoice extends JFrame {
 			}
 		});
 		search.setFont(new Font("Tahoma", Font.BOLD, 9));
-		search.setBounds(178, 112, 35, 35);
+		search.setBounds(270, 112, 35, 35);
 		panel_2.add(search);
 		
 		lblNewLabel_6 = new JLabel("");
 		lblNewLabel_6.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNewLabel_6.setForeground(Color.RED);
-		lblNewLabel_6.setBounds(20, 117, 332, 30);
+		lblNewLabel_6.setBounds(20, 117, 215, 30);
 		panel_2.add(lblNewLabel_6);
 		
 		JPanel panel_3 = new JPanel();
@@ -279,7 +279,7 @@ public class ManagementInvoice extends JFrame {
 				Invoice inv = getGui();
 				if (inv!=null) {
 				invoiceExecute.Save(inv);
-				JOptionPane.showMessageDialog(null, "save data successful");
+				JOptionPane.showMessageDialog(null, "Save data successful");
 				checkPrint = true;
 				}
 				

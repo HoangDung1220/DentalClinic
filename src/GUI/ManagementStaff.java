@@ -200,7 +200,7 @@ public class ManagementStaff extends JFrame {
 					  list = staff.searchByIDOrName(Integer.parseInt(ch), null);} 
 					  else
 					  {
-						  lbNote.setText("Khong co du lieu phu hop");
+						  lbNote.setText("This data is not suitable");
 
 					  }
 				  } else 
@@ -216,7 +216,7 @@ public class ManagementStaff extends JFrame {
 				  }
 				  else 
 				  {
-					  lbNote.setText("Khong co du lieu phu hop");
+					  lbNote.setText("This data is not suitable");
 					   
 
 				  }
