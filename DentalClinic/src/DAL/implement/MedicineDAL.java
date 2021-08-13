@@ -48,8 +48,8 @@ public class MedicineDAL extends AbstractDAL<Medicine> implements IMedicineDAL{
 	public List<Medicine> searchByNameAndIDType(String name, int idType) {
 		StringBuilder st = new StringBuilder("select *from medicine inner join type_medicine on medicine.id_typemedicine = type_medicine.id");
 		if (idType != 0) {
-			st.append(" where type_medicine.id = '"+idType+"' ");
-			st.append("and medicine.name_medicine like '%"+name+"%'");
+			st.append(" where type_medicine.id = "+idType);
+			st.append(" and medicine.name_medicine like '%"+name+"%'");
 
 		} else 
 		st.append(" where medicine.name_medicine like '%"+name+"%'");
@@ -60,13 +60,14 @@ public class MedicineDAL extends AbstractDAL<Medicine> implements IMedicineDAL{
 	@Override
 	public List<Medicine> findAll(Pageble pageable) {
 		StringBuilder querry = new StringBuilder();
-		querry.append("select *from medicine inner join type_medicine where medicine.id_typemedicine = type_medicine.id ");
+		
 		if ((Integer) pageable.getOffset()!=null && (Integer) pageable.getLimit()!=null) {
-			querry.append("limit "+pageable.getOffset()+","+pageable.getLimit()+"");
+			querry.append("select * from ( SELECT ROW_NUMBER() OVER (ORDER BY (SELECT 0)) as [Count], * FROM medicine ) as a inner  join type_medicine on a.id_typemedicine = type_medicine.id " 
+					+"WHERE [Count] BETWEEN " +pageable.getOffset()+" and "+ pageable.getLimit());
 			return query(querry.toString(),new MedicineMapper());
 		}
 		else 	
-		{		
+		{	querry.append("select * from medicine inner join type_medicine where medicine.id_typemedicine = type_medicine.id")	;
 			return query(querry.toString(),new MedicineMapper());
 		}
 	}
@@ -74,19 +75,24 @@ public class MedicineDAL extends AbstractDAL<Medicine> implements IMedicineDAL{
 	@Override
 	public List<Medicine> searchByNameAndIDType(String name, int idType, Pageble pageable) {
 		StringBuilder querry = new StringBuilder();
-		querry.append("select *from medicine inner join type_medicine on medicine.id_typemedicine = type_medicine.id ");
-		if (idType != 0) {
-			querry.append(" where type_medicine.id = '"+idType+"' ");
-			querry.append("and medicine.name_medicine like '%"+name+"%' ");
-
-		} else 
-			querry.append(" where medicine.name_medicine like '%"+name+"%' ");
-		if ((Integer) pageable.getOffset()!=null && (Integer) pageable.getLimit()!=null) {
-			querry.append("limit "+pageable.getOffset()+","+pageable.getLimit()+"");
+		String str="(SELECT ROW_NUMBER() OVER (ORDER BY (SELECT 0)) as [Count], * FROM medicine";
+		String cndId=" id_typemedicine = "+idType;
+		String cndName=" name_medicine like '%"+name+"%'";
+		String inner=" ) as a inner  join type_medicine on a.id_typemedicine = type_medicine.id ";
+		String cnd="";
+		if(idType!=0)
+		{
+			cnd=" where "+cndId+" and "+cndName;
+		}
+		else cnd=" where"+cndName;
+		if ((Integer) pageable.getOffset()!=null && (Integer) pageable.getLimit()!=null ) {
+			querry.append(" select * from" + str + cnd + inner 
+					      + " WHERE [Count] BETWEEN " +pageable.getOffset()+" and "+ pageable.getLimit() );
 			return query(querry.toString(),new MedicineMapper());
 		}
-		else 	
-		{		
+
+		else
+		{   querry.append("select * from medicine inner join type_medicine on medicine.id_typemedicine = type_medicine.id "+cnd);
 			return query(querry.toString(),new MedicineMapper());
 		}
 	}

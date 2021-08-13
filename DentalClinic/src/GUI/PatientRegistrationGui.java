@@ -58,7 +58,8 @@ public class PatientRegistrationGui extends JFrame{
     private static JDateChooser dateChooser;
     private JButton exit;
     private PatientBUS patientExecute = new PatientBUS();
-	
+    private JLabel lberror;
+
 	public static void setColumn(Vector<String> v)
 	{
 		v.add("Id");
@@ -95,6 +96,7 @@ public class PatientRegistrationGui extends JFrame{
         IPatientBUS patient = new PatientBUS();
 		List<Patient> list =new ArrayList<Patient>();
 		list= patient.findAll();     // find all patient
+
 		for (int i=0;i<list.size();i++)
 		{
 			Patient p=(Patient)list.get(i);
@@ -122,7 +124,7 @@ public class PatientRegistrationGui extends JFrame{
             textFieldAddress.setText("");
             rdbtnNewRadioButtonFemale.setSelected(true);       
             Date date  = new Date(2000-1900,02,01);
-            dateChooser.setDate(date);
+                dateChooser.setDate(date);
             
             
 		
@@ -159,7 +161,7 @@ public class PatientRegistrationGui extends JFrame{
 	
 		{  
 		
-//	        p.setId(Integer.parseInt(textFieldID.getText()));
+			
 		    p.setFullname(textFieldFullName.getText());
 		    if (rdbtnNewRadioButtonFemale.isSelected()) p.setGender(false);
 		    else if ( rdbtnNewRadioButtonMale.isSelected()) p.setGender(true);
@@ -181,6 +183,8 @@ public class PatientRegistrationGui extends JFrame{
 		    p.setiCard(textFieldICard.getText());
 		    p.setCreatedBy(SystemConstant.staff.getFullname());
 		    p.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+		    p.setModifiedBy(SystemConstant.staff.getFullname());
+		    p.setModifiedDate(new Timestamp(System.currentTimeMillis()));
 		
 		}
 	}
@@ -245,6 +249,7 @@ public class PatientRegistrationGui extends JFrame{
 				int id = Integer.parseInt(table.getValueAt(index, 0).toString());
 				Patient p = patientExecute.findOne(id);
 				getGui(p);
+				lberror.setText("");
 				
 			}
 			
@@ -279,6 +284,12 @@ public class PatientRegistrationGui extends JFrame{
 		panel_1.add(lblNewLabel_3);
 		
 		textFieldFullName = new JTextField();
+		textFieldFullName.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lberror.setText("");
+			}
+		});
 		textFieldFullName.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		textFieldFullName.setBounds(94, 81, 154, 25);
 		panel_1.add(textFieldFullName);
@@ -291,6 +302,12 @@ public class PatientRegistrationGui extends JFrame{
 		panel_1.add(lblNewLabel_4);
 		
 		textFieldICard = new JTextField();
+		textFieldICard.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lberror.setText("");
+			}
+		});
 		textFieldICard.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		textFieldICard.setBounds(94, 131, 154, 25);
 		panel_1.add(textFieldICard);
@@ -303,6 +320,13 @@ public class PatientRegistrationGui extends JFrame{
 		panel_1.add(lblNewLabel_5);
 		
 		textFieldAddress = new JTextField();
+		textFieldAddress.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lberror.setText("");
+
+			}
+		});
 		textFieldAddress.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		textFieldAddress.setBounds(94, 182, 154, 25);
 		panel_1.add(textFieldAddress);
@@ -315,6 +339,13 @@ public class PatientRegistrationGui extends JFrame{
 		panel_1.add(lblNewLabel_6);
 		
 		textFieldPhone = new JTextField();
+		textFieldPhone.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lberror.setText("");
+
+			}
+		});
 		textFieldPhone.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		textFieldPhone.setBounds(384, 29, 154, 25);
 		panel_1.add(textFieldPhone);
@@ -375,6 +406,13 @@ public class PatientRegistrationGui extends JFrame{
 		panel_1.add(btnNewButtonDelete);
 		
 		dateChooser = new JDateChooser();
+		dateChooser.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lberror.setText("");
+
+			}
+		});
 		dateChooser.setBounds(384, 81, 153, 25);
 		panel_1.add(dateChooser);
 		
@@ -393,6 +431,11 @@ public class PatientRegistrationGui extends JFrame{
 		exit.setIcon(new ImageIcon(SystemConstant.img_exit2));
 		exit.setBounds(233, 305, 40, 35);
 		panel_1.add(exit);
+		
+		lberror = new JLabel("");
+		lberror.setForeground(Color.RED);
+		lberror.setBounds(27, 240, 471, 35);
+		panel_1.add(lberror);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "List of patients", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(109, 109, 109)));
@@ -414,6 +457,7 @@ public class PatientRegistrationGui extends JFrame{
 				int id = Integer.parseInt(table_1.getValueAt(index, 0).toString());
 				Patient p = patientExecute.findOne(id);
 				getGui(p);
+				lberror.setText("");
 				
 			}
 			
@@ -436,16 +480,26 @@ public class PatientRegistrationGui extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				    
-			    	IPatientBUS patient = new PatientBUS();
-					Patient p=new Patient();
-					getData(p);		
-					if (checkData(p)){
+		    	IPatientBUS patient = new PatientBUS();
+				Patient p=new Patient();
+				getData(p);		
+				if (p.getFullname().length()>0) {
+				 if (checkData(p) && patientExecute.findOneByIcard(p.getiCard())==null )
+				 {
+					
 					int id =patient.insert(p);		
 					textFieldID.setText(String.valueOf(id));
 					JOptionPane.showMessageDialog(null, "Data Saved successfully");
 					table_1.setModel(showDataToTable("",""));
-					}
-					
+				 }
+				 else {
+					 lberror.setText("Icard already exists");
+				 }
+				 
+				} else 
+				{
+					lberror.setText("Please filled data to Fullname field");
+				}
 					
 				
 			}
@@ -455,8 +509,9 @@ public class PatientRegistrationGui extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				
+				lberror.setText("");
 				int[] list = table_1.getSelectedRows();
+				if (list.length>0) {
 				List<Integer> listId = new ArrayList<Integer>(); 
 				for (int i:list) {
 					listId.add(Integer.parseInt(table_1.getValueAt(i, 0).toString()));
@@ -470,6 +525,7 @@ public class PatientRegistrationGui extends JFrame{
 					
 					JOptionPane.showMessageDialog(null, "Data deleted Succesfully");							
 					table_1.setModel(showDataToTable("",""));
+				}
 				}
 				
 			}
@@ -487,25 +543,30 @@ public class PatientRegistrationGui extends JFrame{
 		btnNewButtonUpdate.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int index=table_1.getSelectedRow(); 
-			
-				IPatientBUS patient = new PatientBUS();
-				Patient p=new Patient();
-//				List<Patient> list =new ArrayList<Patient>();
-//				list= patient.findAll();     // find all patient
-//				Patient p=(Patient)list.get(index);
+				lberror.setText("");
+				int index =-1;
+				 index=table_1.getSelectedRow(); 
+				if (index!=-1) {
+				 IPatientBUS patient = new PatientBUS();
+				List<Patient> list =new ArrayList<Patient>();
+				list= patient.findAll();     // find all patient
+				Patient p=(Patient)list.get(index);
 				getData(p);
 				p.setModifiedDate(new Timestamp(System.currentTimeMillis()));
 				p.setModifiedBy(SystemConstant.staff.getFullname());
-			    
-			    if (checkData(p)) {
-			    	patient.update(p);
-			    	JOptionPane.showMessageDialog(null, "Data updated successfully");
-			    }
-				
+				if (p.getFullname().length()>0) {
+					if (checkData(p)) {
+			    patient.update(p);
+				JOptionPane.showMessageDialog(null, "Data updated successfully");
 
 				table_1.setModel(showDataToTable("",""));
 				
+			}
+				}
+				} else 
+				{
+					lberror.setText("Please filled data to Fullname field");
+				}
 			}
 	    });
 		table_1.setModel(showDataToTable("",""));
@@ -520,7 +581,7 @@ public static void main(String[] args) {
 			try {
 				PatientRegistrationGui frame = new PatientRegistrationGui();
 				frame.setVisible(true);
-//				table_1.setModel(showDataToTable("",""));
+				table_1.setModel(showDataToTable("",""));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -571,9 +632,9 @@ public boolean checkData(Patient s) {
 	}
 	else 
 	{
-		
+		st.deleteCharAt(st.length()-1);
 		st.append(" is errored");
-		JOptionPane.showMessageDialog(null,st.toString());
+		lberror.setText(st.toString());
 	return false;
 	}
 } 

@@ -73,5 +73,10 @@ public class MedicalFormBUS implements IMedicalFormBUS{
 		}			
 	}
 
+	@Override
+	public List<MedicalForm> searchByDoctor(boolean isName, boolean isDate, String name, Date date, int id_doctor) {
+		return form.searchByDoctor(isName, isDate, name, date,id_doctor);
+	}
+
 
 }

@@ -1,5 +1,6 @@
 package DAL.implement;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class PatientDAL extends AbstractDAL<Patient> implements IPatientDAL{
 
 	@Override
 	public void update(Patient p) {
-		String st ="update patient set fullname =?,gender=?,birthday=?,phone=?,address=?,icard=?,modified_date=?,modified_by=?where id =?";
+		String st ="update patient set fullname =?,gender=?,birthday=?,phone=?,address=?,icard=?,modified_date=?,modified_by=? where id =?";
 		update(st,p.getFullname(),p.getGender(),p.getBirthday(),p.getPhone(),p.getAddress(),p.getiCard(),p.getModifiedDate(),p.getModifiedBy(),p.getId());	
 	}
 
@@ -47,8 +48,13 @@ public class PatientDAL extends AbstractDAL<Patient> implements IPatientDAL{
         List<Patient> list = query(st,new PatientMapper(),id);
 	    return list.isEmpty()?null:list.get(0);
 	}
-
-	
+	@Override
+	public Patient findOneByIcard(String icard)
+	{
+		String st="select * from Patient where iCard=?";
+		List<Patient> list =query(st,new PatientMapper(),icard);
+		return list.isEmpty()?null:list.get(0);
+	}
 	@Override
 	public List<Patient> searchByNameAndIcard(String fullname, String icard) {
 		String st = "select * from patient where fullname = ? and icard = ?";
@@ -76,15 +82,41 @@ public class PatientDAL extends AbstractDAL<Patient> implements IPatientDAL{
 	@Override
 	public List<Patient> findAllPage(Pageble pageble) {
 		StringBuilder querry = new StringBuilder();
-		querry.append("select *from patient ");
+		
 		if ((Integer) pageble.getOffset()!=null && (Integer) pageble.getLimit()!=null) {
-			querry.append("limit "+pageble.getOffset()+","+pageble.getLimit()+"");
+			querry.append("select * from");
+			querry.append("( SELECT ROW_NUMBER() OVER (ORDER BY (SELECT 0)) as [Count], * FROM patient ) as a where [Count] BETWEEN "+pageble.getOffset()+" and "+ pageble.getLimit());					
 			return query(querry.toString(),new PatientMapper());
 		}
 		else 	
-		{		
+		{	querry.append("select *from patient ");	
 			return query(querry.toString(),new PatientMapper());
 		}
+	}
+
+	@Override
+	public List<Patient> findAllPage(Pageble pageble, Date date1, Date date2) {
+		StringBuilder querry = new StringBuilder();
+		
+		if ((Integer) pageble.getOffset()!=null && (Integer) pageble.getLimit()!=null) {
+			querry.append("select * from ");
+			querry.append("( SELECT ROW_NUMBER() OVER (ORDER BY (SELECT 0)) as [Count], * FROM patient where created_date BETWEEN ? AND ? ) as a where [Count] BETWEEN "+pageble.getOffset()+" AND "+pageble.getLimit());			
+			return query(querry.toString(),new PatientMapper(),date1,date2);
+		}
+		else 	
+		{	querry.append("select * from patient where created_date BETWEEN ? AND ?")	;
+			return query(querry.toString(),new PatientMapper(),date1,date2);
+		}
+	}
+
+	@Override
+	public List<Patient> findAllPage(Date date1, Date date2) {
+		StringBuilder querry = new StringBuilder();
+		querry.append("select *from patient  where created_date BETWEEN ? and ? ");
+		
+			
+			return query(querry.toString(),new PatientMapper(),date1,date2);
+		
 	}
 	
 }

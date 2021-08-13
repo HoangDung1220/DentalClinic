@@ -7,6 +7,7 @@ import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,8 @@ public class PatientStatisticalGui extends JFrame {
 	private static int totalPages;
 	private JLabel lbpage;
 	private JLabel lbtotalpage;
+	private Date date01 = Date.valueOf("2020-01-01");
+	private Date date02 = Date.valueOf("2022-01-01");
 
 
 	/**
@@ -244,9 +247,11 @@ public class PatientStatisticalGui extends JFrame {
 
 	    dateChooserFrom = new JDateChooser();
 		dateChooserFrom.setBounds(200, 43, 112, 20);
+		dateChooserFrom.setDate(date01);
 		contentPane.add(dateChooserFrom);
 
 	    dateChooserTo = new JDateChooser();
+	    dateChooserTo.setDate(new Timestamp(System.currentTimeMillis()));
 		dateChooserTo.setBounds(647, 43, 112, 20);
 		contentPane.add(dateChooserTo);
 
@@ -350,10 +355,19 @@ public class PatientStatisticalGui extends JFrame {
 
 			        @SuppressWarnings("deprecation")
 					Date date2 = new Date(Integer.parseInt(y1)-1900, Integer.parseInt(m1)-1, Integer.parseInt(d1));
+			        date01 = date1;
+			        date02 = date2;
+			        if (date01.compareTo(date02)<0) {
+				    Patient p = paging(1,SystemConstant.LIMITStatic,patient.findAllPage(date01, date02),date01,date02);
+				    table.setModel(showDataToTable2(p.getList()));
+					decorPaging(p);
 
-				    table.setModel(showDataToTable(date1, date2));
-
-
+			        } else 
+			        {
+			        	   Patient p = new Patient();
+						    table.setModel(showDataToTable2(p.getList()));
+							decorPaging(p);
+			        }
 
 			}
 			
@@ -364,7 +378,7 @@ public class PatientStatisticalGui extends JFrame {
 	    btnfirst.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 	    btnfirst.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent arg0) {
-	    		Patient s= paging(1,SystemConstant.LIMITStatic);
+	    		Patient s= paging(1,SystemConstant.LIMITStatic,patient.findAllPage(date01, date02),date01,date02);
 				decorPaging(s);
 			    table.setModel(showDataToTable2(s.getList()));
 	    	}
@@ -385,13 +399,15 @@ public class PatientStatisticalGui extends JFrame {
 	    		int currentPage = Integer.parseInt(lbpage.getText());
 				if (currentPage>1) {
 				String page = String.valueOf(--currentPage);
-				Patient s= paging(currentPage,SystemConstant.LIMITStatic);
+	    		Patient s= paging(currentPage,SystemConstant.LIMITStatic,patient.findAllPage(date01, date02),date01,date02);
+
 				lbpage.setText(page);
 				lbtotalpage.setText(s.getPage()+"/"+s.getTotalPage());
 			    table.setModel(showDataToTable2(s.getList()));
 				} else 
 				{
-					Patient s= paging(currentPage,SystemConstant.LIMITStatic);
+		    		Patient s= paging(currentPage,SystemConstant.LIMITStatic,patient.findAllPage(date01, date02),date01,date02);
+
 				    table.setModel(showDataToTable2(s.getList()));
 
 				}
@@ -420,13 +436,15 @@ public class PatientStatisticalGui extends JFrame {
 	    		int currentPage = Integer.parseInt(lbpage.getText());
 				if (currentPage<totalPages) {
 				String page = String.valueOf(++currentPage);
-				Patient s= paging(currentPage,SystemConstant.LIMITStatic);
+	    		Patient s= paging(currentPage,SystemConstant.LIMITStatic,patient.findAllPage(date01, date02),date01,date02);
+
 				lbpage.setText(page);
 				lbtotalpage.setText(s.getPage()+"/"+s.getTotalPage());
 			    table.setModel(showDataToTable2(s.getList()));
 				} else 
 				{
-					Patient s= paging(currentPage,SystemConstant.LIMITStatic);
+		    		Patient s= paging(currentPage,SystemConstant.LIMITStatic,patient.findAllPage(date01, date02),date01,date02);
+
 				    table.setModel(showDataToTable2(s.getList()));
 
 				}
@@ -444,7 +462,8 @@ public class PatientStatisticalGui extends JFrame {
 	    lblast.setBackground(SystemColor.activeCaption);
 	    lblast.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent arg0) {
-	    		Patient s= paging(totalPages,SystemConstant.LIMITStatic);
+	    		Patient s= paging(totalPages,SystemConstant.LIMITStatic,patient.findAllPage(date01, date02),date01,date02);
+
 				decorPaging(s);
 			    table.setModel(showDataToTable2(s.getList()));
 
@@ -456,18 +475,19 @@ public class PatientStatisticalGui extends JFrame {
 	    lblast.setBounds(608, 464, 60, 21);
 	    panel.add(lblast);
 	    showDataToTable1();
-	    Patient p = paging(1,SystemConstant.LIMITStatic);
+	   
+	    	    	   
+	    Patient p = paging(1,SystemConstant.LIMITStatic,patient.findAllPage(date01, date02),date01,date02);
 	    table.setModel(showDataToTable2(p.getList()));
 		decorPaging(p);
 
 	}
-	public Patient paging(int page,int limit){
+	public Patient paging(int page,int limit,List<Patient> list,Date date1, Date date2){
 		Patient s= new Patient();
-		List<Patient> list = patient.findAll();
 		int totalItem = list.size();
 		int totalPage = (int) Math.ceil(((double) totalItem)/limit);
 		Pageble pageable =  new PageRequest(page, limit);
-		List<Patient> listPaging = patient.findAllPaging(pageable);
+		List<Patient> listPaging = patient.findAllPage(pageable, date1, date2);
 		s.setTotalItem(totalItem);
 		s.setTotalPage(totalPage);
 		s.setPage(page);

@@ -29,6 +29,7 @@ import javax.swing.table.DefaultTableModel;
 import BUS.implement.DentalServiceBUS;
 import BUS.implement.DetailServiceBUS;
 import BUS.implement.MedicalFormBUS;
+import Checked.DataChecked;
 import Constant.SystemConstant;
 import DTO.DentalService;
 import DTO.DetailService;
@@ -239,6 +240,7 @@ public class ServiceDetail extends JFrame {
 				int index = table.getSelectedRow();
 				int id = Integer.parseInt(table.getValueAt(index, 0).toString());
 				setDataToGui(id);
+				Edit.setEnabled(false);
 			}
 			
 		});
@@ -250,6 +252,8 @@ public class ServiceDetail extends JFrame {
 					int row = table.getSelectedRow();
 					int id = Integer.parseInt(table.getValueAt(row, 0).toString());
 					setDataToGui(id);
+					Edit.setEnabled(false);
+
 					
 				}
 				
@@ -332,6 +336,8 @@ public class ServiceDetail extends JFrame {
 				int index = table_1.getSelectedRow();
 				int id = Integer.parseInt(table_1.getValueAt(index, 0).toString());
 				setDataToGui1(id);
+				Edit.setEnabled(true);
+
 			}
 			
 			
@@ -344,6 +350,8 @@ public class ServiceDetail extends JFrame {
 					int row = table_1.getSelectedRow();
 					int id = Integer.parseInt(table_1.getValueAt(row, 0).toString());
 					setDataToGui1(id);
+					Edit.setEnabled(true);
+
 				}
 				
 			}
@@ -420,12 +428,18 @@ public class ServiceDetail extends JFrame {
 	
 	public boolean checkData(String quantity) {
 		boolean check = true;
+		if (quantity.equals("0")) {
+			return false;
+		}
 		for (int i=0;i<quantity.length();i++) {
 			if (quantity.charAt(i)<'0' || quantity.charAt(i)>'9') {
 				check = false;
 			}
 			
 		}
+		if (DataChecked.checkInteger(quantity)) return false;
+		
+		
 		
 		return check;
 	}

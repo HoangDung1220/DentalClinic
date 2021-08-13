@@ -92,4 +92,24 @@ public class MedicalFormDAL extends AbstractDAL<MedicalForm> implements IMedical
 		
 	}
 
+	@Override
+	public List<MedicalForm> searchByDoctor(boolean isName, boolean isDate, String name, Date date,int id_doctor) {
+		StringBuilder st = new StringBuilder();
+		st.append("select *from medical_form inner join patient on medical_form.id_patient=patient.id ");
+		st.append("inner join staff on medical_form.id_doctor=staff.id");
+		st.append(" where staff.id = ? ");
+		if (isName && !isDate) {
+			st.append("and patient.fullname like '%"+name+"%'");
+		} else 	
+			if (!isName && isDate) {
+				st.append(" and medical_form.date_cure like '%"+date+"%'");
+			} else 
+				if (isName && isDate) {
+
+					st.append(" and patient.fullname like '%"+name+"%' and medical_form.date_cure like '%"+date+"%'");
+			}
+		return query(st.toString(),new MedicalFormMapper(),id_doctor);
+
+	}
+
 }

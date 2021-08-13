@@ -32,7 +32,8 @@ public class InvoiceDAL extends AbstractDAL<Invoice> implements IInvoiceDAL {
 
 	@Override
 	public void Save(Invoice invoice1) {
-		String st ="insert into invoice(id,id_medical_form,id_staff,total_price_medicine,total_price_service,pay_date,total_price) values(?,?,?,?,?,?,?)";
+		String st ="SET IDENTITY_INSERT invoice ON;  "
+				+ "insert into invoice(id,id_medical_form,id_staff,total_price_medicine,total_price_service,pay_date,total_price) values(?,?,?,?,?,?,?)";
 		insert(st,invoice1.getId(),invoice1.getIdMedicalForm(),invoice1.getIdStaff(),invoice1.getTotalPriceMedicine()
 				,invoice1.getTotalPriceService(),invoice1.getPayDate(),invoice1.getTotalPrice());
 	}
@@ -53,7 +54,7 @@ public class InvoiceDAL extends AbstractDAL<Invoice> implements IInvoiceDAL {
 	@Override
 	public void printf(String id1) {
 		try {
-			JasperDesign jdesign = JRXmlLoader.load("C:\\Users\\Hoang Dung\\eclipse-workspace\\Dental_Clinic_Project\\src\\GUI\\test.jrxml");
+			JasperDesign jdesign = JRXmlLoader.load("D:\\PBL3\\DentalClinic\\src\\GUI\\Test.jrxml");
 			StringBuilder st = new StringBuilder("SELECT *FROM invoice inner join staff ON invoice.id_staff = staff.id ");
 			st.append("inner join medical_form ON invoice.id_medical_form = medical_form.id ");
 			st.append("inner join patient ON medical_form.id_patient = patient.id ");

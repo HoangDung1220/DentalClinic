@@ -67,9 +67,13 @@ public class ManagementMedicalForm extends JFrame {
 
 	
 	public ManagementMedicalForm() {
-		//showTable(medicalForm.findAll(SystemConstant.staff.getId()));
-		showTable(medicalForm.findAll(SystemConstant.staff.getId()));
+		if (SystemConstant.staff.getRole().getCode().equalsIgnoreCase(SystemConstant.ADMIN)) {
+			showTable(medicalForm.findAll1());
 
+		} else 
+		{
+		showTable(medicalForm.findAll(SystemConstant.staff.getId()));
+		}
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 780, 488);
 		contentPane = new JPanel();
@@ -118,6 +122,13 @@ public class ManagementMedicalForm extends JFrame {
 		contentPane.add(checkAll);
 		
 		checkName = new JCheckBox("Name_Patient");
+		checkName.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				checkAll.setSelected(false);
+
+			}
+		});
 		checkName.setForeground(new Color(0, 51, 153));
 		checkName.setFont(new Font("Tahoma", Font.BOLD, 12));
 		checkName.setBackground(SystemColor.activeCaption);
@@ -125,6 +136,12 @@ public class ManagementMedicalForm extends JFrame {
 		contentPane.add(checkName);
 		
 		checkDate = new JCheckBox("Date_Cure");
+		checkDate.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				checkAll.setSelected(false);
+			}
+		});
 		checkDate.setForeground(new Color(0, 51, 153));
 		checkDate.setBackground(SystemColor.activeCaption);
 		checkDate.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -207,8 +224,14 @@ public class ManagementMedicalForm extends JFrame {
 				if (e.getKeyCode()==KeyEvent.VK_ENTER) {
 					String st = sdf.format(dateSearch.getDate());
 				    Date date1 = Date.valueOf(st);
+				    if (SystemConstant.staff.getRole().getCode().equalsIgnoreCase(SystemConstant.ADMIN)) {
 					List<MedicalForm> list = medicalForm.search(checkName.isSelected(), checkDate.isSelected(), textSearch.getText(),date1);
 					showTable(list);
+				    } else 
+				    {
+				    	List<MedicalForm> list = medicalForm.searchByDoctor(checkName.isSelected(), checkDate.isSelected(), textSearch.getText(),date1,SystemConstant.staff.getId());
+						showTable(list);
+				    }
 					
 				}
 			}
@@ -222,7 +245,7 @@ public class ManagementMedicalForm extends JFrame {
 				if (e.getKeyCode()==KeyEvent.VK_ENTER) {
 					String st = sdf.format(dateSearch.getDate());
 				    Date date1 = Date.valueOf(st);
-					List<MedicalForm> list = medicalForm.search(checkName.isSelected(), checkDate.isSelected(), textSearch.getText(),date1);
+					List<MedicalForm> list = medicalForm.searchByDoctor(checkName.isSelected(), checkDate.isSelected(), textSearch.getText(),date1,SystemConstant.staff.getId());
 					showTable(list);
 					
 				}

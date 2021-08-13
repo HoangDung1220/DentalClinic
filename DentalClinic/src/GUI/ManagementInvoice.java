@@ -30,6 +30,7 @@ import BUS.implement.InvoiceBUS;
 import BUS.implement.MedicalFormBUS;
 import BUS.implement.PrescriptionBUS;
 import Checked.AutoID;
+import Checked.DataChecked;
 import Constant.SystemConstant;
 import DTO.DetailService;
 import DTO.Invoice;
@@ -60,6 +61,7 @@ public class ManagementInvoice extends JFrame {
 	private JButton btnNewButton_1 ;
 	private JLabel lblNewLabel_6 ;
 	private JButton btnNewButton_2;
+	private boolean checkPrint=false;
 
 
 
@@ -215,6 +217,7 @@ public class ManagementInvoice extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				btnNewButton_1.setEnabled(true);
 				if ((textIDMedical.getText()).length()>0) {
+					if (DataChecked.checkData(textIDMedical.getText())) {
 					int id_form = Integer.parseInt(textIDMedical.getText());
 					Invoice invoice = invoiceExecute.findOneByIdMedical(id_form);
 					if (invoice != null)
@@ -231,6 +234,10 @@ public class ManagementInvoice extends JFrame {
 					setGui(id_form);
 					}
 				} else 
+					{
+					lblNewLabel_6.setText("This data is errored!");
+					}}
+					else 
 				{
 					lblNewLabel_6.setText("Please fill out this field");
 
@@ -238,13 +245,13 @@ public class ManagementInvoice extends JFrame {
 			}
 		});
 		search.setFont(new Font("Tahoma", Font.BOLD, 9));
-		search.setBounds(178, 112, 35, 35);
+		search.setBounds(270, 112, 35, 35);
 		panel_2.add(search);
 		
 		lblNewLabel_6 = new JLabel("");
 		lblNewLabel_6.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNewLabel_6.setForeground(Color.RED);
-		lblNewLabel_6.setBounds(20, 117, 332, 30);
+		lblNewLabel_6.setBounds(20, 117, 215, 30);
 		panel_2.add(lblNewLabel_6);
 		
 		JPanel panel_3 = new JPanel();
@@ -270,8 +277,11 @@ public class ManagementInvoice extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Invoice inv = getGui();
+				if (inv!=null) {
 				invoiceExecute.Save(inv);
-				JOptionPane.showMessageDialog(null, "save data successful");
+				JOptionPane.showMessageDialog(null, "Save data successful");
+				checkPrint = true;
+				}
 				
 			}
 		});
@@ -284,7 +294,10 @@ public class ManagementInvoice extends JFrame {
 		btnNewButton_2.setIcon(new ImageIcon(SystemConstant.img_print));
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if (checkPrint) {
 				invoiceExecute.printf(lbID.getText());
+				}
+				checkPrint = false;
 			}
 		});
 		btnNewButton_2.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -391,7 +404,6 @@ public class ManagementInvoice extends JFrame {
 			s_price +=i.getPrice();
 			defaultTableService.addRow(row);
 		}
-		
 		lbTotalService.setText(String.valueOf(s_price));
 	}
 	
@@ -428,6 +440,7 @@ public class ManagementInvoice extends JFrame {
 	}
 	
 	public Invoice getGui() {
+		if (lbID.getText().length()>0) {
 		Invoice inv = new Invoice();
 		inv.setId(lbID.getText());
 		inv.setIdMedicalForm(Integer.parseInt(textIDMedical.getText()));
@@ -438,5 +451,7 @@ public class ManagementInvoice extends JFrame {
 		inv.setTotalPriceService(Double.parseDouble(lbTotalService.getText()));
 		
 		return inv;
+		} else 
+			return null;
 	}
 }

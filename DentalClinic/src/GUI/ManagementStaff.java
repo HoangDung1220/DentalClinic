@@ -200,7 +200,7 @@ public class ManagementStaff extends JFrame {
 					  list = staff.searchByIDOrName(Integer.parseInt(ch), null);} 
 					  else
 					  {
-						  lbNote.setText("Khong co du lieu phu hop");
+						  lbNote.setText("This data is not suitable");
 
 					  }
 				  } else 
@@ -216,7 +216,7 @@ public class ManagementStaff extends JFrame {
 				  }
 				  else 
 				  {
-					  lbNote.setText("Khong co du lieu phu hop");
+					  lbNote.setText("This data is not suitable");
 					   
 
 				  }
@@ -258,6 +258,12 @@ public class ManagementStaff extends JFrame {
 		panel_1.add(lblNewLabel_3);
 		
 		txtName = new JTextField();
+		txtName.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lbNote1.setText("");
+			}
+		});
 		txtName.setBounds(113, 79, 156, 19);
 		panel_1.add(txtName);
 		txtName.setColumns(10);
@@ -393,10 +399,11 @@ public class ManagementStaff extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				Staff s = null;
 				s = GetDataToGui(s);
+				if (txtName.getText().length()>0) {
 				if (checkData(s))
 				{
+				lbNote1.setText("");
 				txtID.setText(String.valueOf(staff.insert(s)));
-				
 				Staff sta = staff.findOne(Integer.parseInt(txtID.getText()));
 				StringBuilder st = new StringBuilder("NV");
 				st.append(txtID.getText());
@@ -404,6 +411,10 @@ public class ManagementStaff extends JFrame {
 				staff.update(sta);
 				JOptionPane.showMessageDialog(null, "Data Saved Successfully");
 				refresh();
+				}
+				} else 
+				{
+					lbNote1.setText("Please filled Fullname");
 				}
 			}
 		});
@@ -417,6 +428,8 @@ public class ManagementStaff extends JFrame {
 		Edit.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		Edit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				lbNote1.setText("");
+				if (txtID.getText().length()>0 && txtName.getText().length()>0) {
 				Staff sm = staff.findOne(Integer.parseInt(txtID.getText()));
 			    sm = GetDataToGui(sm);	
 			    if (checkData(sm)) {
@@ -425,6 +438,7 @@ public class ManagementStaff extends JFrame {
 				showTable(staff.findAll());
 				refresh();
 				}
+			}
 			}
 		});
 		Edit.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -437,7 +451,9 @@ public class ManagementStaff extends JFrame {
 		Delete.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		Delete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				lbNote1.setText("");
 				int[] list = table.getSelectedRows();
+				if (list.length>0) {
 				List<Integer> listId = new ArrayList<Integer>(); 
 				for (int i:list) {
 					listId.add(Integer.parseInt(table.getValueAt(i, 0).toString()));
@@ -454,7 +470,7 @@ public class ManagementStaff extends JFrame {
 					showTable(staff.findAll());
 					refresh();
 				}
-				
+				}
 				
 			}
 		});
@@ -620,6 +636,8 @@ public class ManagementStaff extends JFrame {
 				int row = table.getSelectedRow();
 				int id = Integer.parseInt(table.getValueAt(row, 0).toString());
 				SetDataByGui(id);
+				lbNote1.setText("");
+				
 			}
 			
 		});
@@ -752,29 +770,11 @@ public class ManagementStaff extends JFrame {
 		}
 		}
 		
-		SimpleDateFormat month =new SimpleDateFormat ("MM");
-	    SimpleDateFormat year =new SimpleDateFormat ("yyyy");
-        SimpleDateFormat day =new SimpleDateFormat ("dd");
-
-        String m =month.format(dateOfWork.getDate());	    
-        String y =year.format(dateOfWork.getDate());
-        String d =day.format(dateOfWork.getDate());
-    
-        @SuppressWarnings("deprecation")
-		Date date1 = new Date(Integer.parseInt(y)-1900, Integer.parseInt(m)-1, Integer.parseInt(d));
-        
-        
-        String m1 =month.format(dateOfBirth.getDate());
-        String y1 =year.format(dateOfBirth.getDate());
-        String d1 =day.format(dateOfBirth.getDate());
-    
-        @SuppressWarnings("deprecation")
-		Date date2 = new Date(Integer.parseInt(y1)-1900, Integer.parseInt(m1)-1, Integer.parseInt(d1));
-		if (date1.compareTo(date2) <=0)
-		{
-			list[3]=false;
+		if (dateOfBirth.getDate().compareTo(dateOfWork.getDate())>=0) {
+			list[3]= false;
 		}
-        StringBuilder st = new StringBuilder();
+		
+		StringBuilder st = new StringBuilder();
 
 		
 		for (int i = 0;i<list.length;i++) {
@@ -789,8 +789,10 @@ public class ManagementStaff extends JFrame {
 			case 2:
 				st.append("Identified Card,");
 				break;
+			
 			case 3:
-				st.append("Day of Birth and Day of Work,");
+			st.append("Date of birth and Work start date,");
+			break;
 			}
 		}
 		if (st.toString().equals(""))
@@ -798,7 +800,7 @@ public class ManagementStaff extends JFrame {
 		}
 		else 
 		{
-			
+			st.deleteCharAt(st.length()-1);
 			st.append(" is errored");
 			lbNote1.setText(st.toString());
 		return false;

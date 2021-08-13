@@ -118,6 +118,12 @@ public class ManagementMedicalForms extends JFrame {
 		contentPane.add(checkAll);
 		
 		checkName = new JCheckBox("Name_Patient");
+		checkName.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				checkAll.setSelected(false);
+			}
+		});
 		checkName.setForeground(new Color(0, 51, 153));
 		checkName.setFont(new Font("Tahoma", Font.BOLD, 12));
 		checkName.setBackground(SystemColor.activeCaption);
@@ -125,6 +131,13 @@ public class ManagementMedicalForms extends JFrame {
 		contentPane.add(checkName);
 		
 		checkDate = new JCheckBox("Date_Cure");
+		checkDate.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				checkAll.setSelected(false);
+
+			}
+		});
 		checkDate.setForeground(new Color(0, 51, 153));
 		checkDate.setBackground(SystemColor.activeCaption);
 		checkDate.setFont(new Font("Tahoma", Font.BOLD, 12));

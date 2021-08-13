@@ -29,6 +29,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import BUS.implement.DentalServiceBUS;
+import Checked.DataChecked;
 import Constant.SystemConstant;
 import DTO.DentalService;
 import PAGING.PageRequest;
@@ -201,10 +202,10 @@ public class ManagementService extends JFrame {
 				DentalService d = getDataByGui();
 				txtID.setText(String.valueOf(service.insert(d)));
 				JOptionPane.showMessageDialog(null, "You save data successful");
-				showTable(service.findAll());
+			//	showTable(service.findAll());
 				refresh();
 					} else
-						lberror.setText("Data is error!");
+						lberror.setText("This data is errored!");
 					    lberror.setForeground(Color.red);
 							
 					} else 
@@ -224,7 +225,9 @@ public class ManagementService extends JFrame {
 		JButton Edit = new JButton("");
 		Edit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int index = table.getSelectedRow();
+				int index =-1;
+				 index = table.getSelectedRow();
+				 if (index!=-1) {
 				int id = Integer.parseInt(table.getValueAt(index, 0).toString());
 				
 				if (txtPrice.getText().length()>0 && txtQuantity.getText().length()>0 && txtName.getText().length()>0) {
@@ -237,14 +240,14 @@ public class ManagementService extends JFrame {
 				m.setQuantity(mData.getQuantity());
 				m.setUnit(mData.getUnit());
 				m.setWarranty(mData.getWarranty());
-				
+				lberror.setText("");
 				service.update(m);
 				JOptionPane.showMessageDialog(null, "You update data successful");
 				refresh();
 			}
 					else
 					{
-				lberror.setText("Data is error!");
+				lberror.setText("This data is errored!");
 			    lberror.setForeground(Color.red);
 					
 			}
@@ -254,7 +257,7 @@ public class ManagementService extends JFrame {
 			    lberror.setForeground(Color.red);
 			}
 			
-
+				 }
 			}
 		});
 		Edit.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -267,6 +270,7 @@ public class ManagementService extends JFrame {
 		Delete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int[] listRow = table.getSelectedRows();
+				if (listRow.length>0) {
 				List<Integer> listId = new ArrayList<Integer>(); 
 				for (int i : listRow) {
 					listId.add(Integer.parseInt(table.getValueAt(i, 0).toString()));
@@ -281,6 +285,7 @@ public class ManagementService extends JFrame {
 					refresh();
 				}
 				}
+			}
 		});
 		Delete.setFont(new Font("Tahoma", Font.BOLD, 14));
 		Delete.setBounds(206, 202, 40, 35);
@@ -468,6 +473,7 @@ public class ManagementService extends JFrame {
 				int row = table.getSelectedRow();
 				int id = Integer.parseInt(table.getValueAt(row, 0).toString());
 				setDataToGui(id);
+				lberror.setText("");
 				
 				}
 			}
@@ -506,7 +512,6 @@ public class ManagementService extends JFrame {
 			};
 			defaultTable.addRow(o);
 		}
-		table.setModel(defaultTable);
 		
 	}
 	
@@ -550,29 +555,23 @@ public class ManagementService extends JFrame {
 		
 	}
 	public boolean checkData(String quantity,String price) {
-
-    	for (int i=0;i<quantity.length();i++) {
-			if ((quantity.charAt(i)<'0' || quantity.charAt(i)>'9') && quantity.charAt(i)!='.') {
-				return  false;
+		boolean check =true;
+			for (int i=0;i<quantity.length();i++) {
+				if (((quantity.charAt(i)<'0' || quantity.charAt(i)>'9') && quantity.charAt(i)!='.')) {
+					check=false;
+				}
 			}
-		}
-    	
-    	for (int i=0;i<price.length();i++) {
-			if ((price.charAt(i)<'0' || price.charAt(i)>'9') && price.charAt(i)!='.') {
-				return false;
+			
+			for (int i=0;i<price.length();i++) {
+				if ((price.charAt(i)<'0' || price.charAt(i)>'9') && quantity.charAt(i)!='.') {
+					check=false;
+				}
 			}
-		}
-    	if (Integer.parseInt(quantity)==0 || Integer.parseInt(price)==0)
-	    {
-	    	return false;
-	    }
-    	
-    
-	
+			if (DataChecked.checkInteger(quantity)) return false;
+			
+			if (DataChecked.checkInteger(price)) return false;
 
-	
-
-return true;
+		return check;
 	}
 	public DentalService paging(int page,int limit,List<DentalService> list,String name){
 		DentalService s= new DentalService();

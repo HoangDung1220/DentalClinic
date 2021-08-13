@@ -303,6 +303,7 @@ public class StaffMain extends JFrame {
 				clicked(Home,labelHome);
 				clickedSort(HomeSort);
 
+
 			}
 		});
 		labelHome.setForeground(new Color(240, 255, 255));

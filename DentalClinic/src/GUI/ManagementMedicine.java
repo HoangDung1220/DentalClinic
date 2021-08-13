@@ -33,6 +33,7 @@ import BUS.IMedicineBUS;
 import BUS.ITypeMedicineBUS;
 import BUS.implement.MedicineBUS;
 import BUS.implement.TypeMedicineBUS;
+import Checked.DataChecked;
 import Constant.SystemConstant;
 import DTO.Medicine;
 import DTO.TypeMedicine;
@@ -223,7 +224,7 @@ public class ManagementMedicine extends JFrame {
 		Save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			
-			if (txtPrice.getText().length()>0 && txtQuantity.getText().length()>0 && txtName.getText().length() >0) {
+			if (txtPrice.getText().length()>0 && txtQuantity.getText().length()>0) {
 			if (checkData(txtPrice.getText(),txtQuantity.getText())) {
 					Medicine i = getDataByGui();
 					txtID.setText(String.valueOf(medicine.insert(i)));
@@ -231,7 +232,7 @@ public class ManagementMedicine extends JFrame {
 					refresh();  
 			} else
 			{
-				lberror.setText("Data is error!");
+				lberror.setText("This data is errored!!");
 			    lberror.setForeground(Color.red);
 			}
 			}
@@ -254,9 +255,11 @@ public class ManagementMedicine extends JFrame {
 		Edit.setFont(new Font("Tahoma", Font.BOLD, 14));
 		Edit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int index = table.getSelectedRow();
+				int index =-1;
+				index = table.getSelectedRow();
+				if (index!=-1) {
 				int id = Integer.parseInt(table.getValueAt(index, 0).toString());
-				if (txtPrice.getText().length()>0 && txtQuantity.getText().length()>0 && txtName.getText().length() >0) {
+				if (txtPrice.getText().length()>0 && txtQuantity.getText().length()>0) {
 					if (checkData(txtPrice.getText(),txtQuantity.getText())) {
 
 				Medicine mData = getDataByGui();
@@ -268,13 +271,13 @@ public class ManagementMedicine extends JFrame {
 				m.setQuantity(mData.getQuantity());
 				m.setUnit(mData.getUnit());
 				m.setNameMedicine(mData.getNameMedicine());
-				
+				lberror.setText("");
 				medicine.update(m);
 				JOptionPane.showMessageDialog(null, "You update data successful");
 				refresh();
 					} else
 					{
-						lberror.setText("Data is error!");
+						lberror.setText("This data is errored!!");
 					    lberror.setForeground(Color.red);
 							
 					}} else 
@@ -283,6 +286,7 @@ public class ManagementMedicine extends JFrame {
 					    lberror.setForeground(Color.red);
 					}
 					}
+			}
 			
 		});
 		Edit.setBounds(656, 100, 40, 35);
@@ -293,6 +297,7 @@ public class ManagementMedicine extends JFrame {
 		Delete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int[] listRow = table.getSelectedRows();
+				if (listRow.length>0) {
 				List<Integer> listId = new ArrayList<Integer>(); 
 				for (int i : listRow) {
 					listId.add(Integer.parseInt(table.getValueAt(i, 0).toString()));
@@ -306,6 +311,7 @@ public class ManagementMedicine extends JFrame {
 					showTable(medicine.findAll());
 					refresh();
 				}
+			}
 			}
 				
 		});
@@ -399,6 +405,7 @@ public class ManagementMedicine extends JFrame {
 				int row = table.getSelectedRow();
 				int id = Integer.parseInt(table.getValueAt(row, 0).toString());
 				getDataToGui(id);
+				lberror.setText("");
 				
 				}
 			}
@@ -535,7 +542,7 @@ public class ManagementMedicine extends JFrame {
 		}
 
 
-//		table.setModel(defaultTable);
+		
 	}
 	
 	public Medicine getDataByGui() {
@@ -583,31 +590,22 @@ public class ManagementMedicine extends JFrame {
 	}
 	
 	public boolean checkData(String quantity,String price) {
-		
-		    
-		    
-		    	for (int i=0;i<quantity.length();i++) {
-					if ((quantity.charAt(i)<'0' || quantity.charAt(i)>'9') && quantity.charAt(i)!='.') {
-						return  false;
-					}
+		boolean check =true;
+			for (int i=0;i<quantity.length();i++) {
+				if ((quantity.charAt(i)<'0' || quantity.charAt(i)>'9') && quantity.charAt(i)!='.') {
+					check= false;
 				}
-		    	
-		    	for (int i=0;i<price.length();i++) {
-					if ((price.charAt(i)<'0' || price.charAt(i)>'9') && price.charAt(i)!='.') {
-						return false;
-					}
+			}
+			
+			for (int i=0;i<price.length();i++) {
+				if ((price.charAt(i)<'0' || price.charAt(i)>'9') && price.charAt(i)!='.') {
+					check= false;
 				}
-		    	if (Integer.parseInt(quantity)==0 || Integer.parseInt(price)==0)
-			    {
-			    	return false;
-			    }
-		    	
-		    
-			
-	
-			
+			}
+			if (DataChecked.checkInteger(quantity)) return false;	
+			if (DataChecked.checkInteger(price)) return false;
 		
-		return true;
+		return check;
 	}
 	
 	

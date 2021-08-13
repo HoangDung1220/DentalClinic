@@ -21,7 +21,6 @@ import javax.swing.border.LineBorder;
 
 import Constant.SystemConstant;
 import DTO.Staff;
-import java.awt.Rectangle;
 
 public class DoctorMain extends JFrame {
 
@@ -278,8 +277,8 @@ public class DoctorMain extends JFrame {
 				
 			}
 		});
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnNewButton.setForeground(new Color(255, 255, 255));
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		btnNewButton.setForeground(new Color(0, 0, 205));
 		btnNewButton.setBorder(null);
 		btnNewButton.setBounds(181, 374, 59, 21);
 		panel.add(btnNewButton);
