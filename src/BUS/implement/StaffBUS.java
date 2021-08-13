@@ -96,4 +96,10 @@ public class StaffBUS implements IStaffBUS{
 		return staff.findStaffWithPage(pageble);
 	}
 
+	@Override
+	public Staff searchByNameAndICard(String fullname, String card) {
+		
+		return staff.searchByNameAndICard(fullname, card);
+	}
+
 }

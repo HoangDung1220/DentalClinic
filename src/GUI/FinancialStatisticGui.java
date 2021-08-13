@@ -316,7 +316,7 @@ public static DefaultTableModel showDataToTable_Month(Date d1, Date d2)
 		btnNewButtonTK.setIcon(new ImageIcon(SystemConstant.img_search1));
 		contentPane.add(btnNewButtonTK);
 		
-		JLabel lblNewLabel_1_1_1 = new JLabel("Total (million) :");
+		JLabel lblNewLabel_1_1_1 = new JLabel("Total (triệu) :");
 		lblNewLabel_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1_1_1.setForeground(new Color(0, 51, 153));
 		lblNewLabel_1_1_1.setFont(new Font("Times New Roman", Font.BOLD, 14));

@@ -254,7 +254,7 @@ public class ManagementStaff extends JFrame {
 		JLabel lblNewLabel_3 = new JLabel("Fullname");
 		lblNewLabel_3.setForeground(new Color(0, 51, 153));
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblNewLabel_3.setBounds(21, 82, 59, 13);
+		lblNewLabel_3.setBounds(21, 82, 82, 13);
 		panel_1.add(lblNewLabel_3);
 		
 		txtName = new JTextField();
@@ -397,10 +397,11 @@ public class ManagementStaff extends JFrame {
 		Save.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		Save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if (txtID.getText().length()==0) {
 				Staff s = null;
 				s = GetDataToGui(s);
-				if (txtName.getText().length()>0) {
 				if (checkData(s))
+					if (staff.searchByNameAndICard(txtName.getText(), txtICard.getText())==null)
 				{
 				lbNote1.setText("");
 				txtID.setText(String.valueOf(staff.insert(s)));
@@ -411,12 +412,12 @@ public class ManagementStaff extends JFrame {
 				staff.update(sta);
 				JOptionPane.showMessageDialog(null, "Data Saved Successfully");
 				refresh();
-				}
 				} else 
 				{
-					lbNote1.setText("Please filled Fullname");
+					lbNote1.setText("Information of staff is avaliable");
 				}
-			}
+				
+			}}
 		});
 		Save.setFont(new Font("Tahoma", Font.BOLD, 14));
 		Save.setBounds(515, 250, 40, 35);
@@ -738,6 +739,7 @@ public class ManagementStaff extends JFrame {
 	}
 	
 	public boolean checkData(Staff s) {
+		if (txtName.getText().length()>0 && txtICard.getText().length()>0 && txtEmail.getText().length()>0 && txtPhone.getText().length()>0) {
 		boolean[] list = {true,true,true,true} ;
 		
 		if (s.getPhone().length()>0) {
@@ -804,6 +806,11 @@ public class ManagementStaff extends JFrame {
 			st.append(" is errored");
 			lbNote1.setText(st.toString());
 		return false;
+		}}
+		else 
+		{
+			lbNote1.setText("Please filled data");	
+			return false;
 		}
 	} 
 	

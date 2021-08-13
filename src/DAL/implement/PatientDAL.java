@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
+import Constant.SystemConstant;
 import DAL.IPatientDAL;
 import DTO.Patient;
 import Mapper.PatientMapper;
@@ -20,6 +21,8 @@ public class PatientDAL extends AbstractDAL<Patient> implements IPatientDAL{
 
 	@Override
 	public int insert(Patient p) {
+		p.setCreatedBy(SystemConstant.staff.getFullname());
+		p.setCreatedDate(new Timestamp(System.currentTimeMillis()));
 		String st ="insert into patient(fullname,gender,phone,address,birthday,icard,created_date,created_by) values (?,?,?,?,?,?,?,?)";
 	   return insert(st,p.getFullname(),p.getGender(),p.getPhone(),p.getAddress(),p.getBirthday()
 	    		,p.getiCard(),p.getCreatedDate(),p.getCreatedBy());
@@ -30,6 +33,8 @@ public class PatientDAL extends AbstractDAL<Patient> implements IPatientDAL{
 
 	@Override
 	public void update(Patient p) {
+		p.setModifiedDate(new Timestamp(System.currentTimeMillis()));
+		p.setModifiedBy(SystemConstant.staff.getFullname());
 		String st ="update patient set fullname =?,gender=?,birthday=?,phone=?,address=?,icard=?,modified_date=?,modified_by=?where id =?";
 		update(st,p.getFullname(),p.getGender(),p.getBirthday(),p.getPhone(),p.getAddress(),p.getiCard(),p.getModifiedDate(),p.getModifiedBy(),p.getId());	
 	}
@@ -110,6 +115,13 @@ public class PatientDAL extends AbstractDAL<Patient> implements IPatientDAL{
 			
 			return query(querry.toString(),new PatientMapper(),date1,date2);
 		
+	}
+
+	@Override
+	public Patient findOneByIcard(String icard) {
+		String st="select * from Patient where icard=?";
+		List<Patient> list =query(st,new PatientMapper(),icard);
+		return list.isEmpty()?null:list.get(0);
 	}
 	
 }

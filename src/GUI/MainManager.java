@@ -284,6 +284,7 @@ public class MainManager extends JFrame {
 		labelHome.setFont(new Font("Sitka Subheading", Font.BOLD, 17));
 		labelHome.setBounds(10, 10, 250, 37);
 		labelHome.setIcon(new ImageIcon(SystemConstant.home));
+		labelHome.setForeground(Color.black);
 		
 		panel.add(labelHome);
 		
@@ -419,7 +420,7 @@ public class MainManager extends JFrame {
 		TaiKhoan.setVisible(false);
 		ChangeAccount.setVisible(false);
 		ThongKe.setVisible(false);
-		Home.setVisible(false);
+		Home.setVisible(true);
 		//labelHome.setForeground(Color.white);
 		JPanel panel_5 = new JPanel();
 		panel_5.setBorder(null);

@@ -101,4 +101,11 @@ public class StaffDAL extends AbstractDAL<Staff> implements IStaffDAL {
 		
 	}
 
+	@Override
+	public Staff searchByNameAndICard(String fullname, String card) {
+		 String st ="select *from staff inner join role on staff.id_role=role.id where staff.fullname=? and staff.icard=? ";    
+		 List<Staff> list = query(st,new StaffMapper(),fullname,card);
+		return list.isEmpty()?null:list.get(0);
+	}
+
 }

@@ -19,6 +19,7 @@ public interface IPatientBUS {
 	public List<Patient> findAllPaging(Pageble pageble);
 	public List<Patient> findAllPage(Pageble pageble, Date date1, Date date2);
 	public List<Patient> findAllPage(Date date1, Date date2) ;
+	public Patient findOneByIcard(String icard);
 
 
 }

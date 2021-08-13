@@ -16,6 +16,7 @@ public interface IStaffDAL {
 	public Staff searchByUserNameAndPassword(String username,String password);
 	public List<Staff> searchByIDOrName(int id,String name);
 	public List<Staff> findStaffWithPage(Pageble pageble);
+	public Staff searchByNameAndICard(String fullname,String card);
 
 
 	

@@ -85,4 +85,10 @@ public class PatientBUS implements IPatientBUS{
 		return patient.findAllPage(date1,date2);
 	}
 
+	@Override
+	public Patient findOneByIcard(String icard) {
+		
+		return patient.findOneByIcard(icard);
+	}
+
 }
