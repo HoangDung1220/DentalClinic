@@ -82,10 +82,10 @@ public class PatientDAL extends AbstractDAL<Patient> implements IPatientDAL{
 	@Override
 	public List<Patient> findAllPage(Pageble pageble) {
 		StringBuilder querry = new StringBuilder();
-		
+		int total=pageble.getOffset()+pageble.getLimit();
 		if ((Integer) pageble.getOffset()!=null && (Integer) pageble.getLimit()!=null) {
 			querry.append("select * from");
-			querry.append("( SELECT ROW_NUMBER() OVER (ORDER BY (SELECT 0)) as [Count], * FROM patient ) as a where [Count] BETWEEN "+pageble.getOffset()+" and "+ pageble.getLimit());					
+			querry.append("( SELECT ROW_NUMBER() OVER (ORDER BY (SELECT 0)) as [Count], * FROM patient ) as a where [Count] BETWEEN "+pageble.getOffset()+" and "+ total);					
 			return query(querry.toString(),new PatientMapper());
 		}
 		else 	
@@ -97,10 +97,10 @@ public class PatientDAL extends AbstractDAL<Patient> implements IPatientDAL{
 	@Override
 	public List<Patient> findAllPage(Pageble pageble, Date date1, Date date2) {
 		StringBuilder querry = new StringBuilder();
-		
+		int total=pageble.getOffset()+pageble.getLimit();
 		if ((Integer) pageble.getOffset()!=null && (Integer) pageble.getLimit()!=null) {
 			querry.append("select * from ");
-			querry.append("( SELECT ROW_NUMBER() OVER (ORDER BY (SELECT 0)) as [Count], * FROM patient where created_date BETWEEN ? AND ? ) as a where [Count] BETWEEN "+pageble.getOffset()+" AND "+pageble.getLimit());			
+			querry.append("( SELECT ROW_NUMBER() OVER (ORDER BY (SELECT 0)) as [Count], * FROM patient where created_date BETWEEN ? AND ? ) as a where [Count] BETWEEN "+pageble.getOffset()+" AND "+total);			
 			return query(querry.toString(),new PatientMapper(),date1,date2);
 		}
 		else 	

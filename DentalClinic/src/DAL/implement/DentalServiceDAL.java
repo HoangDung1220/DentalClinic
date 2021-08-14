@@ -50,12 +50,12 @@ public class DentalServiceDAL extends AbstractDAL<DentalService> implements IDen
 	@Override
 	public List<DentalService> findAllWithPage(Pageble pageble) {
 		StringBuilder querry = new StringBuilder();
-		
+		int total=pageble.getOffset()+pageble.getLimit();
 		querry.append("select *from  ");
 		if ((Integer) pageble.getOffset()!=null && (Integer) pageble.getLimit()!=null) {
 
 			querry.append("( select ROW_NUMBER() OVER (ORDER BY (SELECT 0)) AS [Count], * FROM dental_service ) as a "
-					+ "  WHERE [Count] BETWEEN "+pageble.getOffset()+" AND "+pageble.getLimit());
+					+ "  WHERE [Count] BETWEEN "+pageble.getOffset()+" AND "+total);
 			return query(querry.toString(),new DentalServiceMapper());
 		}
 		else 	
@@ -70,11 +70,12 @@ public class DentalServiceDAL extends AbstractDAL<DentalService> implements IDen
 	@Override
 	public List<DentalService> searchByName(String name, Pageble pageble) {
 		StringBuilder querry = new StringBuilder();
+		int total=pageble.getOffset()+pageble.getLimit();
 		querry.append("select *from  ");
 		if ((Integer) pageble.getOffset()!=null && (Integer) pageble.getLimit()!=null) {
 
 			querry.append("( select ROW_NUMBER() OVER (ORDER BY (SELECT 0)) AS [Count], * FROM dental_service ) as a "
-					+ "  WHERE [Count] BETWEEN "+pageble.getOffset()+" AND "+pageble.getLimit() +" AND name_service like '%"+name+"%'");
+					+ "  WHERE [Count] BETWEEN "+pageble.getOffset()+" AND "+total +" AND name_service like '%"+name+"%'");
 			return query(querry.toString(),new DentalServiceMapper());
 		}
 		else 	

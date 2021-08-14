@@ -205,6 +205,7 @@ public class PatientStatisticalGui extends JFrame {
 
 
 				}
+				
 			
 
 		
@@ -360,11 +361,13 @@ public class PatientStatisticalGui extends JFrame {
 			        if (date01.compareTo(date02)<0) {
 				    Patient p = paging(1,SystemConstant.LIMITStatic,patient.findAllPage(date01, date02),date01,date02);
 				    table.setModel(showDataToTable2(p.getList()));
+		        	 setAmmount(patient.findAllPage(date01, date02));
 					decorPaging(p);
 
 			        } else 
 			        {
-			        	   Patient p = new Patient();
+			        	    Patient p = new Patient();
+				        	 setAmmount(patient.findAllPage(date01, date02));
 						    table.setModel(showDataToTable2(p.getList()));
 							decorPaging(p);
 			        }
@@ -501,5 +504,17 @@ public class PatientStatisticalGui extends JFrame {
 		lbpage.setText(String.valueOf(p.getPage()));
 		lbtotalpage.setText(p.getPage()+"/"+p.getTotalPage());
 
+	}
+	
+	public void setAmmount(List<Patient> list) {
+		int countFemale=0,countMale=0;
+		for (Patient p:list) {
+			if (p.getGender()==false) countFemale++;
+		    else if (p.getGender()==true) countMale++;
+
+			textFieldSL.setText(""+list.size());
+			textFieldFemale.setText(""+countFemale);
+			textFieldMale.setText(""+countMale);
+		}
 	}
 }

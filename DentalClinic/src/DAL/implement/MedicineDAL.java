@@ -60,10 +60,10 @@ public class MedicineDAL extends AbstractDAL<Medicine> implements IMedicineDAL{
 	@Override
 	public List<Medicine> findAll(Pageble pageable) {
 		StringBuilder querry = new StringBuilder();
-		
+		int total=pageable.getOffset()+pageable.getLimit();
 		if ((Integer) pageable.getOffset()!=null && (Integer) pageable.getLimit()!=null) {
 			querry.append("select * from ( SELECT ROW_NUMBER() OVER (ORDER BY (SELECT 0)) as [Count], * FROM medicine ) as a inner  join type_medicine on a.id_typemedicine = type_medicine.id " 
-					+"WHERE [Count] BETWEEN " +pageable.getOffset()+" and "+ pageable.getLimit());
+					+"WHERE [Count] BETWEEN " +pageable.getOffset()+" and "+ total);
 			return query(querry.toString(),new MedicineMapper());
 		}
 		else 	
@@ -75,6 +75,7 @@ public class MedicineDAL extends AbstractDAL<Medicine> implements IMedicineDAL{
 	@Override
 	public List<Medicine> searchByNameAndIDType(String name, int idType, Pageble pageable) {
 		StringBuilder querry = new StringBuilder();
+		int total=pageable.getOffset()+pageable.getLimit();
 		String str="(SELECT ROW_NUMBER() OVER (ORDER BY (SELECT 0)) as [Count], * FROM medicine";
 		String cndId=" id_typemedicine = "+idType;
 		String cndName=" name_medicine like '%"+name+"%'";
@@ -87,7 +88,7 @@ public class MedicineDAL extends AbstractDAL<Medicine> implements IMedicineDAL{
 		else cnd=" where"+cndName;
 		if ((Integer) pageable.getOffset()!=null && (Integer) pageable.getLimit()!=null ) {
 			querry.append(" select * from" + str + cnd + inner 
-					      + " WHERE [Count] BETWEEN " +pageable.getOffset()+" and "+ pageable.getLimit() );
+					      + " WHERE [Count] BETWEEN " +pageable.getOffset()+" and "+ total );
 			return query(querry.toString(),new MedicineMapper());
 		}
 

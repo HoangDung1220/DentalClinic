@@ -89,10 +89,10 @@ public class StaffDAL extends AbstractDAL<Staff> implements IStaffDAL {
 	@Override
 	public List<Staff> findStaffWithPage(Pageble pageble) {
 		StringBuilder querry = new StringBuilder();
-		
+		int total=pageble.getOffset()+pageble.getLimit();
 		if ((Integer) pageble.getOffset()!=null && (Integer) pageble.getLimit()!=null) {
 			querry.append("select * from ( SELECT ROW_NUMBER() OVER (ORDER BY (SELECT 0)) as [Count], * FROM staff ) as a inner join role on a.id_role=role.id"
-					      + "WHERE [Count] BETWEEN "+ pageble.getOffset()+ " and " +  pageble.getLimit() );
+					      + "WHERE [Count] BETWEEN "+ pageble.getOffset()+ " and " +  total );
 			return query(querry.toString(),new StaffMapper());
 		}
 		else 	
